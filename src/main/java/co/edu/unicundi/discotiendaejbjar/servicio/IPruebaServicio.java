@@ -5,6 +5,7 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
+import co.edu.unicundi.discotiendaejbjar.entidad.Prueba;
 import javax.ejb.Local;
 
 /**
@@ -14,6 +15,6 @@ import javax.ejb.Local;
 @Local
 public interface IPruebaServicio {
     
-    public String mostrar();
+    public void mostrar(Prueba object);
     
 }

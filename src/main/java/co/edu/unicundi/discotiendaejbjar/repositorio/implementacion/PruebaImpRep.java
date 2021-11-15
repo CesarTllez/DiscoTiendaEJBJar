@@ -5,8 +5,12 @@
  */
 package co.edu.unicundi.discotiendaejbjar.repositorio.implementacion;
 
+import co.edu.unicundi.discotiendaejbjar.entidad.Prueba;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IPruebaRep;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -14,10 +18,12 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class PruebaImpRep implements IPruebaRep{
-
+    @PersistenceContext(unitName = "conexionPostgresql")
+    private EntityManager manager;
     @Override
-    public String mostrar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void mostrar(Prueba object) {    
+      this.manager.persist(object);
+  
     }
     
 }
