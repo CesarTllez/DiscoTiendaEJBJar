@@ -22,7 +22,7 @@ import javax.persistence.TypedQuery;
  * @author Diego Cobos
  */
 @Stateless
-public class CancionReplmp implements ICancionRep{
+public class CancionRepImp implements ICancionRep{
         
     /**
      * Permite realizar operaciones sobre la base de datos.
@@ -30,17 +30,33 @@ public class CancionReplmp implements ICancionRep{
     @PersistenceContext(unitName = "conexionPostgresql")
     private EntityManager manager;  
  
+    /**
+     * Metodo que permite buscar una cancion por medio de la id
+     * @param id
+     * @return 
+     */
     @Override
     public Cancion buscarPorId(Integer id) {
         TypedQuery<Cancion> query = this.manager.createNamedQuery("Cancion.buscarPorId", Cancion.class);
         return query.setParameter("id", id).getSingleResult();
     }
+    
+    /**
+     * Metodo que permite buscar una cancion por medio del nombre
+     * @param nombre
+     * @return 
+     */
     @Override
     public Cancion buscarPorNombre(String nombre) {
               TypedQuery<Cancion> query = this.manager.createNamedQuery("Cancion.buscarPorNombre", Cancion.class);
         return query.setParameter("nombre", nombre).getSingleResult();
     }
 
+    /**
+     * Metodo que permite validar la existencia de la cancion por medio de la id en la Bd
+     * @param id
+     * @return 
+     */
     @Override
     public Long validarExistenciaPorId(Integer id) {
        Long query = (Long)this.manager.createNamedQuery("Cancion.validarExistenciaPorId")
@@ -49,6 +65,11 @@ public class CancionReplmp implements ICancionRep{
         return query;
     }
 
+    /**
+     * Metodo que permite validar la existencia de la cancion por medio del nombre en la Bd
+     * @param nombre
+     * @return 
+     */
     @Override
     public Long validarExistenciaPorNombre(String nombre) {
               Long query = (Long)this.manager.createNamedQuery("Cancion.validarExistenciaPorNombre")
@@ -57,12 +78,20 @@ public class CancionReplmp implements ICancionRep{
         return query;
     }
 
+    /**
+     * Metodo que permite buscar todas las canciones de la base de datos
+     * @return 
+     */
     @Override
     public List<Cancion> buscarTodo() {
-              TypedQuery<Cancion> query = this.manager.createNamedQuery("Cliente.buscarTodos", Cancion.class);
+              TypedQuery<Cancion> query = this.manager.createNamedQuery("Cancion.buscarTodos", Cancion.class);
         return query.getResultList();
     }
 
+    /**
+     * Metodo que permite registrar las canciones a la base de datos
+     * @param objeto 
+     */
     @Override
     public void registrar(Cancion objeto) {
         this.manager.createNamedQuery("Cancion.registrar")
@@ -72,6 +101,10 @@ public class CancionReplmp implements ICancionRep{
                 .executeUpdate();
     }
 
+    /**
+     * Metodo que permite actualizar la información de las canciones y lo guarda en la base de datos
+     * @param objeto 
+     */
     @Override
     public void actualizar(Cancion objeto) {
                 this.manager.createNamedQuery("Cancion.actualizar")
@@ -81,6 +114,10 @@ public class CancionReplmp implements ICancionRep{
                 .executeUpdate();
     }
 
+    /**
+     * Método que permite eliminar a un cliente por JPQL de la base de datos.
+     * @param id 
+     */
     @Override
     public void eliminarJPQL(Integer id) {
               this.manager.createNamedQuery("Cancion.eliminarPorIdJPQL")
@@ -88,6 +125,10 @@ public class CancionReplmp implements ICancionRep{
                 .executeUpdate();
     }
 
+    /**
+     * Método que permite eliminar a un cliente por SQL de la base de datos.
+     * @param id 
+     */
     @Override
     public void eliminarSQL(Integer id) {
                 this.manager.createNamedQuery("Cancion.eliminarPorIdSQL")

@@ -6,7 +6,7 @@
 package co.edu.unicundi.discotiendaejbjar.repositorio;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
-import co.edu.unicundi.discotiendaejbjar.entidad.Cliente;
+
 import javax.ejb.Local;
 
 /**

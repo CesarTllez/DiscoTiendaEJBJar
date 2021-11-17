@@ -45,7 +45,7 @@ import javax.validation.constraints.Size;
 //Anotación para queries SQL's
 @NamedNativeQueries({
      //Registrar cliente.
-    @NamedNativeQuery(name = "Cancion.registrar", query = "INSERT INTO canciones (nombres, duracion, precio) VALUES (?, ?, ?)"),
+    @NamedNativeQuery(name = "Cancion.registrar", query = "INSERT INTO canciones (nombre, duracion, precio) VALUES (?, ?, ?)"),
     //Validar la existencia del cliente en la BD por id.
     @NamedNativeQuery(name = "Cancion.validarExistenciaPorId", query = "SELECT COUNT(*) FROM canciones WHERE id = ?") ,
     //Validar la existencia del cliente en la BD por nombre.
@@ -71,7 +71,7 @@ public class Cancion implements Serializable{
     @Column(name = "nombre", nullable = false, length = 25)
     private String nombre;
     
-    /**
+     /**
      * Almacena la duracion de la cancion
      */
     @NotNull(message = "Debe ingresar minimo un nombre.")
@@ -99,10 +99,10 @@ public class Cancion implements Serializable{
      * @param duracion
      * @param precio 
      */
-    public Cancion(Integer id, String nombre, String duracion, double precio) {
+    public Cancion(Integer id,  String duracion, String nombre, double precio) {
         this.id = id;
-        this.nombre = nombre;
         this.duracion = duracion;
+        this.nombre = nombre;
         this.precio = precio;
     }
 
@@ -114,20 +114,19 @@ public class Cancion implements Serializable{
         this.id = id;
     }
 
+        public String getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(String duracion) {
+        this.duracion = duracion;
+    }
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(String duracion) {
-        this.duracion = duracion;
     }
 
     public double getPrecio() {

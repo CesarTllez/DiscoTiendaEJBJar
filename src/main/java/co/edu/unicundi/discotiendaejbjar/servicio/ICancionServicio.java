@@ -5,10 +5,24 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
+import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
+import javax.ejb.Local;
+
 /**
- *
- * @author eison
+ * Interfaz que contiene los métodos referentes a un CRUD y que será
+ * heredada por las demás interfaces del servicio.
+ * @author César Rodríguez
+ * @author Eison Morales
+ * @author Juan Páez
+ * @author Diego Cobos
  */
-public interface ICancionServicio {
+@Local
+public interface ICancionServicio extends ICRUDServicio<Cancion, Integer>{
+      /**
+     * Método que permite buscar a una cancion por nombre.
+     * @param nombre
+     * @return 
+     */
+    public Cancion buscarPorNombre(String nombre);
     
 }
