@@ -11,6 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,6 +28,28 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "artistas" )
+//Anotación para queries JPQL's.
+@NamedQueries({
+    //Buscar a todos los artistas.
+    @NamedQuery(name = "Artista.buscarTodos", query = "SELECT a FROM Artista a"),
+    //Buscar artista por id.
+    @NamedQuery(name = "Artista.buscarPorId", query = "SELECT a FROM Artista a WHERE a.id = :id"),
+    //Actualizar artista.
+    @NamedQuery(name = "Artista.actualizar", query = "UPDATE Artista a SET a.nombre = :nombre WHERE a.id = :id"),
+    //Eliminar artista por id.
+    @NamedQuery(name = "Artista.eliminarPorIdJPQL", query = "DELETE FROM Artista a WHERE a.id = :id")
+})
+//Anotación para queries SQL's
+@NamedNativeQueries({
+    //Registrar artista.
+    @NamedNativeQuery(name = "Artista.registrar", query = "INSERT INTO artistas (nombre) VALUES (?)"),
+    //Validar la existencia del artista en la BD por id.
+    @NamedNativeQuery(name = "Artista.validarExistenciaPorId", query = "SELECT COUNT(*) FROM artistas WHERE id = ?") ,
+    //Validar la existencia del artista en la BD por nombre.
+    @NamedNativeQuery(name = "Artista.validarExistenciaPorNombre", query = "SELECT COUNT(*) FROM artistas WHERE nombre = ?") ,
+    //Eliminar artista por id.
+    @NamedNativeQuery(name = "Artista.eliminarPorIdSQL", query = "DELETE FROM artistas WHERE id = ?") 
+})
 public class Artista implements Serializable {
     
     /**

@@ -5,67 +5,63 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
-import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
-import co.edu.unicundi.discotiendaejbjar.repositorio.IRolRep;
-import co.edu.unicundi.discotiendaejbjar.servicio.IRolServicio;
+import co.edu.unicundi.discotiendaejbjar.entidad.Artista;
+import co.edu.unicundi.discotiendaejbjar.repositorio.IArtistaRep;
+import co.edu.unicundi.discotiendaejbjar.servicio.IArtistaServicio;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 /**
- * Clase que permite acceder a los métodos que operan la base de datos y
- * valida los datos que proporciona el api.
- * @author César Rodríguez
- * @author Eison Morales
- * @author Juan Páez
- * @author Diego Cobos
+ *
+ * @author cesar
  */
 @Stateless
-public class RolServicioImp implements IRolServicio {
+public class ArtistaServicioImp implements IArtistaServicio{
     
     /**
      * Permite acceder a los métodos que operan la base de datos.
      */
     @EJB
-    private IRolRep repositorio;
+    private IArtistaRep repositorio;
 
     /**
-     * Método que comprueba si el id existe, si es así, busca el rol
+     * Método que comprueba si el id existe, si es así, busca el artista
      * con dicho id.
      * @param id
      * @return 
      */
     @Override
-    public Rol buscarPorId(Integer id) {
+    public Artista buscarPorId(Integer id) {
         if(this.repositorio.validarExistenciaPorId(id) == 1){
             return this.repositorio.buscarPorId(id);
         }else{
              System.out.println("Excepcion: Ese id no existe en la base de datos.");
         }
         /*Objeto que debe borrarse cuando se implementen las excepciones.
-        */Rol r = new Rol();
-        /**/return r;
+        */Artista a = new Artista();
+        /**/return a;
         /*---------------------------------------------------------*/
     }
 
     /**
-     * Método que busca a todos los roles.
+     * Método que busca a todos los artistas.
      * @return 
      */
     @Override
-    public List<Rol> buscarTodo() {
+    public List<Artista> buscarTodo() {
         return this.repositorio.buscarTodo();
     }
 
     /**
      * Método que comprueba si el nombre no están registrado con 
-     * otro rol, si es así, permite efectur el registro.
+     * otro artista, si es así, permite efectur el registro.
      * @param objeto 
      */
     @Override
-    public void registrar(Rol objeto) {
+    public void registrar(Artista objeto) {
         if(this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1){
-                System.out.println("Excepcion: Actualmente hay un rol registrado con ese nombre.");
+                System.out.println("Excepcion: Actualmente hay un artista registrado con ese nombre.");
             }else{
                 this.repositorio.registrar(objeto);
             }
@@ -73,11 +69,11 @@ public class RolServicioImp implements IRolServicio {
 
     /**
      * Método que comprueba si el id existe y el nombre no 
-     * está registrado con otro rol, si es así, permite modificar el rol.
+     * está registrado con otro artista, si es así, permite modificar al artista.
      * @param objeto 
      */
     @Override
-    public void actualizar(Rol objeto) {
+    public void actualizar(Artista objeto) {
         if((objeto.getId() != null)){
             if(this.repositorio.validarExistenciaPorId(objeto.getId()) == 1){
                 if((!objeto.getNombre().equals(this.repositorio.buscarPorId(objeto.getId()).getNombre()))){
@@ -95,7 +91,7 @@ public class RolServicioImp implements IRolServicio {
 
     /**
      * Método que comprueba si el id ingresado existe, si es así, procede
-     * a eliminar el rol por dicho id.
+     * a eliminar al artista por dicho id.
      * @param id 
      */
     @Override
@@ -109,7 +105,7 @@ public class RolServicioImp implements IRolServicio {
 
     /**
      * Método que comprueba si el id ingresado existe, si es así, procede
-     * a eliminar el cliente por dicho id.
+     * a eliminar al artista por dicho id.
      * @param id 
      */
     @Override
