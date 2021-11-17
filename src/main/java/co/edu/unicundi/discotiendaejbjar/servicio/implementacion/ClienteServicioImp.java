@@ -119,7 +119,7 @@ public class ClienteServicioImp implements IClienteServicio{
     }
 
     /**
-     * Método que comprueba si el id exste y los datos proporcionados (cédula y correo) no 
+     * Método que comprueba si el id existe y los datos proporcionados (cédula y correo) no 
      * están registrados con otro usuario, si es así, permite modificar el cliente.
      * @param objeto 
      */

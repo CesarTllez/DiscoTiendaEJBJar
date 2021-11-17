@@ -99,6 +99,9 @@ public class Cliente implements Serializable{
     @Column(name = "correo", nullable = false, unique = true, length = 90)
     private String correo;
     
+    /**
+     * Almacena la contraseña.
+     */
     @NotNull (message = "La contrasena es obligatoria.")
     @Size(min = 6, max = 20, message = "Longitud requerida: Minimo 6 - Maximo 20 caracteres")
     @Column(name = "contrasena", nullable = false, length = 20)
@@ -109,6 +112,8 @@ public class Cliente implements Serializable{
      */
     @Column(name = "fecha_nacimiento", nullable = false)
     private String fechaNacimiento;
+    
+    /*Rol*/
 
     /**
      * Contructor pot defecto de la clase.

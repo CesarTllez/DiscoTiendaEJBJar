@@ -9,8 +9,9 @@ import co.edu.unicundi.discotiendaejbjar.entidad.Cliente;
 import javax.ejb.Local;
 
 /**
- * Interfaz que hereda de "ICRUDServicio". Contiene todos los métodos
- * de dicha interfaz y dos propios para buscar cliente por correo y cedula.
+ * Interfaz que hereda de "ICRUDRep". Contiene todos los métodos
+ * de dicha interfaz y cinco propios para buscar cliente por correo y cedula y validar 
+ * la existencia.
  * @author César Rodríguez
  * @author Eison Morales
  * @author Juan Páez
