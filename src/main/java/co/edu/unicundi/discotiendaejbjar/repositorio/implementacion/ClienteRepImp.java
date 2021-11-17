@@ -96,6 +96,7 @@ public class ClienteRepImp implements IClienteRep{
     @Override
     public void actualizar(Cliente objeto) {
         this.manager.createNamedQuery("Cliente.actualizar")
+                .setParameter("id", objeto.getId())
                 .setParameter("cedula", objeto.getCedula())
                 .setParameter("nombres", objeto.getNombres())
                 .setParameter("apellidos", objeto.getApellidos())

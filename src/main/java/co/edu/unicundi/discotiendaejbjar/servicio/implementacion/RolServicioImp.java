@@ -23,6 +23,9 @@ import javax.ejb.Stateless;
 @Stateless
 public class RolServicioImp implements IRolServicio {
     
+    /**
+     * Permite acceder a los métodos que operan la base de datos.
+     */
     @EJB
     private IRolRep repositorio;
 
@@ -34,7 +37,15 @@ public class RolServicioImp implements IRolServicio {
      */
     @Override
     public Rol buscarPorId(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.repositorio.validarExistenciaPorId(id) == 1){
+            return this.repositorio.buscarPorId(id);
+        }else{
+             System.out.println("Excepcion: Ese id no existe en la base de datos.");
+        }
+        /*Objeto que debe borrarse cuando se implementen las excepciones.
+        */Rol r = new Rol();
+        /**/return r;
+        /*---------------------------------------------------------*/
     }
 
     /**
@@ -43,7 +54,7 @@ public class RolServicioImp implements IRolServicio {
      */
     @Override
     public List<Rol> buscarTodo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.repositorio.buscarTodo();
     }
 
     /**
@@ -53,7 +64,11 @@ public class RolServicioImp implements IRolServicio {
      */
     @Override
     public void registrar(Rol objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1){
+                System.out.println("Excepcion: Actualmente hay un usuario registrado con ese nombre.");
+            }else{
+                this.repositorio.registrar(objeto);
+            }
     }
 
     /**
@@ -63,7 +78,19 @@ public class RolServicioImp implements IRolServicio {
      */
     @Override
     public void actualizar(Rol objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if((objeto.getId() != null)){
+            if(this.repositorio.validarExistenciaPorId(objeto.getId()) == 1){
+                if((!objeto.getNombre().equals(this.repositorio.buscarPorId(objeto.getId()).getNombre()))){
+                    this.repositorio.actualizar(objeto);
+                }else{
+                    System.out.println("Excepcion: No ingreso un nombre diferente.");
+                }
+            }else{
+                System.out.println("Excepcion: No existe ese id en la base de datos.");
+            }
+        }else{
+            System.out.println("Excepcion: Es necesario ingresar un id.");
+        }
     }
 
     /**
@@ -73,7 +100,11 @@ public class RolServicioImp implements IRolServicio {
      */
     @Override
     public void eliminarJPQL(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.repositorio.validarExistenciaPorId(id) == 1){
+            this.repositorio.eliminarJPQL(id);
+        }else{
+             System.out.println("Excepcion: No existe ese id en la base de datos.");
+        }
     }
 
     /**
@@ -83,7 +114,11 @@ public class RolServicioImp implements IRolServicio {
      */
     @Override
     public void eliminarSQL(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.repositorio.validarExistenciaPorId(id) == 1){
+            this.repositorio.eliminarSQL(id);
+        }else{
+             System.out.println("Excepcion: No existe ese id en la base de datos.");
+        }
     }
     
 }
