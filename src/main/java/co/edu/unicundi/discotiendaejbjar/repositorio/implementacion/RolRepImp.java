@@ -9,6 +9,9 @@ import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IRolRep;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -16,45 +19,103 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class RolRepImp implements IRolRep {
+    
+    /**
+     * Permite realizar operaciones sobre la base de datos.
+     */
+    @PersistenceContext(unitName = "conexionPostgresql")
+    private EntityManager manager;
 
+    /**
+     * Método que permtie buscar un rol por id en la base de datos.
+     * @param id
+     * @return Rol
+     */
     @Override
     public Rol buscarPorId(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TypedQuery<Rol> query = this.manager.createNamedQuery("Rol.buscarPorId", Rol.class);
+        return query.setParameter("id", id).getSingleResult();
     }
 
+    /**
+     * Método que permtie buscar a todos los roles en la base de datos.
+     * @return roles
+     */
     @Override
     public List<Rol> buscarTodo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TypedQuery<Rol> query = this.manager.createNamedQuery("Rol.buscarTodos", Rol.class);
+        return query.getResultList();
     }
 
+    /**
+     * Método que permite registrar un rol en la base de datos.
+     * @param objeto 
+     */
     @Override
     public void registrar(Rol objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         this.manager.createNamedQuery("Rol.registrar")
+                .setParameter( 1, objeto.getNombre())
+                 .executeUpdate();
     }
 
+    /**
+     * Método que permite actualizar a rol en la base de datos.
+     * @param objeto 
+     */
     @Override
     public void actualizar(Rol objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.manager.createNamedQuery("Rol.actualizar")
+                .setParameter("id", objeto.getId())
+                .setParameter("nombre", objeto.getNombre())
+                .executeUpdate();
     }
 
+    /**
+     * Método que permite eliminar un rol por JPQL de la base de datos.
+     * @param id 
+     */
     @Override
     public void eliminarJPQL(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.manager.createNamedQuery("Rol.eliminarPorIdJPQL")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
+    /**
+     * Método que permite eliminar un rol por SQL de la base de datos.
+     * @param id 
+     */
     @Override
     public void eliminarSQL(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.manager.createNamedQuery("Rol.eliminarPorIdSQL")
+                .setParameter( 1, id)
+                .executeUpdate();
     }
     
+    /**
+     * Método que permite validar con el id si un rol existe en la base de datos.
+     * @param id
+     * @return 
+     */
     @Override
     public Long validarExistenciaPorId(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Long query = (Long)this.manager.createNamedQuery("Rol.validarExistenciaPorId")
+                .setParameter(1, id)
+                .getSingleResult();
+        return query;
     }
 
+    /**
+     * Método que permite validar con el nombre si un rol existe en la base de datos.
+     * @param nombre
+     * @return 
+     */
     @Override
-    public Long validarExistenciaPorNombre(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Long validarExistenciaPorNombre(String nombre) {
+        Long query = (Long)this.manager.createNamedQuery("Rol.validarExistenciaPorNombre")
+                .setParameter(1, nombre)
+                .getSingleResult();
+        return query;
     }
     
 }

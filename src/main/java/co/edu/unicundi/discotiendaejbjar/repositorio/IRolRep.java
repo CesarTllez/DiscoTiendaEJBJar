@@ -22,14 +22,14 @@ public interface IRolRep extends ICRUDRep<Rol, Integer>{
     /**
      * Método que permite validar con el id si un rol existe en la base de datos.
      * @param id
-     * @return 
+     * @return existencia
      */
     public Long validarExistenciaPorId(Integer id);
     
     /**
      * Método que permite validar con el nombre si un rol existe en la base de datos.
      * @param nombre
-     * @return 
+     * @return existencia
      */
     public Long validarExistenciaPorNombre(String nombre);
     

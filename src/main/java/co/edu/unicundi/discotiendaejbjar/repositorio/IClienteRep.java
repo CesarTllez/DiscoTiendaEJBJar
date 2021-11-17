@@ -37,21 +37,21 @@ public interface IClienteRep extends ICRUDRep<Cliente, Integer>{
     /**
      * Método que permite validar con el id si un cliente existe en la base de datos.
      * @param id
-     * @return 
+     * @return existencia
      */
     public Long validarExistenciaPorId(Integer id);
     
     /**
      * Método que permite validar con la cédula si un cliente existe en la base de datos.
      * @param cedula
-     * @return 
+     * @return existencia
      */
     public Long validarExistenciaPorCedula(String cedula);
     
     /**
      * Método que permite validar con el correo si un cliente existe en la base de datos.
      * @param correo
-     * @return 
+     * @return existencia
      */
     public Long validarExistenciaPorCorreo(String correo);
     
