@@ -5,10 +5,9 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
-import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
-import co.edu.unicundi.discotiendaejbjar.repositorio.ICancionRep;
-
-import co.edu.unicundi.discotiendaejbjar.servicio.ICancionServicio;
+import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
+import co.edu.unicundi.discotiendaejbjar.repositorio.IDiscoRep;
+import co.edu.unicundi.discotiendaejbjar.servicio.IDiscoServicio;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -23,44 +22,44 @@ import javax.ejb.Stateless;
  * @author Diego Cobos
  */
 @Stateless
-public class CancionServicioImp implements ICancionServicio {
+public class DiscoServicioImp implements IDiscoServicio {
 
     /**
      * Permite acceder a los métodos que operan la base de datos.
      */
     @EJB
-    private ICancionRep repositorio;
+    private IDiscoRep repositorio;
 
     /**
-     * Método que comprueba si el nombre existe, si es así, busca la cancion con
+     * Método que comprueba si el nombre existe, si es así, busca el disco con
      * dicho nombre.
      *
      * @param nombre
      * @return
      */
     @Override
-    public Cancion buscarPorNombre(String nombre) {
+    public Disco buscarPorNombre(String nombre) {
         if (this.repositorio.validarExistenciaPorNombre(nombre) == 1) {
             return this.repositorio.buscarPorNombre(nombre);
         } else {
-            System.out.println("Excepcion: Ese nombre de la cancion no existe en la base de datos.");
+            System.out.println("Excepcion: Ese nombre del disco no existe en la base de datos.");
         }
         /*Objeto que debe borrarse cuando se implementen las excepciones.
          */
-        Cancion c = new Cancion();
+        Disco c = new Disco();
         /**/
         return c;
     }
 
     /**
-     * Método que comprueba si el id existe, si es así, busca la cancion con
-     * dicho id.
+     * Método que comprueba si el id existe, si es así, busca el disco con dicho
+     * id.
      *
      * @param id
      * @return
      */
     @Override
-    public Cancion buscarPorId(Integer id) {
+    public Disco buscarPorId(Integer id) {
         if (this.repositorio.validarExistenciaPorId(id) == 1) {
             return this.repositorio.buscarPorId(id);
         } else {
@@ -68,30 +67,30 @@ public class CancionServicioImp implements ICancionServicio {
         }
         /*Objeto que debe borrarse cuando se implementen las excepciones.
          */
-        Cancion c = new Cancion();
+        Disco c = new Disco();
         /**/
         return c;
     }
 
     /**
-     * Metodo que hace una busqueda de todas las canciones en la base de datos
+     * Metodo que hace una busqueda de todos los discos en la base de datos
      *
      * @return
      */
     @Override
-    public List<Cancion> buscarTodo() {
+    public List<Disco> buscarTodo() {
         return this.repositorio.buscarTodo();
     }
 
     /**
-     * Metodo que comprueba si hay una cancion que existe con el mismo nombre
+     * Metodo que comprueba si hay un disco que existe con el mismo nombre
      *
      * @param objeto
      */
     @Override
-    public void registrar(Cancion objeto) {
+    public void registrar(Disco objeto) {
         if (this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1) {
-            System.out.println("Excepcion: Actualmente hay una cancion registrada con ese nombre.");
+            System.out.println("Excepcion: Actualmente hay un disco registrado con ese nombre.");
         } else {
             this.repositorio.registrar(objeto);
         }
@@ -99,18 +98,18 @@ public class CancionServicioImp implements ICancionServicio {
 
     /**
      * Método que comprueba si el id existe y los datos proporcionados (nombre)
-     * no están registrados con otra cancion, si es así, permite modificar la
-     * cancion.
+     * no están registrados con otro disco, si es así, permite modificar el
+     * disco.
      *
      * @param objeto
      */
     @Override
-    public void actualizar(Cancion objeto) {
+    public void actualizar(Disco objeto) {
         if ((objeto.getId() != null)) {
             if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
                 if ((!objeto.getNombre().equals(this.repositorio.buscarPorId(objeto.getId()).getNombre()))) {
                     if (this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1) {
-                        System.out.println("Excepcion: Actualmente, hay una cancion registrada con este nombre.");
+                        System.out.println("Excepcion: Actualmente, hay un disco registrado con este nombre.");
                     } else {
                         this.repositorio.actualizar(objeto);
                     }
@@ -127,7 +126,7 @@ public class CancionServicioImp implements ICancionServicio {
 
     /**
      * Método que comprueba si el id ingresado existe, si es así, procede a
-     * eliminar la cancion de dicho id.
+     * eliminar el disco de dicho id.
      *
      * @param id
      */
@@ -142,7 +141,7 @@ public class CancionServicioImp implements ICancionServicio {
 
     /**
      * Método que comprueba si el id ingresado existe, si es así, procede a
-     * eliminar la cancion de dicho id.
+     * eliminar el disco de dicho id.
      *
      * @param id
      */

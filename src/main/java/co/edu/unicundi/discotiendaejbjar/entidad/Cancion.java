@@ -16,7 +16,6 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -44,13 +43,13 @@ import javax.validation.constraints.Size;
 })
 //Anotación para queries SQL's
 @NamedNativeQueries({
-     //Registrar cliente.
+     //Registrar cancion.
     @NamedNativeQuery(name = "Cancion.registrar", query = "INSERT INTO canciones (nombre, duracion, precio) VALUES (?, ?, ?)"),
-    //Validar la existencia del cliente en la BD por id.
+    //Validar la existencia del canciones en la BD por id.
     @NamedNativeQuery(name = "Cancion.validarExistenciaPorId", query = "SELECT COUNT(*) FROM canciones WHERE id = ?") ,
-    //Validar la existencia del cliente en la BD por nombre.
+    //Validar la existencia del canciones en la BD por nombre.
     @NamedNativeQuery(name = "Cancion.validarExistenciaPorNombre", query = "SELECT COUNT(*) FROM canciones WHERE nombre = ?") ,
-    //Validar la existencia del cliente en la BD por correo.
+    //Validar la existencia del canciones en la BD.
     @NamedNativeQuery(name = "Cancion.eliminarPorIdSQL", query = "DELETE FROM canciones WHERE id = ?") 
 })
  
@@ -80,7 +79,7 @@ public class Cancion implements Serializable{
     private String duracion;
     
      /**
-     * Almacena la duracion de la cancion
+     * Almacena el precio de la cancion
      */
     @NotNull(message = "Debe ingresar minimo un precio.")
     @Column(name = "precio", nullable = false, length = 25)
@@ -114,7 +113,7 @@ public class Cancion implements Serializable{
         this.id = id;
     }
 
-        public String getDuracion() {
+    public String getDuracion() {
         return duracion;
     }
 

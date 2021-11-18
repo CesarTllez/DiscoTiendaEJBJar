@@ -5,7 +5,7 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
-import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
+import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
 import javax.ejb.Local;
 
 /**
@@ -18,14 +18,13 @@ import javax.ejb.Local;
  * @author Diego Cobos
  */
 @Local
-public interface ICancionServicio extends ICRUDServicio<Cancion, Integer> {
+public interface IDiscoServicio extends ICRUDServicio<Disco, Integer> {
 
     /**
-     * Método que permite buscar a una cancion por nombre.
+     * Método que permite buscar un disco por nombre.
      *
      * @param nombre
      * @return
      */
-    public Cancion buscarPorNombre(String nombre);
-
+    public Disco buscarPorNombre(String nombre);
 }
