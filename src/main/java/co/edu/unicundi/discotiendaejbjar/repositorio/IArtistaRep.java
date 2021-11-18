@@ -5,29 +5,29 @@
  */
 package co.edu.unicundi.discotiendaejbjar.repositorio;
 
-import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
+import co.edu.unicundi.discotiendaejbjar.entidad.Artista;
 import javax.ejb.Local;
 
 /**
  * Interfaz que hereda de "ICRUDServicio". Contiene todos los métodos
- * de dicha interfaz y dos propios para validar la existencia del tol por id y nombre.
+ * de dicha interfaz y dos propios para validar la existencia del artista por id y nombre.
  * @author César Rodríguez
  * @author Eison Morales
  * @author Juan Páez
  * @author Diego Cobos
  */
 @Local
-public interface IRolRep extends ICRUDRep<Rol, Integer>{
+public interface IArtistaRep extends ICRUDRep<Artista, Integer>{
     
     /**
-     * Método que permite validar con el id si un rol existe en la base de datos.
+     * Método que permite validar con el id si un artista existe en la base de datos.
      * @param id
      * @return existencia
      */
     public Long validarExistenciaPorId(Integer id);
     
     /**
-     * Método que permite validar con el nombre si un rol existe en la base de datos.
+     * Método que permite validar con el nombre si un artista existe en la base de datos.
      * @param nombre
      * @return existencia
      */

@@ -5,9 +5,9 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
-import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
-import co.edu.unicundi.discotiendaejbjar.repositorio.IRolRep;
-import co.edu.unicundi.discotiendaejbjar.servicio.IRolServicio;
+import co.edu.unicundi.discotiendaejbjar.entidad.Administrador;
+import co.edu.unicundi.discotiendaejbjar.repositorio.IAdministradorRep;
+import co.edu.unicundi.discotiendaejbjar.servicio.IAdministradorServicio;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -21,70 +21,84 @@ import javax.ejb.Stateless;
  * @author Diego Cobos
  */
 @Stateless
-public class RolServicioImp implements IRolServicio {
+public class AdministradorServicioImp implements IAdministradorServicio{
     
     /**
      * Permite acceder a los métodos que operan la base de datos.
      */
     @EJB
-    private IRolRep repositorio;
+    private IAdministradorRep repositorio;
 
     /**
-     * Método que comprueba si el id existe, si es así, busca el rol
+     * Método que comprueba si el correo existe, si es así, busca al administrador
+     * con dicho correo.
+     * @param correo
+     * @return 
+     */
+    @Override
+    public Administrador buscarPorCorreo(String correo) {
+        if(this.repositorio.validarExistenciaPorCorreo(correo) == 1){
+            return this.repositorio.buscarPorCorreo(correo);
+        }else{
+             System.out.println("Excepcion: Ese correo no existe en la base de datos.");
+        }
+        /*Objeto que debe borrarse cuando se implementen las excepciones.
+        */Administrador a = new Administrador();
+        /**/return a;
+        /*---------------------------------------------------------*/
+    }
+
+    /**
+     * Método que comprueba si el id existe, si es así, busca al administrador
      * con dicho id.
      * @param id
      * @return 
      */
     @Override
-    public Rol buscarPorId(Integer id) {
+    public Administrador buscarPorId(Integer id) {
         if(this.repositorio.validarExistenciaPorId(id) == 1){
             return this.repositorio.buscarPorId(id);
         }else{
              System.out.println("Excepcion: Ese id no existe en la base de datos.");
         }
         /*Objeto que debe borrarse cuando se implementen las excepciones.
-        */Rol r = new Rol();
-        /**/return r;
+        */Administrador a = new Administrador();
+        /**/return a;
         /*---------------------------------------------------------*/
     }
 
     /**
-     * Método que busca a todos los roles.
+     * Método que busca a todos los administradores.
      * @return 
      */
     @Override
-    public List<Rol> buscarTodo() {
+    public List<Administrador> buscarTodo() {
         return this.repositorio.buscarTodo();
     }
 
     /**
-     * Método que comprueba si el nombre no están registrado con 
-     * otro rol, si es así, permite efectur el registro.
+     * Método que comprueba si el correo proporcionado no 
+     * está registrado con otro usuario, si es así, permite efectur el registro.
      * @param objeto 
      */
     @Override
-    public void registrar(Rol objeto) {
-        if(this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1){
-                System.out.println("Excepcion: Actualmente hay un rol registrado con ese nombre.");
+    public void registrar(Administrador objeto) {
+        if(this.repositorio.validarExistenciaPorCorreo(objeto.getCorreo()) == 1){
+                System.out.println("Excepcion: Actualmente hay un usuario registrado con ese correo.");
             }else{
                 this.repositorio.registrar(objeto);
             }
     }
 
     /**
-     * Método que comprueba si el id existe y el nombre no 
-     * está registrado con otro rol, si es así, permite modificar el rol.
+     * Método que comprueba si el id existe, si es así, permite modificar el administrador.
      * @param objeto 
      */
     @Override
-    public void actualizar(Rol objeto) {
+    public void actualizar(Administrador objeto) {
         if((objeto.getId() != null)){
             if(this.repositorio.validarExistenciaPorId(objeto.getId()) == 1){
-                if((!objeto.getNombre().equals(this.repositorio.buscarPorId(objeto.getId()).getNombre()))){
-                    this.repositorio.actualizar(objeto);
-                }else{
-                    System.out.println("Excepcion: No ingreso un nombre diferente.");
-                }
+                this.repositorio.actualizar(objeto);
             }else{
                 System.out.println("Excepcion: No existe ese id en la base de datos.");
             }
@@ -95,7 +109,7 @@ public class RolServicioImp implements IRolServicio {
 
     /**
      * Método que comprueba si el id ingresado existe, si es así, procede
-     * a eliminar el rol por dicho id.
+     * a eliminar al administrador por dicho id.
      * @param id 
      */
     @Override
@@ -109,7 +123,7 @@ public class RolServicioImp implements IRolServicio {
 
     /**
      * Método que comprueba si el id ingresado existe, si es así, procede
-     * a eliminar el cliente por dicho id.
+     * a eliminar al administrador por dicho id.
      * @param id 
      */
     @Override

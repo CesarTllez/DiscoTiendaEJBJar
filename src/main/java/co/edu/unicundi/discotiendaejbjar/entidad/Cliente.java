@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
@@ -47,7 +49,7 @@ import javax.validation.constraints.Size;
 //Anotación para queries SQL's
 @NamedNativeQueries({
     //Registrar cliente.
-    @NamedNativeQuery(name = "Cliente.registrar", query = "INSERT INTO clientes (cedula, nombres, apellidos, correo, contrasena, fecha_nacimiento) VALUES (?, ?, ?, ?, ?, ?)"),
+    @NamedNativeQuery(name = "Cliente.registrar", query = "INSERT INTO clientes (cedula, nombres, apellidos, correo, contrasena, fecha_nacimiento, id_rol) VALUES (?, ?, ?, ?, ?, ?, ?)"),
     //Validar la existencia del cliente en la BD por id.
     @NamedNativeQuery(name = "Cliente.validarExistenciaPorId", query = "SELECT COUNT(*) FROM clientes WHERE id = ?") ,
     //Validar la existencia del cliente en la BD por cédula.
@@ -113,7 +115,12 @@ public class Cliente implements Serializable{
     @Column(name = "fecha_nacimiento", nullable = false)
     private String fechaNacimiento;
     
-    /*Rol*/
+    /**
+     * Relación muchos a uno con rol.
+     */
+    @ManyToOne()
+    @JoinColumn(name = "id_rol", nullable = false)
+    private Rol rol;
 
     /**
      * Contructor pot defecto de la clase.
@@ -123,20 +130,24 @@ public class Cliente implements Serializable{
 
     /**
      * Constructor en donde se inicializan los atributos de la clase.
+     * @param id
      * @param cedula
      * @param nombres
      * @param apellidos
      * @param correo
      * @param contrasena
-     * @param fechaNacimiento 
+     * @param fechaNacimiento
+     * @param rol 
      */
-    public Cliente(String cedula, String nombres, String apellidos, String correo, String contrasena, String fechaNacimiento) {
+    public Cliente(Integer id, String cedula, String nombres, String apellidos, String correo, String contrasena, String fechaNacimiento, Rol rol) {
+        this.id = id;
         this.cedula = cedula;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.correo = correo;
         this.contrasena = contrasena;
         this.fechaNacimiento = fechaNacimiento;
+        this.rol = rol;
     }
 
     public Integer getId() {
@@ -193,6 +204,14 @@ public class Cliente implements Serializable{
 
     public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
     
 }

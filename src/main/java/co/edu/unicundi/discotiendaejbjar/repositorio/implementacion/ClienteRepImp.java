@@ -86,6 +86,7 @@ public class ClienteRepImp implements IClienteRep{
                 .setParameter( 4, objeto.getCorreo())
                 .setParameter( 5, objeto.getContrasena())
                 .setParameter( 6, objeto.getFechaNacimiento())
+                .setParameter( 7, objeto.getRol().getId())
                 .executeUpdate();
     }
 
