@@ -6,8 +6,11 @@
 package co.edu.unicundi.discotiendaejbjar.entidad;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +18,7 @@ import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -66,6 +70,12 @@ public class Rol  implements Serializable{
     @Size(min = 7, max = 13, message = "Longitud requerida: Minimo 7 - Maximo 13 caracteres")
     @Column(name = "nombre", nullable = false, length = 13, unique = true)
     private String nombre;
+    
+    /**
+     * Relación uno a muchos con cliente.
+     */
+    @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Cliente> cliente;
 
     /**
      * Contructor pot defecto de la clase.

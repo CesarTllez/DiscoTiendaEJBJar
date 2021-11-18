@@ -6,6 +6,7 @@
 package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Cliente;
+import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IClienteRep;
 import co.edu.unicundi.discotiendaejbjar.servicio.IClienteServicio;
 import java.util.List;
@@ -112,6 +113,9 @@ public class ClienteServicioImp implements IClienteServicio{
                 if(this.repositorio.validarExistenciaPorCedula(objeto.getCedula()) == 1){
                     System.out.println("Excepcion: Actualmente hay un usuario registrado con esa cedula.");
                 }else{
+                    Rol rol = new Rol();
+                    rol.setId(2);
+                    objeto.setRol(rol);
                     this.repositorio.registrar(objeto);
                 }
             }
