@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -52,7 +53,7 @@ import javax.validation.constraints.Size;
 //Anotación para queries SQL's
 @NamedNativeQueries({
     //Registrar cancion.
-    @NamedNativeQuery(name = "Disco.registrar", query = "INSERT INTO discos (nombre, precio, numCanciones, anio) VALUES (?, ?, ?, ?)"),
+    @NamedNativeQuery(name = "Disco.registrar", query = "INSERT INTO discos (nombre, precio, numCanciones, anio, id_artista) VALUES (?, ?, ?, ?, ?)"),
     //Validar la existencia del canciones en la BD por id.
     @NamedNativeQuery(name = "Disco.validarExistenciaPorId", query = "SELECT COUNT(*) FROM discos WHERE id = ?"),
     //Validar la existencia del canciones en la BD por nombre.
@@ -114,6 +115,12 @@ public class Disco implements Serializable {
      */
     @OneToMany(mappedBy = "disco", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Cancion> cancion;
+    
+    /**
+     * Atributo volàtil que almacena el id del artista.
+     */
+    @Transient
+    private Integer idArtista;
     
     /**
      * Contructor pot defecto de la clase.
@@ -186,6 +193,14 @@ public class Disco implements Serializable {
 
     public void setArtista(Artista artista) {
         this.artista = artista;
+    }
+
+    public Integer getIdArtista() {
+        return idArtista;
+    }
+
+    public void setIdArtista(Integer idArtista) {
+        this.idArtista = idArtista;
     }
     
 }

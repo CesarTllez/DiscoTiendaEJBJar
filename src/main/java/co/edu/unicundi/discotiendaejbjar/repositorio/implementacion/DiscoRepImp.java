@@ -108,6 +108,7 @@ public class DiscoRepImp implements IDiscoRep {
                 .setParameter(2, objeto.getPrecio())
                 .setParameter(3, objeto.getNumCanciones())
                 .setParameter(4, objeto.getAnio())
+                .setParameter(5, objeto.getArtista().getId())
                 .executeUpdate();
     }
 

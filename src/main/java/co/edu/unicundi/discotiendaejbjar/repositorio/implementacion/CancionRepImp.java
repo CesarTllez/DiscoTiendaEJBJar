@@ -107,6 +107,7 @@ public class CancionRepImp implements ICancionRep {
                 .setParameter(1, objeto.getNombre())
                 .setParameter(2, objeto.getDuracion())
                 .setParameter(3, objeto.getPrecio())
+                .setParameter(4, objeto.getDisco().getId())
                 .executeUpdate();
     }
 

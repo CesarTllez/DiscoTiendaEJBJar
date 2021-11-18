@@ -6,6 +6,7 @@
 package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
+import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ICancionRep;
 
 import co.edu.unicundi.discotiendaejbjar.servicio.ICancionServicio;
@@ -93,6 +94,9 @@ public class CancionServicioImp implements ICancionServicio {
         if (this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1) {
             System.out.println("Excepcion: Actualmente hay una cancion registrada con ese nombre.");
         } else {
+            Disco disco = new Disco();
+            disco.setId(objeto.getIdDisco());
+            objeto.setDisco(disco);
             this.repositorio.registrar(objeto);
         }
     }
