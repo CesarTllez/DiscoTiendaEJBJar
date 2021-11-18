@@ -6,8 +6,10 @@
 package co.edu.unicundi.discotiendaejbjar.entidad;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +17,7 @@ import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -67,7 +70,11 @@ public class Artista implements Serializable {
     @Column(name = "nombre", nullable = false, length = 25)
     private String nombre;
     
-    /*disco*/
+    /**
+     * Relación uno a muchos con disco.
+     */
+    @OneToMany(mappedBy = "artista", fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<Disco> disco;
 
     /**
      * Contructor pot defecto de la clase.

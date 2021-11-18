@@ -13,6 +13,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
@@ -99,6 +101,13 @@ public class Disco implements Serializable {
     @Size(min = 2, max = 4, message = "Longitud requerida: Minimo 3 - Maximo 25 caracteres")
     @Column(name = "anio", nullable = false, length = 25)
     private String anio;
+    
+    /**
+     * Relación muchos a uno con artista.
+     */
+    @ManyToOne()
+    @JoinColumn(name = "id_artista", nullable = false)
+    private Artista artista;
 
     /**
      * Relación uno a muchos con cliente.
@@ -106,16 +115,29 @@ public class Disco implements Serializable {
     @OneToMany(mappedBy = "disco", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Cancion> cancion;
     
+    /**
+     * Contructor pot defecto de la clase.
+     */
     public Disco() {
 
     }
 
-    public Disco(Integer id, String nombre, double precio, int numCanciones, String anio) {
+    /**
+     * Constructor en donde se inicializan los atributos de la clase.
+     * @param id
+     * @param nombre
+     * @param precio
+     * @param numCanciones
+     * @param anio
+     * @param artista
+     */
+    public Disco(Integer id, String nombre, double precio, Integer numCanciones, String anio, Artista artista) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.numCanciones = numCanciones;
         this.anio = anio;
+        this.artista = artista;
     }
 
     public Integer getId() {
@@ -158,4 +180,12 @@ public class Disco implements Serializable {
         this.anio = anio;
     }
 
+    public Artista getArtista() {
+        return artista;
+    }
+
+    public void setArtista(Artista artista) {
+        this.artista = artista;
+    }
+    
 }
