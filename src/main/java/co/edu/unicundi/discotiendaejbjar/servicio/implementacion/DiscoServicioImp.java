@@ -107,15 +107,7 @@ public class DiscoServicioImp implements IDiscoServicio {
     public void actualizar(Disco objeto) {
         if ((objeto.getId() != null)) {
             if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
-                if ((!objeto.getNombre().equals(this.repositorio.buscarPorId(objeto.getId()).getNombre()))) {
-                    if (this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1) {
-                        System.out.println("Excepcion: Actualmente, hay un disco registrado con este nombre.");
-                    } else {
-                        this.repositorio.actualizar(objeto);
-                    }
-                } else {
-                    System.out.println("Excepcion: No ingreso un nombre diferente.");
-                }
+                this.repositorio.actualizar(objeto);
             } else {
                 System.out.println("Excepcion: No existe ese id en la base de datos.");
             }

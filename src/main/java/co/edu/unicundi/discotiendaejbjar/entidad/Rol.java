@@ -7,7 +7,6 @@ package co.edu.unicundi.discotiendaejbjar.entidad;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -74,7 +73,7 @@ public class Rol  implements Serializable{
     /**
      * Relación uno a muchos con cliente.
      */
-    @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Cliente> cliente;
 
     /**

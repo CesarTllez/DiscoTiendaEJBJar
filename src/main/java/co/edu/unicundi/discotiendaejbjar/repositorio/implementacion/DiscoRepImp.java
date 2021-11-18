@@ -120,6 +120,7 @@ public class DiscoRepImp implements IDiscoRep {
     @Override
     public void actualizar(Disco objeto) {
         this.manager.createNamedQuery("Cancion.actualizar")
+                .setParameter("id", objeto.getId())
                 .setParameter("nombre", objeto.getNombre())
                 .setParameter("precio", objeto.getPrecio())
                 .setParameter("numCanciones", objeto.getNumCanciones())

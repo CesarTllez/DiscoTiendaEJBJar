@@ -119,6 +119,7 @@ public class CancionRepImp implements ICancionRep {
     @Override
     public void actualizar(Cancion objeto) {
         this.manager.createNamedQuery("Cancion.actualizar")
+                .setParameter("id", objeto.getId())
                 .setParameter("nombre", objeto.getNombre())
                 .setParameter("duracion", objeto.getDuracion())
                 .setParameter("precio", objeto.getPrecio())

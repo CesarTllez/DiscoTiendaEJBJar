@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
@@ -84,6 +86,13 @@ public class Cancion implements Serializable{
     @NotNull(message = "Debe ingresar minimo un precio.")
     @Column(name = "precio", nullable = false, length = 25)
     private double precio;
+    
+    /**
+     * Relación muchos a uno con rol.
+     */
+    @ManyToOne
+    @JoinColumn(name = "id_disco", nullable = false)
+    private Disco disco;
 
      /**
      * Contructor pot defecto de la clase.
@@ -91,18 +100,21 @@ public class Cancion implements Serializable{
     public Cancion(){
     
     }
+
     /**
      * Constructor en donde se inicializan los atributos de la clase.
      * @param id
      * @param nombre
      * @param duracion
-     * @param precio 
+     * @param precio
+     * @param disco 
      */
-    public Cancion(Integer id,  String duracion, String nombre, double precio) {
+    public Cancion(Integer id, String nombre, String duracion, double precio, Disco disco) {
         this.id = id;
-        this.duracion = duracion;
         this.nombre = nombre;
+        this.duracion = duracion;
         this.precio = precio;
+        this.disco = disco;
     }
 
     public Integer getId() {
@@ -135,15 +147,13 @@ public class Cancion implements Serializable{
     public void setPrecio(double precio) {
         this.precio = precio;
     }
-    
-   
-    /**
-     * id
-     * nombre
-     * duracion
-     * precio
-     */
-    
-    /*disco*/
+
+    public Disco getDisco() {
+        return disco;
+    }
+
+    public void setDisco(Disco disco) {
+        this.disco = disco;
+    }
     
 }
