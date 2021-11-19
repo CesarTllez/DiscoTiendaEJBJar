@@ -22,9 +22,9 @@ public interface IDiscoServicio extends ICRUDServicio<Disco, Integer> {
 
     /**
      * Método que permite buscar un disco por nombre.
-     *
      * @param nombre
      * @return
      */
     public Disco buscarPorNombre(String nombre);
+    
 }

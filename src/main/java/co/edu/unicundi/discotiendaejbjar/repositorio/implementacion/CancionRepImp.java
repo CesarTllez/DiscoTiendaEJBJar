@@ -54,6 +54,16 @@ public class CancionRepImp implements ICancionRep {
         TypedQuery<Cancion> query = this.manager.createNamedQuery("Cancion.buscarPorNombre", Cancion.class);
         return query.setParameter("nombre", nombre).getSingleResult();
     }
+    
+    /**
+     * Metodo que permite buscar todas las canciones por id del disco en la base de datos.
+     * @return 
+     */
+    @Override
+    public List<Cancion> buscarTodosPorIdDisco(Integer idDisco) {
+       TypedQuery<Cancion> query = this.manager.createNamedQuery("Cancion.buscarTodosPorIdDisco", Cancion.class);
+       return query.setParameter("idDisco", idDisco).getResultList();
+    }
 
     /**
      * Metodo que permite validar la existencia de la cancion por medio de la id

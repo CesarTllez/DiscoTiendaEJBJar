@@ -6,6 +6,7 @@
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -27,5 +28,11 @@ public interface ICancionServicio extends ICRUDServicio<Cancion, Integer> {
      * @return
      */
     public Cancion buscarPorNombre(String nombre);
+    
+    /**
+     * Método que permite buscar todas las canciones por id del disco.
+     * @return 
+     */
+    public List<Cancion> buscarTodosPorIdDisco(Integer idDisco);
 
 }

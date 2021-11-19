@@ -16,7 +16,6 @@ import javax.ejb.Stateless;
 /**
  * Clase que permite acceder a los métodos que operan la base de datos y valida
  * los datos que proporciona el api.
- *
  * @author César Rodríguez
  * @author Eison Morales
  * @author Juan Páez
@@ -34,7 +33,6 @@ public class DiscoServicioImp implements IDiscoServicio {
     /**
      * Método que comprueba si el nombre existe, si es así, busca el disco con
      * dicho nombre.
-     *
      * @param nombre
      * @return
      */
@@ -55,7 +53,6 @@ public class DiscoServicioImp implements IDiscoServicio {
     /**
      * Método que comprueba si el id existe, si es así, busca el disco con dicho
      * id.
-     *
      * @param id
      * @return
      */
@@ -74,8 +71,7 @@ public class DiscoServicioImp implements IDiscoServicio {
     }
 
     /**
-     * Metodo que hace una busqueda de todos los discos en la base de datos
-     *
+     * Metodo que hace una busqueda de todos los discos en la base de datos.
      * @return
      */
     @Override
@@ -84,8 +80,7 @@ public class DiscoServicioImp implements IDiscoServicio {
     }
 
     /**
-     * Metodo que comprueba si hay un disco que existe con el mismo nombre
-     *
+     * Metodo que comprueba si hay un disco que existe con el mismo nombre.
      * @param objeto
      */
     @Override
@@ -104,7 +99,6 @@ public class DiscoServicioImp implements IDiscoServicio {
      * Método que comprueba si el id existe y los datos proporcionados (nombre)
      * no están registrados con otro disco, si es así, permite modificar el
      * disco.
-     *
      * @param objeto
      */
     @Override
@@ -123,7 +117,6 @@ public class DiscoServicioImp implements IDiscoServicio {
     /**
      * Método que comprueba si el id ingresado existe, si es así, procede a
      * eliminar el disco de dicho id.
-     *
      * @param id
      */
     @Override
@@ -138,7 +131,6 @@ public class DiscoServicioImp implements IDiscoServicio {
     /**
      * Método que comprueba si el id ingresado existe, si es así, procede a
      * eliminar el disco de dicho id.
-     *
      * @param id
      */
     @Override

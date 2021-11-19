@@ -32,8 +32,7 @@ public class DiscoRepImp implements IDiscoRep {
     private EntityManager manager;
 
     /**
-     * Metodo que permite buscar un disco por medio del nombre
-     *
+     * Metodo que permite buscar un disco por medio del nombre.
      * @param nombre
      * @return
      */
@@ -45,8 +44,7 @@ public class DiscoRepImp implements IDiscoRep {
 
     /**
      * Metodo que permite validar la existencia del disco por medio de la id en
-     * la Bd
-     *
+     * la Base de datos.
      * @param id
      * @return
      */
@@ -60,8 +58,7 @@ public class DiscoRepImp implements IDiscoRep {
 
     /**
      * Metodo que permite validar la existencia del disco por medio del nombre
-     * en la Bd
-     *
+     * en la Base de datos.
      * @param nombre
      * @return
      */
@@ -74,8 +71,7 @@ public class DiscoRepImp implements IDiscoRep {
     }
 
     /**
-     * Metodo que permite buscar un disco por medio de la id
-     *
+     * Metodo que permite buscar un disco por medio de la id.
      * @param id
      * @return
      */
@@ -86,8 +82,7 @@ public class DiscoRepImp implements IDiscoRep {
     }
 
     /**
-     * Metodo que permite buscar todo el disco de la base de datos
-     *
+     * Metodo que permite buscar todos los discos en la base de datos.
      * @return
      */
     @Override
@@ -97,8 +92,7 @@ public class DiscoRepImp implements IDiscoRep {
     }
 
     /**
-     * Metodo que permite registrar el disco en la base de datos
-     *
+     * Metodo que permite registrar el disco en la base de datos.
      * @param objeto
      */
     @Override
@@ -114,8 +108,7 @@ public class DiscoRepImp implements IDiscoRep {
 
     /**
      * Metodo que permite actualizar la información del disco y lo guarda en la
-     * base de datos
-     *
+     * base de datos.
      * @param objeto
      */
     @Override
@@ -131,7 +124,6 @@ public class DiscoRepImp implements IDiscoRep {
 
     /**
      * Método que permite eliminar un disco por JPQL de la base de datos.
-     *
      * @param id
      */
     @Override
@@ -143,7 +135,6 @@ public class DiscoRepImp implements IDiscoRep {
 
     /**
      * Método que permite eliminar un disco por SQL de la base de datos.
-     *
      * @param id
      */
     @Override

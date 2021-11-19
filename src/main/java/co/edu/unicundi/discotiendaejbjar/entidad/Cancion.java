@@ -39,6 +39,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Cancion.buscarPorId", query = "SELECT c FROM Cancion c WHERE c.id = :id"),
     //Buscar canciones por nombre.
     @NamedQuery(name = "Cancion.buscarPorNombre", query = "SELECT c FROM Cancion c WHERE c.nombre = :nombre"),
+    //Buscar canciones por disco.
+    @NamedQuery(name = "Cancion.buscarTodosPorIdDisco", query = "SELECT c.id, c.nombre, c.duracion, c.precio FROM Cancion c WHERE c.disco.id = :idDisco"),
     //Actualizar canciones por id.
     @NamedQuery(name = "Cancion.actualizar", query = "UPDATE Cancion c SET c.nombre = :nombre, c.duracion = :duracion, c.precio = :precio  WHERE c.id = :id"),
     //Eliminar cancion por id.
@@ -48,11 +50,11 @@ import javax.validation.constraints.Size;
 @NamedNativeQueries({
      //Registrar cancion.
     @NamedNativeQuery(name = "Cancion.registrar", query = "INSERT INTO canciones (nombre, duracion, precio, id_disco) VALUES (?, ?, ?, ?)"),
-    //Validar la existencia del canciones en la BD por id.
+    //Validar la existencia de la canción en la BD por id.
     @NamedNativeQuery(name = "Cancion.validarExistenciaPorId", query = "SELECT COUNT(*) FROM canciones WHERE id = ?") ,
-    //Validar la existencia del canciones en la BD por nombre.
+    //Validar la existencia de la canción en la BD por nombre.
     @NamedNativeQuery(name = "Cancion.validarExistenciaPorNombre", query = "SELECT COUNT(*) FROM canciones WHERE nombre = ?") ,
-    //Validar la existencia del canciones en la BD.
+    //Validar la existencia de la canción en la BD.
     @NamedNativeQuery(name = "Cancion.eliminarPorIdSQL", query = "DELETE FROM canciones WHERE id = ?") 
 })
  

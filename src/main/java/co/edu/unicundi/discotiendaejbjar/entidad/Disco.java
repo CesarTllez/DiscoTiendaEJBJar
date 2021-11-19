@@ -39,26 +39,26 @@ import javax.validation.constraints.Size;
 @Table(name = "discos")
 //Anotación para queries JPQL's.
 @NamedQueries({
-    //Buscar todos los canciones.
-    @NamedQuery(name = "Disco.buscarTodos", query = "SELECT c FROM Disco c"),
-    //Buscar canciones por id.
-    @NamedQuery(name = "Disco.buscarPorId", query = "SELECT c FROM Disco c WHERE c.id = :id"),
-    //Buscar canciones por nombre.
-    @NamedQuery(name = "Disco.buscarPorNombre", query = "SELECT c FROM Disco c WHERE c.nombre = :nombre"),
-    //Actualizar canciones por id.
-    @NamedQuery(name = "Disco.actualizar", query = "UPDATE Disco c SET c.nombre = :nombre, c.precio = :precio, c.numCanciones = :numCanciones, c.anio = :anio WHERE c.id = :id"),
-    //Eliminar cancion por id.
-    @NamedQuery(name = "Disco.eliminarPorIdJPQL", query = "DELETE FROM Disco c WHERE c.id = :id")
+    //Buscar todos los discos.
+    @NamedQuery(name = "Disco.buscarTodos", query = "SELECT d FROM Disco d"),
+    //Buscar discos por id.
+    @NamedQuery(name = "Disco.buscarPorId", query = "SELECT d FROM Disco d WHERE d.id = :id"),
+    //Buscar discos por nombre.
+    @NamedQuery(name = "Disco.buscarPorNombre", query = "SELECT d FROM Disco d WHERE d.nombre = :nombre"),
+    //Actualizar discos por id.
+    @NamedQuery(name = "Disco.actualizar", query = "UPDATE Disco d SET d.nombre = :nombre, d.precio = :precio, d.numCanciones = :numCanciones, d.anio = :anio WHERE d.id = :id"),
+    //Eliminar disco por id.
+    @NamedQuery(name = "Disco.eliminarPorIdJPQL", query = "DELETE FROM Disco d WHERE d.id = :id")
 })
 //Anotación para queries SQL's
 @NamedNativeQueries({
-    //Registrar cancion.
+    //Registrar discos.
     @NamedNativeQuery(name = "Disco.registrar", query = "INSERT INTO discos (nombre, precio, numCanciones, anio, id_artista) VALUES (?, ?, ?, ?, ?)"),
-    //Validar la existencia del canciones en la BD por id.
+    //Validar la existencia del disco en la BD por id.
     @NamedNativeQuery(name = "Disco.validarExistenciaPorId", query = "SELECT COUNT(*) FROM discos WHERE id = ?"),
-    //Validar la existencia del canciones en la BD por nombre.
+    //Validar la existencia del disco en la BD por nombre.
     @NamedNativeQuery(name = "Disco.validarExistenciaPorNombre", query = "SELECT COUNT(*) FROM discos WHERE nombre = ?"),
-    //Validar la existencia del canciones en la BD.
+    //Validar la existencia del disco en la BD.
     @NamedNativeQuery(name = "Disco.eliminarPorIdSQL", query = "DELETE FROM discos WHERE id = ?")
 })
 

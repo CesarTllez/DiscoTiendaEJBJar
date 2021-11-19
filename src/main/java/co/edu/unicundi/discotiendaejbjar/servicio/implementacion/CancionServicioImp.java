@@ -73,6 +73,15 @@ public class CancionServicioImp implements ICancionServicio {
         /**/
         return c;
     }
+    
+    /**
+     * Metodo que hace una busqueda de todas las canciones por id del disco en la base de datos.
+     * @return 
+     */
+    @Override
+    public List<Cancion> buscarTodosPorIdDisco(Integer idDisco) {
+        return this.repositorio.buscarTodosPorIdDisco(idDisco);
+    }
 
     /**
      * Metodo que hace una busqueda de todas las canciones en la base de datos
