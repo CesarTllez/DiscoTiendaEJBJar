@@ -8,6 +8,7 @@ package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ICancionRep;
+import co.edu.unicundi.discotiendaejbjar.repositorio.IDiscoRep;
 
 import co.edu.unicundi.discotiendaejbjar.servicio.ICancionServicio;
 import java.util.List;
@@ -31,6 +32,12 @@ public class CancionServicioImp implements ICancionServicio {
      */
     @EJB
     private ICancionRep repositorio;
+    
+    /**
+     * Permite acceder a los métodos que operan la base de datos.
+     */
+    @EJB
+    private IDiscoRep repositorioDisco;
 
     /**
      * Método que comprueba si el nombre existe, si es así, busca la cancion con
@@ -103,10 +110,14 @@ public class CancionServicioImp implements ICancionServicio {
         if (this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1) {
             System.out.println("Excepcion: Actualmente hay una cancion registrada con ese nombre.");
         } else {
-            Disco disco = new Disco();
-            disco.setId(objeto.getIdDisco());
-            objeto.setDisco(disco);
-            this.repositorio.registrar(objeto);
+            if(this.repositorioDisco.validarExistenciaPorId(objeto.getIdDisco()) == 1){
+                Disco disco = new Disco();
+                disco.setId(objeto.getIdDisco());
+                objeto.setDisco(disco);
+                this.repositorio.registrar(objeto);
+            }else{
+                System.out.println("Excepcion: El id del disco ingresado no existe en la base de datos.");
+            }
         }
     }
 

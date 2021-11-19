@@ -92,7 +92,7 @@ public class Disco implements Serializable {
     @NotNull(message = "Debe ingresar minimo un numero de canciones.")
     @Min(value = 1, message = "Debe tener como minimo una cancion")
     @Max(value = 1000, message = "maximo son 1000")
-    @Column(name = "numCanciones", nullable = false, length = 25)
+    @Column(name = "num_canciones", nullable = false, length = 25)
     private Integer numCanciones;
 
     /**
