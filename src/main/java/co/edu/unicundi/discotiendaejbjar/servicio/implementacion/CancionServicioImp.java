@@ -7,6 +7,9 @@ package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
+import co.edu.unicundi.discotiendaejbjar.excepciones.BussinessException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ICancionRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IDiscoRep;
 
@@ -14,6 +17,7 @@ import co.edu.unicundi.discotiendaejbjar.servicio.ICancionServicio;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.resource.spi.ResourceAdapterInternalException;
 
 /**
  * Clase que permite acceder a los métodos que operan la base de datos y valida
@@ -47,17 +51,13 @@ public class CancionServicioImp implements ICancionServicio {
      * @return
      */
     @Override
-    public Cancion buscarPorNombre(String nombre) {
+    public Cancion buscarPorNombre(String nombre)throws ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorNombre(nombre) == 1) {
             return this.repositorio.buscarPorNombre(nombre);
         } else {
-            System.out.println("Excepcion: Ese nombre de la cancion no existe en la base de datos.");
+            throw new ResourceNotFoundException("Ese nombre de la cancion no existe en la base de datos."); 
         }
-        /*Objeto que debe borrarse cuando se implementen las excepciones.
-         */
-        Cancion c = new Cancion();
-        /**/
-        return c;
+
     }
 
     /**
@@ -68,17 +68,14 @@ public class CancionServicioImp implements ICancionServicio {
      * @return
      */
     @Override
-    public Cancion buscarPorId(Integer id) {
+    public Cancion buscarPorId(Integer id)throws ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorId(id) == 1) {
             return this.repositorio.buscarPorId(id);
         } else {
-            System.out.println("Excepcion: Ese id no existe en la base de datos.");
+            throw new ResourceNotFoundException("Ese id no existe en la base de datos."); 
+          
         }
-        /*Objeto que debe borrarse cuando se implementen las excepciones.
-         */
-        Cancion c = new Cancion();
-        /**/
-        return c;
+   
     }
     
     /**
@@ -106,9 +103,10 @@ public class CancionServicioImp implements ICancionServicio {
      * @param objeto
      */
     @Override
-    public void registrar(Cancion objeto) {
+    public void registrar(Cancion objeto) throws EntityValidationException, ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1) {
-            System.out.println("Excepcion: Actualmente hay una cancion registrada con ese nombre.");
+            throw new EntityValidationException("Actualmente hay una cancion registrada con ese nombre.");
+         
         } else {
             if(this.repositorioDisco.validarExistenciaPorId(objeto.getIdDisco()) == 1){
                 Disco disco = new Disco();
@@ -116,7 +114,8 @@ public class CancionServicioImp implements ICancionServicio {
                 objeto.setDisco(disco);
                 this.repositorio.registrar(objeto);
             }else{
-                System.out.println("Excepcion: El id del disco ingresado no existe en la base de datos.");
+                throw new ResourceNotFoundException("El id del disco ingresado no existe en la base de datos.");
+                
             }
         }
     }
@@ -129,15 +128,16 @@ public class CancionServicioImp implements ICancionServicio {
      * @param objeto
      */
     @Override
-    public void actualizar(Cancion objeto) {
+    public void actualizar(Cancion objeto)throws ResourceNotFoundException, BussinessException{
         if ((objeto.getId() != null)) {
             if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
                 this.repositorio.actualizar(objeto);
             } else {
-                System.out.println("Excepcion: No existe ese id en la base de datos.");
+                throw new ResourceNotFoundException("No existe ese id en la base de datos.");
+              
             }
         } else {
-            System.out.println("Excepcion: Es necesario ingresar un id.");
+            throw new BussinessException("Es necesario ingresar un id.");
         }
     }
 
@@ -148,11 +148,12 @@ public class CancionServicioImp implements ICancionServicio {
      * @param id
      */
     @Override
-    public void eliminarJPQL(Integer id) {
+    public void eliminarJPQL(Integer id)throws ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorId(id) == 1) {
             this.repositorio.eliminarJPQL(id);
         } else {
-            System.out.println("Excepcion: No existe ese id en la base de datos.");
+            throw new ResourceNotFoundException("No existe ese id en la base de datos.");
+                   
         }
     }
 
@@ -163,11 +164,11 @@ public class CancionServicioImp implements ICancionServicio {
      * @param id
      */
     @Override
-    public void eliminarSQL(Integer id) {
+    public void eliminarSQL(Integer id)throws ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorId(id) == 1) {
             this.repositorio.eliminarSQL(id);
         } else {
-            System.out.println("Excepcion: No existe ese id en la base de datos.");
+            throw new ResourceNotFoundException("No existe ese id en la base de datos.");
         }
     }
 

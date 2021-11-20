@@ -9,6 +9,7 @@ import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
 import co.edu.unicundi.discotiendaejbjar.entidad.Token;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IUsuarioRep;
 import co.edu.unicundi.discotiendaejbjar.servicio.IUsuarioServicio;
@@ -103,7 +104,7 @@ public class UsuarioServicioImp implements IUsuarioServicio{
      * @return 
      */
     @Override
-    public UsuarioDto buscarPorId(Integer id) {
+    public UsuarioDto buscarPorId(Integer id) throws ResourceNotFoundException{
         if(this.repositorio.validarExistenciaPorId(id) == 1){
             UsuarioDto usuarioDto = new UsuarioDto();
             ModelMapper mapper = new ModelMapper();
@@ -112,12 +113,8 @@ public class UsuarioServicioImp implements IUsuarioServicio{
             usuarioDto.setIdRol(this.repositorio.buscarPorId(id).getRol().getId());
             return usuarioDto;
         }else{
-             System.out.println("Excepcion: Ese id no existe en la base de datos.");
+            throw new ResourceNotFoundException("Ese id no existe en la base de datos.");
         }
-        /*Objeto que debe borrarse cuando se implementen las excepciones.
-        */UsuarioDto u = new UsuarioDto();
-        /**/return u;
-        /*---------------------------------------------------------*/
     }
     
     /**
@@ -147,7 +144,7 @@ public class UsuarioServicioImp implements IUsuarioServicio{
      * @return 
      */
     @Override
-    public UsuarioDto buscarPorCorreo(String correo) {
+    public UsuarioDto buscarPorCorreo(String correo)throws ResourceNotFoundException{
         if(this.repositorio.validarExistenciaPorCorreo(correo) == 1){
             UsuarioDto usuarioDto = new UsuarioDto();
             ModelMapper mapper = new ModelMapper();
@@ -156,12 +153,10 @@ public class UsuarioServicioImp implements IUsuarioServicio{
             usuarioDto.setIdRol(this.repositorio.buscarPorCorreo(correo).getRol().getId());
             return usuarioDto;
         }else{
-             System.out.println("Excepcion: Ese correo no existe en la base de datos.");
+            throw new ResourceNotFoundException("Ese correo no existe en la base de datos.");
+
         }
-        /*Objeto que debe borrarse cuando se implementen las excepciones.
-        */UsuarioDto u = new UsuarioDto();
-        /**/return u;
-        /*---------------------------------------------------------*/
+
     }
 
     /**
@@ -172,7 +167,7 @@ public class UsuarioServicioImp implements IUsuarioServicio{
      * @return 
      */
     @Override
-    public UsuarioDto buscarPorCedula(String cedula) {
+    public UsuarioDto buscarPorCedula(String cedula)throws ResourceNotFoundException{
         if(this.repositorio.validarExistenciaPorCedula(cedula) == 1){
             UsuarioDto usuarioDto = new UsuarioDto();
             ModelMapper mapper = new ModelMapper();
@@ -181,12 +176,8 @@ public class UsuarioServicioImp implements IUsuarioServicio{
             usuarioDto.setIdRol(this.repositorio.buscarPorCedula(cedula).getRol().getId());
             return usuarioDto;
         }else{
-             System.out.println("Excepcion: Esa cedula no existe en la base de datos.");
+            throw new ResourceNotFoundException("Esa cedula no existe en la base de datos.");
         }
-        /*Objeto que debe borrarse cuando se implementen las excepciones.
-        */UsuarioDto u = new UsuarioDto();
-        /**/return u;
-        /*---------------------------------------------------------*/
     }
 
     /**
@@ -272,11 +263,11 @@ public class UsuarioServicioImp implements IUsuarioServicio{
      * @param id 
      */
     @Override
-    public void eliminarJPQL(Integer id) {
+    public void eliminarJPQL(Integer id)throws ResourceNotFoundException{
         if(this.repositorio.validarExistenciaPorId(id) == 1){
             this.repositorio.eliminarJPQL(id);
         }else{
-             System.out.println("Excepcion: No existe ese id en la base de datos.");
+          throw new ResourceNotFoundException("No existe ese id en la base de datos.");
         }
     }
 
@@ -286,11 +277,11 @@ public class UsuarioServicioImp implements IUsuarioServicio{
      * @param id 
      */
     @Override
-    public void eliminarSQL(Integer id) {
+    public void eliminarSQL(Integer id)throws ResourceNotFoundException {
         if(this.repositorio.validarExistenciaPorId(id) == 1){
             this.repositorio.eliminarSQL(id);
         }else{
-             System.out.println("Excepcion: No existe ese id en la base de datos.");
+            throw new ResourceNotFoundException("No existe ese id en la base de datos.");
         }
     }
     

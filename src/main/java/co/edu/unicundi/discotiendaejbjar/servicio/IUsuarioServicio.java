@@ -8,6 +8,7 @@ package co.edu.unicundi.discotiendaejbjar.servicio;
 import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Token;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import javax.ejb.Local;
 
 /**
@@ -33,14 +34,14 @@ public interface IUsuarioServicio extends ICRUDServicio<Usuario, Integer, Usuari
      * @param correo
      * @return 
      */
-    public UsuarioDto buscarPorCorreo(String correo);
+    public UsuarioDto buscarPorCorreo(String correo)throws ResourceNotFoundException;
     
     /**
      * Método que permite buscar a un usuario por cédula.
      * @param cedula
      * @return 
      */
-    public UsuarioDto buscarPorCedula(String cedula);
+    public UsuarioDto buscarPorCedula(String cedula)throws ResourceNotFoundException;
     
     /**
      * Método que permite obtener el token a logearse.

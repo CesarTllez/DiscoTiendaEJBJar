@@ -6,6 +6,9 @@
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
+import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -27,12 +30,12 @@ public interface ICancionServicio extends ICRUDServicio<Cancion, Integer, Cancio
      * @param nombre
      * @return
      */
-    public Cancion buscarPorNombre(String nombre);
+    public Cancion buscarPorNombre(String nombre)throws ResourceNotFoundException;
     
     /**
      * Método que permite buscar todas las canciones por id del disco.
      * @return 
      */
-    public List<Cancion> buscarTodosPorIdDisco(Integer idDisco);
+    public List<Cancion> buscarTodosPorIdDisco(Integer idDisco)throws  ResourceNotFoundException;
 
 }

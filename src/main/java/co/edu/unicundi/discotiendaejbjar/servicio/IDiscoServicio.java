@@ -6,6 +6,7 @@
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import javax.ejb.Local;
 
 /**
@@ -25,6 +26,6 @@ public interface IDiscoServicio extends ICRUDServicio<Disco, Integer, Disco> {
      * @param nombre
      * @return
      */
-    public Disco buscarPorNombre(String nombre);
+    public Disco buscarPorNombre(String nombre) throws ResourceNotFoundException;
     
 }

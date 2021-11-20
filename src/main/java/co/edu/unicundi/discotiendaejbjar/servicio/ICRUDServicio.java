@@ -5,6 +5,10 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
+import co.edu.unicundi.discotiendaejbjar.excepciones.BussinessException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import java.util.List;
 
 /**
@@ -22,7 +26,7 @@ public interface ICRUDServicio <OBJETO, ID, OBJETODTO> {
      * @param id
      * @return 
      */
-    public OBJETODTO buscarPorId(ID id);
+    public OBJETODTO buscarPorId(ID id)throws ResourceNotFoundException;
     
     /**
      * Método que permite buscar todo.
@@ -34,24 +38,24 @@ public interface ICRUDServicio <OBJETO, ID, OBJETODTO> {
      * Método que permite registrar.
      * @param objeto 
      */
-    public void registrar(OBJETO objeto);
+    public void registrar(OBJETO objeto)throws ResourceNotFoundException, EntityValidationException, ResourceConflictException;
     
     /**
      * Método que permite actualizar.
      * @param objeto 
      */
-    public void actualizar(OBJETO objeto);
+    public void actualizar(OBJETO objeto)throws BussinessException, ResourceNotFoundException,  EntityValidationException, ResourceConflictException;
     
     /**
      * Método que permite eliminar por JPQL.
      * @param id 
      */
-    public void eliminarJPQL(ID id);
+    public void eliminarJPQL(ID id)throws ResourceNotFoundException;
     
     /**
      * Método que permite eliminar por SQL
      * @param id 
      */
-    public void eliminarSQL(ID id);
+    public void eliminarSQL(ID id)throws ResourceNotFoundException;
     
 }

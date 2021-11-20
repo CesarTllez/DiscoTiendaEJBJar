@@ -6,11 +6,16 @@
 package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Artista;
+import co.edu.unicundi.discotiendaejbjar.excepciones.BussinessException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IArtistaRep;
 import co.edu.unicundi.discotiendaejbjar.servicio.IArtistaServicio;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import org.modelmapper.ValidationException;
 
 /**
  * Clase que permite acceder a los métodos que operan la base de datos y
@@ -36,16 +41,14 @@ public class ArtistaServicioImp implements IArtistaServicio{
      * @return 
      */
     @Override
-    public Artista buscarPorId(Integer id) {
+    public Artista buscarPorId(Integer id)throws ResourceNotFoundException{
         if(this.repositorio.validarExistenciaPorId(id) == 1){
             return this.repositorio.buscarPorId(id);
         }else{
-             System.out.println("Excepcion: Ese id no existe en la base de datos.");
+            throw new ResourceNotFoundException("Ese id no existe en la base de datos.");
+           
         }
-        /*Objeto que debe borrarse cuando se implementen las excepciones.
-        */Artista a = new Artista();
-        /**/return a;
-        /*---------------------------------------------------------*/
+    
     }
 
     /**
@@ -63,9 +66,9 @@ public class ArtistaServicioImp implements IArtistaServicio{
      * @param objeto 
      */
     @Override
-    public void registrar(Artista objeto) {
+    public void registrar(Artista objeto) throws EntityValidationException{
         if(this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1){
-                System.out.println("Excepcion: Actualmente hay un artista registrado con ese nombre.");
+            throw  new EntityValidationException("Actualmente hay un artista registrado con ese nombre.");
             }else{
                 this.repositorio.registrar(objeto);
             }
@@ -77,19 +80,19 @@ public class ArtistaServicioImp implements IArtistaServicio{
      * @param objeto 
      */
     @Override
-    public void actualizar(Artista objeto) {
+    public void actualizar(Artista objeto) throws BussinessException, EntityValidationException, ResourceNotFoundException, ResourceConflictException{
         if((objeto.getId() != null)){
             if(this.repositorio.validarExistenciaPorId(objeto.getId()) == 1){
                 if((!objeto.getNombre().equals(this.repositorio.buscarPorId(objeto.getId()).getNombre()))){
                     this.repositorio.actualizar(objeto);
                 }else{
-                    System.out.println("Excepcion: No ingreso un nombre diferente.");
+                    throw  new ResourceConflictException("No ingreso un nombre diferente.");
                 }
             }else{
-                System.out.println("Excepcion: No existe ese id en la base de datos.");
+                throw  new ResourceNotFoundException("No existe ese id en la base de datos.");
             }
         }else{
-            System.out.println("Excepcion: Es necesario ingresar un id.");
+            throw  new BussinessException("Es necesario ingresar un id.");
         }
     }
 
@@ -99,11 +102,11 @@ public class ArtistaServicioImp implements IArtistaServicio{
      * @param id 
      */
     @Override
-    public void eliminarJPQL(Integer id) {
+    public void eliminarJPQL(Integer id) throws ResourceNotFoundException{
         if(this.repositorio.validarExistenciaPorId(id) == 1){
             this.repositorio.eliminarJPQL(id);
         }else{
-             System.out.println("Excepcion: No existe ese id en la base de datos.");
+            throw new ResourceNotFoundException("Excepcion: No existe ese id en la base de datos.");
         }
     }
 
@@ -113,11 +116,12 @@ public class ArtistaServicioImp implements IArtistaServicio{
      * @param id 
      */
     @Override
-    public void eliminarSQL(Integer id) {
+    public void eliminarSQL(Integer id) throws ResourceNotFoundException{
         if(this.repositorio.validarExistenciaPorId(id) == 1){
             this.repositorio.eliminarSQL(id);
         }else{
-             System.out.println("Excepcion: No existe ese id en la base de datos.");
+            throw new ResourceNotFoundException(" No existe ese id en la base de datos.");
+
         }
     }
     
