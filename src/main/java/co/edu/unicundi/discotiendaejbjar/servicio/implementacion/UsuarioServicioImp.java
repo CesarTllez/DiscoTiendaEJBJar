@@ -7,10 +7,16 @@ package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
 import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
+import co.edu.unicundi.discotiendaejbjar.entidad.Token;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IUsuarioRep;
 import co.edu.unicundi.discotiendaejbjar.servicio.IUsuarioServicio;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.jasypt.util.text.AES256TextEncryptor;
@@ -41,10 +47,32 @@ public class UsuarioServicioImp implements IUsuarioServicio{
      * @return 
      */
     @Override
-    public String login(String apodo, String contrasena) {
-        if(this.repositorio.validarExistenciaPorApodo(apodo) == 1){
-            if(this.repositorio.buscarPorApodo(apodo).getContrasena().equals(contrasena)){
+    public String login(Token datosLogin) {
+        if(this.repositorio.validarExistenciaPorApodo(datosLogin.getApodo()) == 1){
+            if(this.desencriptarContrasena(
+                    this.repositorio.buscarPorApodo(datosLogin.getApodo()).getContrasena())
+                    .equals(datosLogin.getContrasena())){
+                //Llave del token.
+                String llaveToken = "pW8xqK91$nBlOCEPD420876@tczH";
+                //Fecha cuando se crea el token.
+                long fecha = System.currentTimeMillis();
                 
+                //Restringir servicios por roles.
+                Map<String, Object> permisosRol = new HashMap<>();
+                permisosRol.put(
+                        this.repositorio.buscarPorApodo(datosLogin.getApodo()).getRol().getId().toString(), 
+                        this.repositorio.buscarPorApodo(datosLogin.getApodo()).getRol().getNombre());
+                
+                //Creación del token.
+                String token = Jwts.builder()
+                        .signWith(SignatureAlgorithm.HS512, llaveToken)
+                        .setSubject(datosLogin.getApodo())
+                        .setIssuedAt(new Date( fecha ))
+                        .setExpiration(new Date( fecha + 600000 ))
+                        .claim("permisos", permisosRol)
+                        .compact();
+                
+                return token;
             }else{
                 //Crear excepción personalizada - 401 No autorizado
                 System.out.println("Excepcion: La contrasena ingresada es incorrecta.");

@@ -6,6 +6,7 @@
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
 import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
+import co.edu.unicundi.discotiendaejbjar.entidad.Token;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
 import javax.ejb.Local;
 
@@ -40,6 +41,6 @@ public interface IUsuarioServicio extends ICRUDServicio<Usuario, Integer, Usuari
      * @param contrasena
      * @return 
      */
-    public String login(String apodo, String contrasena);
+    public String login(Token datosLogin);
     
 }
