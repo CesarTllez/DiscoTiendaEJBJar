@@ -8,6 +8,7 @@ package co.edu.unicundi.discotiendaejbjar.entidad;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +18,7 @@ import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -135,6 +137,15 @@ public class Usuario implements Serializable{
     @JoinColumn(name = "id_rol", nullable = false)
     private Rol rol;
     
+    /**
+     * Relación uno a uno con el token.
+     */
+    @OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY, orphanRemoval = true)
+    private Token token;
+    
+    /**
+     * Almacena el id del rol en un atributo volátil.
+     */
     @Transient
     private Integer idRol;
 
@@ -246,6 +257,10 @@ public class Usuario implements Serializable{
 
     public void setIdRol(Integer idRol) {
         this.idRol = idRol;
+    }
+
+    public Token getToken() {
+        return token;
     }
     
 }

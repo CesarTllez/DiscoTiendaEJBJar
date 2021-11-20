@@ -79,8 +79,17 @@ public class UsuarioServicioImp implements IUsuarioServicio{
                         .setExpiration(new Date( fecha + 600000 ))
                         .claim("permisos", permisosRol)
                         .compact();
+                
+                //Se valida si ya existe un token de algún usuario en la base de datos.
+                if(this.repositorioToken.validarExistenciaPorIdUsuario(
+                        this.repositorio.buscarPorApodo(apodo).getId()) == 1){
+                    this.repositorioToken.eliminarPorIdJPQL(
+                            this.repositorio.buscarPorApodo(apodo).getId());
+                }
+                
                 Token objToken = new Token();
                 objToken.setContenido(token);
+                objToken.setIdUsuario(this.repositorio.buscarPorApodo(apodo).getId());
                 this.repositorioToken.registrar(objToken);
                 return objToken;
             }else{

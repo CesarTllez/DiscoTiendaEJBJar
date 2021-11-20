@@ -20,7 +20,7 @@ import javax.persistence.PersistenceContext;
  * @author Diego Cobos
  */
 @Stateless
-public class TokenRemImp implements ITokenRep{
+public class TokenRepImp implements ITokenRep{
 
     /**
      * Permite realizar operaciones sobre la base de datos.
@@ -34,11 +34,25 @@ public class TokenRemImp implements ITokenRep{
      */
     @Override
     public void registrar(Token token) {
-        this.manager.persist(token);
+        this.manager.createNamedQuery("Token.registrar")
+                .setParameter(1, token.getContenido())
+                .setParameter(2, token.getIdUsuario())
+                .executeUpdate();
     }
     
     /**
-     * Método que permite validar la existencia de un token
+     * Método que permite eliminar un token en la base de datos.
+     * @param idUsuario 
+     */
+    @Override
+    public void eliminarPorIdJPQL(Integer idUsuario) {
+        this.manager.createNamedQuery("Token.eliminarPorIdJPQL")
+                .setParameter("idUsuario", idUsuario)
+                .executeUpdate();
+    }
+    
+    /**
+     * Método que permite validar la existencia de un token por contenido.
      * en la base de datos.
      * @param contenido
      * @return 
@@ -47,6 +61,19 @@ public class TokenRemImp implements ITokenRep{
     public Long validarExistenciaPorContenido(String contenido) {
        Long query = (Long)this.manager.createNamedQuery("Token.validarExistenciaPorContenido")
                 .setParameter("contenido", contenido)
+                .getSingleResult();
+        return query;
+    }
+
+    /**
+     * Método que permite validar la existencia de un token por id del usuario.
+     * @param idUsuario
+     * @return 
+     */
+    @Override
+    public Long validarExistenciaPorIdUsuario(Integer idUsuario) {
+        Long query = (Long)this.manager.createNamedQuery("Token.validarExistenciaPorIdUsuario")
+                .setParameter("idUsuario", idUsuario)
                 .getSingleResult();
         return query;
     }

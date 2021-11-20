@@ -25,10 +25,25 @@ public interface ITokenRep {
     public void registrar(Token token);
     
     /**
-     * Método que permite validar si un token existe en la base de datos.
+     * Método que permite eliminar un token.
+     * @param idUsuario 
+     */
+    public void eliminarPorIdJPQL(Integer idUsuario);
+    
+    /**
+     * Método que permite validar si un token existe en la base de datos
+     * por contenido.
      * @param contenido
      * @return 
      */
     public Long validarExistenciaPorContenido(String contenido);
+    
+    /**
+     * Método que permite validar si un token existe en la base de datos
+     * por id del usuario.
+     * @param idUsuario
+     * @return 
+     */
+    public Long validarExistenciaPorIdUsuario(Integer idUsuario);
     
 }

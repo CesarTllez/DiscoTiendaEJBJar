@@ -11,9 +11,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -29,25 +34,63 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     //Validar existencia token por contenido.
     @NamedQuery(name = "Token.validarExistenciaPorContenido", query = "SELECT COUNT(t) FROM Token t WHERE t.contenido = :contenido"),
+    //Validar existencia token por id del usuario.
+    @NamedQuery(name = "Token.validarExistenciaPorIdUsuario", query = "SELECT COUNT(t) FROM Token t WHERE t.usuario.id = :idUsuario"),
     //Eliminar token por id.
-    @NamedQuery(name = "Token.eliminarPorIdJPQL", query = "DELETE FROM Token t WHERE t.id = :id")
+    @NamedQuery(name = "Token.eliminarPorIdJPQL", query = "DELETE FROM Token t WHERE t.usuario.id = :idUsuario")
+})
+//Anotación para queries SQL's
+@NamedNativeQueries({
+    //Registrar token.
+    @NamedNativeQuery(name = "Token.registrar", query = "INSERT INTO tokens (contenido, id_usuario) VALUES (?, ?)")
 })
 public class Token implements Serializable{
     
+    /**
+     * Almacena el id.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
+    /**
+     * Almacena el contenido (token)
+     */
     @NotNull
     @Column(name = "contenido", nullable = false, unique = true)
     private String contenido;
+    
+    /**
+     * Relación uno a uno con usuario.
+     */
+    @OneToOne()
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
+    
+    /**
+     * Almacena el id del usuario en un atributo volátil.
+     */
+    @Transient
+    private Integer idUsuario;
 
+    /**
+     * Contructor pot defecto de la clase.
+     */
     public Token() {
     }
-    
-    public Token(Integer id, String contenido) {
+
+    /**
+     * Constructor en donde se inicializan los atributos de la clase.
+     * @param id
+     * @param contenido
+     * @param usuario
+     * @param idUsuario 
+     */
+    public Token(Integer id, String contenido, Usuario usuario, Integer idUsuario) {
         this.id = id;
         this.contenido = contenido;
+        this.usuario = usuario;
+        this.idUsuario = idUsuario;
     }
 
     public Integer getId() {
@@ -64,6 +107,22 @@ public class Token implements Serializable{
 
     public void setContenido(String contenido) {
         this.contenido = contenido;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
     
 }
