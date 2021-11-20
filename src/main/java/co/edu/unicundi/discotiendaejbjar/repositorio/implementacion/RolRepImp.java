@@ -14,8 +14,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
- *
- * @author cesar
+ * Clase que contiene los métodos necesarios para operar sobre la base de datos
+ * haciendo uso del EntityManager.
+ * @author César Rodríguez
+ * @author Eison Morales
+ * @author Juan Páez
+ * @author Diego Cobos
  */
 @Stateless
 public class RolRepImp implements IRolRep {

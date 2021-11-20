@@ -41,6 +41,6 @@ public interface IUsuarioServicio extends ICRUDServicio<Usuario, Integer, Usuari
      * @param contrasena
      * @return 
      */
-    public String login(Token datosLogin);
+    public Token login(String apodo, String contrasena);
     
 }

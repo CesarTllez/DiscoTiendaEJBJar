@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -27,20 +29,15 @@ public class Token implements Serializable{
     private Integer id;
     
     @NotNull
-    @Column(name = "apodo")
-    private String apodo;
-    
-    @NotNull
-    @Column(name = "contrasena")
-    private String contrasena;
+    @Column(name = "contenido", nullable = false)
+    private String contenido;
 
     public Token() {
     }
-
-    public Token(Integer id, String apodo, String contrasena) {
+    
+    public Token(Integer id, String contenido) {
         this.id = id;
-        this.apodo = apodo;
-        this.contrasena = contrasena;
+        this.contenido = contenido;
     }
 
     public Integer getId() {
@@ -51,20 +48,12 @@ public class Token implements Serializable{
         this.id = id;
     }
 
-    public String getApodo() {
-        return apodo;
+    public String getContenido() {
+        return contenido;
     }
 
-    public void setApodo(String apodo) {
-        this.apodo = apodo;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
     }
     
 }

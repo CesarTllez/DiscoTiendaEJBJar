@@ -9,6 +9,7 @@ import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
 import co.edu.unicundi.discotiendaejbjar.entidad.Token;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
+import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IUsuarioRep;
 import co.edu.unicundi.discotiendaejbjar.servicio.IUsuarioServicio;
 import io.jsonwebtoken.Jwts;
@@ -41,17 +42,23 @@ public class UsuarioServicioImp implements IUsuarioServicio{
     private IUsuarioRep repositorio;
     
     /**
+     * Permite acceder a los métodos que operan la base de datos.
+     */
+    @EJB
+    private ITokenRep repositorioToken;
+    
+    /**
      * Método que retorna el token para el inicio de sesión.
      * @param apodo
      * @param contrasena
-     * @return 
+     * @return token
      */
     @Override
-    public String login(Token datosLogin) {
-        if(this.repositorio.validarExistenciaPorApodo(datosLogin.getApodo()) == 1){
+    public Token login(String apodo, String contrasena) {
+        if(this.repositorio.validarExistenciaPorApodo(apodo) == 1){
             if(this.desencriptarContrasena(
-                    this.repositorio.buscarPorApodo(datosLogin.getApodo()).getContrasena())
-                    .equals(datosLogin.getContrasena())){
+                    this.repositorio.buscarPorApodo(apodo).getContrasena())
+                    .equals(contrasena)){
                 //Llave del token.
                 String llaveToken = "pW8xqK91$nBlOCEPD420876@tczH";
                 //Fecha cuando se crea el token.
@@ -60,19 +67,21 @@ public class UsuarioServicioImp implements IUsuarioServicio{
                 //Restringir servicios por roles.
                 Map<String, Object> permisosRol = new HashMap<>();
                 permisosRol.put(
-                        this.repositorio.buscarPorApodo(datosLogin.getApodo()).getRol().getId().toString(), 
-                        this.repositorio.buscarPorApodo(datosLogin.getApodo()).getRol().getNombre());
+                        this.repositorio.buscarPorApodo(apodo).getRol().getId().toString(), 
+                        this.repositorio.buscarPorApodo(apodo).getRol().getNombre());
                 
                 //Creación del token.
                 String token = Jwts.builder()
                         .signWith(SignatureAlgorithm.HS512, llaveToken)
-                        .setSubject(datosLogin.getApodo())
+                        .setSubject(apodo)
                         .setIssuedAt(new Date( fecha ))
                         .setExpiration(new Date( fecha + 600000 ))
                         .claim("permisos", permisosRol)
                         .compact();
-                
-                return token;
+                Token objToken = new Token();
+                objToken.setContenido(token);
+                this.repositorioToken.registrar(objToken);
+                return objToken;
             }else{
                 //Crear excepción personalizada - 401 No autorizado
                 System.out.println("Excepcion: La contrasena ingresada es incorrecta.");
@@ -80,7 +89,10 @@ public class UsuarioServicioImp implements IUsuarioServicio{
         }else{
             System.out.println("Excepcion: El apodo ingresado no existe en la base de datos.");
         }
-        return "";
+        /*Eliminar cuando se implementen las excepciones.
+        */Token t = new Token();
+        return t;
+        //----------------------------------------------
     }
 
     /**
