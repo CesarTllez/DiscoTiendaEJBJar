@@ -71,10 +71,10 @@ public class Rol  implements Serializable{
     private String nombre;
     
     /**
-     * Relación uno a muchos con cliente.
+     * Relación uno a muchos con usuario.
      */
     @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Cliente> cliente;
+    private List<Usuario> usuario;
 
     /**
      * Contructor pot defecto de la clase.

@@ -15,20 +15,20 @@ import java.util.List;
  * @author Juan Páez
  * @author Diego Cobos
  */
-public interface ICRUDServicio <OBJETO, ID> {
+public interface ICRUDServicio <OBJETO, ID, OBJETODTO> {
     
     /**
      * Método que permite buscar por id.
      * @param id
      * @return 
      */
-    public OBJETO buscarPorId(ID id);
+    public OBJETODTO buscarPorId(ID id);
     
     /**
      * Método que permite buscar todo.
      * @return 
      */
-    public List<OBJETO> buscarTodo();
+    public List<OBJETODTO> buscarTodo();
     
     /**
      * Método que permite registrar.

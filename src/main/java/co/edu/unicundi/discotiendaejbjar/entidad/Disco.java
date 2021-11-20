@@ -53,7 +53,7 @@ import javax.validation.constraints.Size;
 //Anotación para queries SQL's
 @NamedNativeQueries({
     //Registrar discos.
-    @NamedNativeQuery(name = "Disco.registrar", query = "INSERT INTO discos (nombre, precio, numCanciones, anio, id_artista) VALUES (?, ?, ?, ?, ?)"),
+    @NamedNativeQuery(name = "Disco.registrar", query = "INSERT INTO discos (nombre, precio, num_canciones, anio, id_artista) VALUES (?, ?, ?, ?, ?)"),
     //Validar la existencia del disco en la BD por id.
     @NamedNativeQuery(name = "Disco.validarExistenciaPorId", query = "SELECT COUNT(*) FROM discos WHERE id = ?"),
     //Validar la existencia del disco en la BD por nombre.

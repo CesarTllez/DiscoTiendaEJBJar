@@ -19,7 +19,7 @@ import javax.ejb.Local;
  * @author Diego Cobos
  */
 @Local
-public interface ICancionServicio extends ICRUDServicio<Cancion, Integer> {
+public interface ICancionServicio extends ICRUDServicio<Cancion, Integer, Cancion> {
 
     /**
      * Método que permite buscar a una cancion por nombre.

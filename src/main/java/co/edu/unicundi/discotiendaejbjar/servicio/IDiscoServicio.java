@@ -18,7 +18,7 @@ import javax.ejb.Local;
  * @author Diego Cobos
  */
 @Local
-public interface IDiscoServicio extends ICRUDServicio<Disco, Integer> {
+public interface IDiscoServicio extends ICRUDServicio<Disco, Integer, Disco> {
 
     /**
      * Método que permite buscar un disco por nombre.

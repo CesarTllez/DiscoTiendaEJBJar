@@ -15,6 +15,6 @@ import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
  * @author Juan Páez
  * @author Diego Cobos
  */
-public interface IRolServicio extends ICRUDServicio<Rol, Integer>{
+public interface IRolServicio extends ICRUDServicio<Rol, Integer, Rol>{
     
 }

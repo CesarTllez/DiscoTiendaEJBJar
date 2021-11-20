@@ -13,6 +13,6 @@ import javax.ejb.Local;
  * @author cesar
  */
 @Local
-public interface IArtistaServicio extends ICRUDServicio<Artista, Integer>{
+public interface IArtistaServicio extends ICRUDServicio<Artista, Integer, Artista>{
     
 }
