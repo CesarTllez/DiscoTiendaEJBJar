@@ -9,11 +9,8 @@ import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
 import co.edu.unicundi.discotiendaejbjar.entidad.Token;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
-<<<<<<< HEAD
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
-=======
 import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
->>>>>>> 78b59ef9ba15a0b853c92c45e19548496248c1ee
 import co.edu.unicundi.discotiendaejbjar.repositorio.IUsuarioRep;
 import co.edu.unicundi.discotiendaejbjar.servicio.IUsuarioServicio;
 import io.jsonwebtoken.Jwts;
