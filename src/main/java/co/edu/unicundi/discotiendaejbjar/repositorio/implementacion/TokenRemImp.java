@@ -37,4 +37,18 @@ public class TokenRemImp implements ITokenRep{
         this.manager.persist(token);
     }
     
+    /**
+     * Método que permite validar la existencia de un token
+     * en la base de datos.
+     * @param contenido
+     * @return 
+     */
+    @Override
+    public Long validarExistenciaPorContenido(String contenido) {
+       Long query = (Long)this.manager.createNamedQuery("Token.validarExistenciaPorContenido")
+                .setParameter("contenido", contenido)
+                .getSingleResult();
+        return query;
+    }
+    
 }

@@ -11,17 +11,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 /**
- *
- * @author cesar
+ * Clase que mapea la entidad que representa al token en la base de datos.
+ * @author César Rodríguez
+ * @author Eison Morales
+ * @author Juan Páez
+ * @author Diego Cobos
  */
 @Entity
 @Table(name = "tokens")
+//Anotación para queries JPQL's.
+@NamedQueries({
+    //Validar existencia token por contenido.
+    @NamedQuery(name = "Token.validarExistenciaPorContenido", query = "SELECT COUNT(t) FROM Token t WHERE t.contenido = :contenido"),
+    //Eliminar token por id.
+    @NamedQuery(name = "Token.eliminarPorIdJPQL", query = "DELETE FROM Token t WHERE t.id = :id")
+})
 public class Token implements Serializable{
     
     @Id
@@ -29,7 +39,7 @@ public class Token implements Serializable{
     private Integer id;
     
     @NotNull
-    @Column(name = "contenido", nullable = false)
+    @Column(name = "contenido", nullable = false, unique = true)
     private String contenido;
 
     public Token() {

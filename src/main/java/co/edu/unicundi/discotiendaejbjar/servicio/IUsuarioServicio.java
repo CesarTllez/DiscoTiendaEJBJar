@@ -22,6 +22,13 @@ import javax.ejb.Local;
 public interface IUsuarioServicio extends ICRUDServicio<Usuario, Integer, UsuarioDto>{
     
     /**
+     * Método que permite buscar a un usuario por apodo.
+     * @param apodo
+     * @return 
+     */
+    public Usuario buscarPorApodo(String apodo);
+    
+    /**
      * Método que permite buscar a un usuario por correo.
      * @param correo
      * @return 

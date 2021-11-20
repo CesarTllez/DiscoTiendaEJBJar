@@ -121,6 +121,25 @@ public class UsuarioServicioImp implements IUsuarioServicio{
     }
     
     /**
+     * Método que valida si el apodo ingresado existe en la base de datos, si
+     * es así, permite buscar a un usuario con dicho apodo.
+     * @param apodo
+     * @return 
+     */
+    @Override
+    public Usuario buscarPorApodo(String apodo) {
+        if(this.repositorio.validarExistenciaPorApodo(apodo) == 1){
+            return this.repositorio.buscarPorApodo(apodo);
+        }else{
+            System.out.println("Excepcion: El apodo ingresado no existe en la base de datos.");
+        }
+        /*Objeto que debe borrarse cuando se implementen las excepciones.
+        */Usuario u = new Usuario();
+        /**/return u;
+        /*---------------------------------------------------------*/
+    }
+    
+    /**
      * Método que comprueba si el correo existe, si es así, busca el usuario.
      * Además, se hace uso del ModelMapper para cambiar la contraseña
      * encripatada a la original.
