@@ -7,6 +7,9 @@ package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Artista;
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
+import co.edu.unicundi.discotiendaejbjar.excepciones.BussinessException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IArtistaRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IDiscoRep;
 import co.edu.unicundi.discotiendaejbjar.servicio.IDiscoServicio;
@@ -44,17 +47,12 @@ public class DiscoServicioImp implements IDiscoServicio {
      * @return
      */
     @Override
-    public Disco buscarPorNombre(String nombre) {
+    public Disco buscarPorNombre(String nombre) throws ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorNombre(nombre) == 1) {
             return this.repositorio.buscarPorNombre(nombre);
         } else {
-            System.out.println("Excepcion: Ese nombre del disco no existe en la base de datos.");
+            throw new ResourceNotFoundException("Ese nombre del disco no existe en la base de datos.");
         }
-        /*Objeto que debe borrarse cuando se implementen las excepciones.
-         */
-        Disco c = new Disco();
-        /**/
-        return c;
     }
 
     /**
@@ -64,17 +62,15 @@ public class DiscoServicioImp implements IDiscoServicio {
      * @return
      */
     @Override
-    public Disco buscarPorId(Integer id) {
+    public Disco buscarPorId(Integer id) throws ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorId(id) == 1) {
             return this.repositorio.buscarPorId(id);
         } else {
-            System.out.println("Excepcion: Ese id no existe en la base de datos.");
+         throw new ResourceNotFoundException("Ese id no existe en la base de datos.");
         }
         /*Objeto que debe borrarse cuando se implementen las excepciones.
          */
-        Disco c = new Disco();
-        /**/
-        return c;
+
     }
 
     /**
@@ -91,9 +87,9 @@ public class DiscoServicioImp implements IDiscoServicio {
      * @param objeto
      */
     @Override
-    public void registrar(Disco objeto) {
+    public void registrar(Disco objeto) throws ResourceConflictException, ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1) {
-            System.out.println("Excepcion: Actualmente hay un disco registrado con ese nombre.");
+            throw new ResourceConflictException("Actualmente hay un disco registrado con ese nombre.");
         } else {
             if(this.repositorioArtista.validarExistenciaPorId(objeto.getIdArtista()) == 1){
                 Artista artista = new Artista();
@@ -101,7 +97,7 @@ public class DiscoServicioImp implements IDiscoServicio {
                 objeto.setArtista(artista);
                 this.repositorio.registrar(objeto);
             }else{
-                System.out.println("Excepcion: El id del artista ingresado no existe en la base de datos.");
+                throw new ResourceNotFoundException("El id del artista ingresado no existe en la base de datos.");
             }
         }
     }
@@ -113,15 +109,15 @@ public class DiscoServicioImp implements IDiscoServicio {
      * @param objeto
      */
     @Override
-    public void actualizar(Disco objeto) {
+    public void actualizar(Disco objeto) throws ResourceNotFoundException, BussinessException{
         if ((objeto.getId() != null)) {
             if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
                 this.repositorio.actualizar(objeto);
             } else {
-                System.out.println("Excepcion: No existe ese id en la base de datos.");
+                 throw new ResourceNotFoundException("No existe ese id en la base de datos.");
             }
         } else {
-            System.out.println("Excepcion: Es necesario ingresar un id.");
+            throw new BussinessException("Es necesario ingresar un id.");
         }
     }
 
@@ -131,11 +127,12 @@ public class DiscoServicioImp implements IDiscoServicio {
      * @param id
      */
     @Override
-    public void eliminarJPQL(Integer id) {
+    public void eliminarJPQL(Integer id) throws ResourceNotFoundException {
         if (this.repositorio.validarExistenciaPorId(id) == 1) {
             this.repositorio.eliminarJPQL(id);
         } else {
-            System.out.println("Excepcion: No existe ese id en la base de datos.");
+            throw new ResourceNotFoundException("No existe ese id en la base de datos.");
+
         }
     }
 
@@ -145,11 +142,12 @@ public class DiscoServicioImp implements IDiscoServicio {
      * @param id
      */
     @Override
-    public void eliminarSQL(Integer id) {
+    public void eliminarSQL(Integer id) throws ResourceNotFoundException {
         if (this.repositorio.validarExistenciaPorId(id) == 1) {
             this.repositorio.eliminarSQL(id);
-        } else {
-            System.out.println("Excepcion: No existe ese id en la base de datos.");
+        } else {  
+            throw new ResourceNotFoundException("No existe ese id en la base de datos.");
+
         }
     }
 
