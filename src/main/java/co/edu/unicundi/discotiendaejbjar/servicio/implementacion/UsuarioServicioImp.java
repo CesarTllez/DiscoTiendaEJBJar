@@ -55,7 +55,7 @@ public class UsuarioServicioImp implements IUsuarioServicio{
      * @return token
      */
     @Override
-    public Token login(String apodo, String contrasena) {
+    public Token iniciarSesion(String apodo, String contrasena) {
         if(this.repositorio.validarExistenciaPorApodo(apodo) == 1){
             if(this.desencriptarContrasena(
                     this.repositorio.buscarPorApodo(apodo).getContrasena())
@@ -103,6 +103,19 @@ public class UsuarioServicioImp implements IUsuarioServicio{
         */Token t = new Token();
         return t;
         //----------------------------------------------
+    }
+    
+    /**
+     * Método que permite cerrar la sesión del usuario.
+     * @param idUsuario 
+     */
+    @Override
+    public void cerrarSesion(Integer idUsuario) {
+        if(this.repositorioToken.validarExistenciaPorIdUsuario(idUsuario) == 1){
+            this.repositorioToken.eliminarPorIdJPQL(idUsuario);
+        }else{
+            System.out.println("Excepcion: El usuario no tiene ninguna sesion iniciada.");
+        }
     }
 
     /**

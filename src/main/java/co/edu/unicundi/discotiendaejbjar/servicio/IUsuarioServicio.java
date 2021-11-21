@@ -44,11 +44,17 @@ public interface IUsuarioServicio extends ICRUDServicio<Usuario, Integer, Usuari
     public UsuarioDto buscarPorCedula(String cedula)throws ResourceNotFoundException;
     
     /**
-     * Método que permite obtener el token a logearse.
+     * Método que permite obtener el token e iniciar sesion.
      * @param apodo
      * @param contrasena
      * @return 
      */
-    public Token login(String apodo, String contrasena);
+    public Token iniciarSesion(String apodo, String contrasena);
+    
+    /**
+     * Método que permite cerrar la sesión del usuario.
+     * @param idUsuario
+     */
+    public void cerrarSesion(Integer idUsuario);
     
 }
