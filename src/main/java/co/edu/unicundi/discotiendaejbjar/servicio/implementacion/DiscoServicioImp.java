@@ -5,6 +5,7 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
+import co.edu.unicundi.discotiendaejbjar.dto.DiscoDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Artista;
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
 import co.edu.unicundi.discotiendaejbjar.excepciones.BussinessException;
@@ -16,6 +17,8 @@ import co.edu.unicundi.discotiendaejbjar.servicio.IDiscoServicio;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 
 /**
  * Clase que permite acceder a los métodos que operan la base de datos y valida
@@ -47,9 +50,13 @@ public class DiscoServicioImp implements IDiscoServicio {
      * @return
      */
     @Override
-    public Disco buscarPorNombre(String nombre) throws ResourceNotFoundException{
+    public DiscoDto buscarPorNombre(String nombre) throws ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorNombre(nombre) == 1) {
-            return this.repositorio.buscarPorNombre(nombre);
+            DiscoDto discoDto = new DiscoDto();
+            ModelMapper mapper = new ModelMapper();
+            mapper.map( this.repositorio.buscarPorNombre(nombre), discoDto);
+            discoDto.setIdArtista(this.repositorio.buscarPorNombre(nombre).getArtista().getId());
+            return discoDto;
         } else {
             throw new ResourceNotFoundException("Ese nombre del disco no existe en la base de datos.");
         }
@@ -62,9 +69,13 @@ public class DiscoServicioImp implements IDiscoServicio {
      * @return
      */
     @Override
-    public Disco buscarPorId(Integer id) throws ResourceNotFoundException{
+    public DiscoDto buscarPorId(Integer id) throws ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorId(id) == 1) {
-            return this.repositorio.buscarPorId(id);
+            DiscoDto discoDto = new DiscoDto();
+            ModelMapper mapper = new ModelMapper();
+            mapper.map( this.repositorio.buscarPorId(id), discoDto);
+            discoDto.setIdArtista(this.repositorio.buscarPorId(id).getArtista().getId());
+            return discoDto;
         } else {
          throw new ResourceNotFoundException("Ese id no existe en la base de datos.");
         }
@@ -78,8 +89,18 @@ public class DiscoServicioImp implements IDiscoServicio {
      * @return
      */
     @Override
-    public List<Disco> buscarTodo() {
-        return this.repositorio.buscarTodo();
+    public List<DiscoDto> buscarTodo() {
+        ModelMapper mapper = new ModelMapper();
+        
+        //Mapeo de listas con TypeToken.
+        List<DiscoDto> discoDto = mapper.map(
+                this.repositorio.buscarTodo(), 
+                new TypeToken<List<DiscoDto>>(){}.getType());
+        
+        for (DiscoDto discoDtoAux : discoDto) {
+            discoDtoAux.setIdArtista(this.repositorio.buscarPorId(discoDtoAux.getId()).getArtista().getId());
+        }
+        return discoDto;
     }
 
     /**

@@ -5,6 +5,7 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
+import co.edu.unicundi.discotiendaejbjar.dto.CancionDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
 import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
@@ -22,7 +23,7 @@ import javax.ejb.Local;
  * @author Diego Cobos
  */
 @Local
-public interface ICancionServicio extends ICRUDServicio<Cancion, Integer, Cancion> {
+public interface ICancionServicio extends ICRUDServicio<Cancion, Integer, CancionDto> {
 
     /**
      * Método que permite buscar a una cancion por nombre.
@@ -30,12 +31,12 @@ public interface ICancionServicio extends ICRUDServicio<Cancion, Integer, Cancio
      * @param nombre
      * @return
      */
-    public Cancion buscarPorNombre(String nombre)throws ResourceNotFoundException;
+    public CancionDto buscarPorNombre(String nombre)throws ResourceNotFoundException;
     
     /**
      * Método que permite buscar todas las canciones por id del disco.
      * @return 
      */
-    public List<Cancion> buscarTodosPorIdDisco(Integer idDisco)throws  ResourceNotFoundException;
+    public List<CancionDto> buscarTodosPorIdDisco(Integer idDisco)throws  ResourceNotFoundException;
 
 }

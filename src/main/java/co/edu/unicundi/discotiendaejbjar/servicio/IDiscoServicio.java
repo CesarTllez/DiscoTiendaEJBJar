@@ -5,6 +5,7 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
+import co.edu.unicundi.discotiendaejbjar.dto.DiscoDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import javax.ejb.Local;
@@ -19,13 +20,13 @@ import javax.ejb.Local;
  * @author Diego Cobos
  */
 @Local
-public interface IDiscoServicio extends ICRUDServicio<Disco, Integer, Disco> {
+public interface IDiscoServicio extends ICRUDServicio<Disco, Integer, DiscoDto> {
 
     /**
      * Método que permite buscar un disco por nombre.
      * @param nombre
      * @return
      */
-    public Disco buscarPorNombre(String nombre) throws ResourceNotFoundException;
+    public DiscoDto buscarPorNombre(String nombre) throws ResourceNotFoundException;
     
 }

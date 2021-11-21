@@ -40,7 +40,7 @@ import javax.validation.constraints.Size;
     //Buscar canciones por nombre.
     @NamedQuery(name = "Cancion.buscarPorNombre", query = "SELECT c FROM Cancion c WHERE c.nombre = :nombre"),
     //Buscar canciones por disco.
-    @NamedQuery(name = "Cancion.buscarTodosPorIdDisco", query = "SELECT c.id, c.nombre, c.duracion, c.precio FROM Cancion c WHERE c.disco.id = :idDisco"),
+    @NamedQuery(name = "Cancion.buscarTodosPorIdDisco", query = "SELECT c FROM Cancion c WHERE c.disco.id = :idDisco"),
     //Actualizar canciones por id.
     @NamedQuery(name = "Cancion.actualizar", query = "UPDATE Cancion c SET c.nombre = :nombre, c.duracion = :duracion, c.precio = :precio  WHERE c.id = :id"),
     //Eliminar cancion por id.
