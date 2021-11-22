@@ -37,7 +37,9 @@ import javax.validation.constraints.NotNull;
     //Validar existencia token por id del usuario.
     @NamedQuery(name = "Token.validarExistenciaPorIdUsuario", query = "SELECT COUNT(t) FROM Token t WHERE t.usuario.id = :idUsuario"),
     //Eliminar token por id.
-    @NamedQuery(name = "Token.eliminarPorIdJPQL", query = "DELETE FROM Token t WHERE t.usuario.id = :idUsuario")
+    @NamedQuery(name = "Token.eliminarPorIdJPQL", query = "DELETE FROM Token t WHERE t.usuario.id = :idUsuario"),
+    //Eliminar token por contenido.
+    @NamedQuery(name = "Token.eliminarPorContenidoJPQL", query = "DELETE FROM Token t WHERE t.contenido = :contenido")
 })
 //Anotación para queries SQL's
 @NamedNativeQueries({

@@ -116,14 +116,14 @@ public class UsuarioServicioImp implements IUsuarioServicio {
 
     /**
      * Método que permite cerrar la sesión del usuario.
-     * @param idUsuario
+     * @param token
      */
     @Override
-    public void cerrarSesion(Integer idUsuario) {
-        if (this.repositorioToken.validarExistenciaPorIdUsuario(idUsuario) == 1) {
-            this.repositorioToken.eliminarPorIdJPQL(idUsuario);
+    public void cerrarSesion(String token) {
+        if (this.repositorioToken.validarExistenciaPorContenido(token) == 1) {
+            this.repositorioToken.eliminarPorContenidoJPQL(token);
         } else {
-            System.out.println("Excepcion: El usuario no tiene ninguna sesion iniciada.");
+            System.out.println("Excepcion: El usuario no tiene ninguna sesion activa.");
         }
     }
 

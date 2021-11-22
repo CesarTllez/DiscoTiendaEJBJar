@@ -31,6 +31,12 @@ public interface ITokenRep {
     public void eliminarPorIdJPQL(Integer idUsuario);
     
     /**
+     * Método que permite eliminar un token.
+     * @param token 
+     */
+    public void eliminarPorContenidoJPQL(String token);
+    
+    /**
      * Método que permite validar si un token existe en la base de datos
      * por contenido.
      * @param contenido

@@ -52,6 +52,17 @@ public class TokenRepImp implements ITokenRep{
     }
     
     /**
+     * Método que permite eliminar un token en la base de datos.
+     * @param token 
+     */
+    @Override
+    public void eliminarPorContenidoJPQL(String token) {
+        this.manager.createNamedQuery("Token.eliminarPorContenidoJPQL")
+                .setParameter("contenido", token)
+                .executeUpdate();
+    }
+    
+    /**
      * Método que permite validar la existencia de un token por contenido.
      * en la base de datos.
      * @param contenido

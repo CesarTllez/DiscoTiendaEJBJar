@@ -53,8 +53,8 @@ public interface IUsuarioServicio extends ICRUDServicio<Usuario, Integer, Usuari
     
     /**
      * Método que permite cerrar la sesión del usuario.
-     * @param idUsuario
+     * @param token 
      */
-    public void cerrarSesion(Integer idUsuario);
+    public void cerrarSesion(String token);
     
 }
