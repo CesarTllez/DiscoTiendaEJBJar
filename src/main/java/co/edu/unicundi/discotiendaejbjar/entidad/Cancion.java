@@ -30,7 +30,7 @@ import javax.validation.constraints.Size;
  * @author Diego Cobos
  */
  @Entity
- @Table(name = "canciones")
+ @Table(name = "cancion")
  //Anotación para queries JPQL's.
 @NamedQueries({
     //Buscar todos los canciones.
@@ -49,13 +49,13 @@ import javax.validation.constraints.Size;
 //Anotación para queries SQL's
 @NamedNativeQueries({
      //Registrar cancion.
-    @NamedNativeQuery(name = "Cancion.registrar", query = "INSERT INTO canciones (nombre, duracion, precio, id_disco) VALUES (?, ?, ?, ?)"),
+    @NamedNativeQuery(name = "Cancion.registrar", query = "INSERT INTO cancion (nombre, duracion, precio, id_disco) VALUES (?, ?, ?, ?)"),
     //Validar la existencia de la canción en la BD por id.
-    @NamedNativeQuery(name = "Cancion.validarExistenciaPorId", query = "SELECT COUNT(*) FROM canciones WHERE id = ?") ,
+    @NamedNativeQuery(name = "Cancion.validarExistenciaPorId", query = "SELECT COUNT(*) FROM cancion WHERE id = ?") ,
     //Validar la existencia de la canción en la BD por nombre.
-    @NamedNativeQuery(name = "Cancion.validarExistenciaPorNombre", query = "SELECT COUNT(*) FROM canciones WHERE nombre = ?") ,
+    @NamedNativeQuery(name = "Cancion.validarExistenciaPorNombre", query = "SELECT COUNT(*) FROM cancion WHERE nombre = ?") ,
     //Validar la existencia de la canción en la BD.
-    @NamedNativeQuery(name = "Cancion.eliminarPorIdSQL", query = "DELETE FROM canciones WHERE id = ?") 
+    @NamedNativeQuery(name = "Cancion.eliminarPorIdSQL", query = "DELETE FROM cancion WHERE id = ?") 
 })
  
 public class Cancion implements Serializable{

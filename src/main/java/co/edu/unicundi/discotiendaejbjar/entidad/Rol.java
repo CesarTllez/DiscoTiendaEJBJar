@@ -30,7 +30,7 @@ import javax.validation.constraints.Size;
  * @author Diego Cobos
  */
 @Entity
-@Table(name = "roles")
+@Table(name = "rol")
 //Anotación para queries JPQL's.
 @NamedQueries({
     //Buscar todos los roles.
@@ -45,13 +45,13 @@ import javax.validation.constraints.Size;
 //Anotación para queries SQL's
 @NamedNativeQueries({
     //Registrar rol.
-    @NamedNativeQuery(name = "Rol.registrar", query = "INSERT INTO roles (nombre) VALUES (?)"),
+    @NamedNativeQuery(name = "Rol.registrar", query = "INSERT INTO rol (nombre) VALUES (?)"),
     //Validar la existencia del rol en la BD por id.
-    @NamedNativeQuery(name = "Rol.validarExistenciaPorId", query = "SELECT COUNT(*) FROM roles WHERE id = ?") ,
+    @NamedNativeQuery(name = "Rol.validarExistenciaPorId", query = "SELECT COUNT(*) FROM rol WHERE id = ?") ,
     //Validar la existencia del rol en la BD por nombre.
-    @NamedNativeQuery(name = "Rol.validarExistenciaPorNombre", query = "SELECT COUNT(*) FROM roles WHERE nombre = ?") ,
+    @NamedNativeQuery(name = "Rol.validarExistenciaPorNombre", query = "SELECT COUNT(*) FROM rol WHERE nombre = ?") ,
     //Eliminar rol por id.
-    @NamedNativeQuery(name = "Rol.eliminarPorIdSQL", query = "DELETE FROM roles WHERE id = ?") 
+    @NamedNativeQuery(name = "Rol.eliminarPorIdSQL", query = "DELETE FROM rol WHERE id = ?") 
 })
 public class Rol  implements Serializable{
     

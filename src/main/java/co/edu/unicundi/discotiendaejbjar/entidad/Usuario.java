@@ -33,7 +33,7 @@ import javax.validation.constraints.Size;
  * @author Diego Cobos
  */
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuario")
 //Anotación para queries JPQL's.
 @NamedQueries({
     //Buscar todos los usuarios.
@@ -56,15 +56,15 @@ import javax.validation.constraints.Size;
 //Anotación para queries SQL's
 @NamedNativeQueries({
     //Registrar usuario.
-    @NamedNativeQuery(name = "Usuario.registrar", query = "INSERT INTO usuarios (apodo, cedula, nombres, apellidos, correo, contrasena, fecha_nacimiento, id_rol) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"),
+    @NamedNativeQuery(name = "Usuario.registrar", query = "INSERT INTO usuario (apodo, cedula, nombres, apellidos, correo, contrasena, fecha_nacimiento, id_rol) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"),
     //Validar la existencia del usuario en la BD por id.
-    @NamedNativeQuery(name = "Usuario.validarExistenciaPorId", query = "SELECT COUNT(*) FROM usuarios WHERE id = ?") ,
+    @NamedNativeQuery(name = "Usuario.validarExistenciaPorId", query = "SELECT COUNT(*) FROM usuario WHERE id = ?") ,
     //Validar la existencia del usuario en la BD por cédula.
-    @NamedNativeQuery(name = "Usuario.validarExistenciaPorCedula", query = "SELECT COUNT(*) FROM usuarios WHERE cedula = ?") ,
+    @NamedNativeQuery(name = "Usuario.validarExistenciaPorCedula", query = "SELECT COUNT(*) FROM usuario WHERE cedula = ?") ,
     //Validar la existencia del usuario en la BD por correo.
-    @NamedNativeQuery(name = "Usuario.validarExistenciaPorCorreo", query = "SELECT COUNT(*) FROM usuarios WHERE correo = ?") ,
+    @NamedNativeQuery(name = "Usuario.validarExistenciaPorCorreo", query = "SELECT COUNT(*) FROM usuario WHERE correo = ?") ,
     //Eliminar usuario por id.
-    @NamedNativeQuery(name = "Usuario.eliminarPorIdSQL", query = "DELETE FROM usuarios WHERE id = ?") 
+    @NamedNativeQuery(name = "Usuario.eliminarPorIdSQL", query = "DELETE FROM usuario WHERE id = ?") 
 })
 public class Usuario implements Serializable{
     

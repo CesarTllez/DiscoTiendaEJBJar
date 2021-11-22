@@ -36,7 +36,7 @@ import javax.validation.constraints.Size;
  * @author Diego Cobos
  */
 @Entity
-@Table(name = "discos")
+@Table(name = "disco")
 //Anotación para queries JPQL's.
 @NamedQueries({
     //Buscar todos los discos.
@@ -53,13 +53,13 @@ import javax.validation.constraints.Size;
 //Anotación para queries SQL's
 @NamedNativeQueries({
     //Registrar discos.
-    @NamedNativeQuery(name = "Disco.registrar", query = "INSERT INTO discos (nombre, precio, num_canciones, anio, id_artista) VALUES (?, ?, ?, ?, ?)"),
+    @NamedNativeQuery(name = "Disco.registrar", query = "INSERT INTO disco (nombre, precio, num_canciones, anio, id_artista) VALUES (?, ?, ?, ?, ?)"),
     //Validar la existencia del disco en la BD por id.
-    @NamedNativeQuery(name = "Disco.validarExistenciaPorId", query = "SELECT COUNT(*) FROM discos WHERE id = ?"),
+    @NamedNativeQuery(name = "Disco.validarExistenciaPorId", query = "SELECT COUNT(*) FROM disco WHERE id = ?"),
     //Validar la existencia del disco en la BD por nombre.
-    @NamedNativeQuery(name = "Disco.validarExistenciaPorNombre", query = "SELECT COUNT(*) FROM discos WHERE nombre = ?"),
+    @NamedNativeQuery(name = "Disco.validarExistenciaPorNombre", query = "SELECT COUNT(*) FROM disco WHERE nombre = ?"),
     //Validar la existencia del disco en la BD.
-    @NamedNativeQuery(name = "Disco.eliminarPorIdSQL", query = "DELETE FROM discos WHERE id = ?")
+    @NamedNativeQuery(name = "Disco.eliminarPorIdSQL", query = "DELETE FROM disco WHERE id = ?")
 })
 
 public class Disco implements Serializable {

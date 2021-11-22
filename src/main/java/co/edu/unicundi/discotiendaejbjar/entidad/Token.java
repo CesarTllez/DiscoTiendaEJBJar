@@ -29,7 +29,7 @@ import javax.validation.constraints.NotNull;
  * @author Diego Cobos
  */
 @Entity
-@Table(name = "tokens")
+@Table(name = "token")
 //Anotación para queries JPQL's.
 @NamedQueries({
     //Validar existencia token por contenido.
@@ -42,7 +42,7 @@ import javax.validation.constraints.NotNull;
 //Anotación para queries SQL's
 @NamedNativeQueries({
     //Registrar token.
-    @NamedNativeQuery(name = "Token.registrar", query = "INSERT INTO tokens (contenido, id_usuario) VALUES (?, ?)")
+    @NamedNativeQuery(name = "Token.registrar", query = "INSERT INTO token (contenido, id_usuario) VALUES (?, ?)")
 })
 public class Token implements Serializable{
     

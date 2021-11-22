@@ -30,7 +30,7 @@ import javax.validation.constraints.Size;
  * @author Diego Cobos
  */
 @Entity
-@Table(name = "artistas" )
+@Table(name = "artista" )
 //Anotación para queries JPQL's.
 @NamedQueries({
     //Buscar a todos los artistas.
@@ -45,13 +45,13 @@ import javax.validation.constraints.Size;
 //Anotación para queries SQL's
 @NamedNativeQueries({
     //Registrar artista.
-    @NamedNativeQuery(name = "Artista.registrar", query = "INSERT INTO artistas (nombre) VALUES (?)"),
+    @NamedNativeQuery(name = "Artista.registrar", query = "INSERT INTO artista (nombre) VALUES (?)"),
     //Validar la existencia del artista en la BD por id.
-    @NamedNativeQuery(name = "Artista.validarExistenciaPorId", query = "SELECT COUNT(*) FROM artistas WHERE id = ?") ,
+    @NamedNativeQuery(name = "Artista.validarExistenciaPorId", query = "SELECT COUNT(*) FROM artista WHERE id = ?") ,
     //Validar la existencia del artista en la BD por nombre.
-    @NamedNativeQuery(name = "Artista.validarExistenciaPorNombre", query = "SELECT COUNT(*) FROM artistas WHERE nombre = ?") ,
+    @NamedNativeQuery(name = "Artista.validarExistenciaPorNombre", query = "SELECT COUNT(*) FROM artista WHERE nombre = ?") ,
     //Eliminar artista por id.
-    @NamedNativeQuery(name = "Artista.eliminarPorIdSQL", query = "DELETE FROM artistas WHERE id = ?") 
+    @NamedNativeQuery(name = "Artista.eliminarPorIdSQL", query = "DELETE FROM artista WHERE id = ?") 
 })
 public class Artista implements Serializable {
     
