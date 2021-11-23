@@ -19,6 +19,13 @@ import javax.ejb.Local;
 public interface ITokenRep {
     
     /**
+     * Método que permite buscar por el id del usuario.
+     * @param idUsuario
+     * @return 
+     */
+    public Token buscarPorIdUsuario(Integer idUsuario);
+    
+    /**
      * Método que permite registrar un token en la base de datos.
      * @param token 
      */

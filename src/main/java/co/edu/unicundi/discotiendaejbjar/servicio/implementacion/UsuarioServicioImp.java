@@ -5,10 +5,14 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
+import co.edu.unicundi.discotiendaejbjar.dto.TokenDto;
 import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
 import co.edu.unicundi.discotiendaejbjar.entidad.Token;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
+import co.edu.unicundi.discotiendaejbjar.excepciones.BussinessException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IRolRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
@@ -49,7 +53,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      */
     @EJB
     private ITokenRep repositorioToken;
-    
+
     /**
      * Permite acceder a los métodos del rol que operan la base de datos.
      */
@@ -58,12 +62,13 @@ public class UsuarioServicioImp implements IUsuarioServicio {
 
     /**
      * Método que retorna el token para el inicio de sesión.
+     *
      * @param apodo
      * @param contrasena
      * @return token
      */
     @Override
-    public Token iniciarSesion(String apodo, String contrasena) {
+    public TokenDto iniciarSesion(String apodo, String contrasena) {
         if (this.repositorio.validarExistenciaPorApodo(apodo) == 1) {
             if (this.desencriptarContrasena(
                     this.repositorio.buscarPorApodo(apodo).getContrasena())
@@ -98,11 +103,13 @@ public class UsuarioServicioImp implements IUsuarioServicio {
                             this.repositorio.buscarPorApodo(apodo).getId());
                 }
 
+                TokenDto tokenDto = new TokenDto();
+                tokenDto.setContenido(token);
                 Token objToken = new Token();
                 objToken.setContenido(token);
                 objToken.setIdUsuario(this.repositorio.buscarPorApodo(apodo).getId());
                 this.repositorioToken.registrar(objToken);
-                return objToken;
+                return tokenDto;
             } else {
                 //Crear excepción personalizada - 401 No autorizado
                 System.out.println("Excepcion: La contrasena ingresada es incorrecta.");
@@ -112,13 +119,14 @@ public class UsuarioServicioImp implements IUsuarioServicio {
         }
         /*Eliminar cuando se implementen las excepciones.
          */
-        Token t = new Token();
+        TokenDto t = new TokenDto();
         return t;
         //----------------------------------------------
     }
 
     /**
      * Método que permite cerrar la sesión del usuario.
+     *
      * @param token
      */
     @Override
@@ -134,6 +142,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * Método que comprueba si el id existe, si es así, busca el usuario.
      * Además, se hace uso del ModelMapper para cambiar la contraseña
      * encripatada a la original.
+     *
      * @param id
      * @return
      */
@@ -154,6 +163,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
     /**
      * Método que valida si el apodo ingresado existe en la base de datos, si es
      * así, permite buscar a un usuario con dicho apodo.
+     *
      * @param apodo
      * @return
      */
@@ -176,6 +186,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * Método que comprueba si el correo existe, si es así, busca el usuario.
      * Además, se hace uso del ModelMapper para cambiar la contraseña
      * encripatada a la original.
+     *
      * @param correo
      * @return
      */
@@ -199,6 +210,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * Método que comprueba si la cédula existe, si es así, busca el usuario.
      * Además, se hace uso del ModelMapper para cambiar la contraseña
      * encripatada a la original.
+     *
      * @param cedula
      * @return
      */
@@ -219,6 +231,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
     /**
      * Método que busca a todos los usuarios. Además, se hace uso del
      * ModelMapper para cambiar la contraseña encripatada a la original.
+     *
      * @return
      */
     @Override
@@ -274,36 +287,42 @@ public class UsuarioServicioImp implements IUsuarioServicio {
     }
 
     /**
-     * Método que comprueba si el id existe y los datos proporcionados (cédula y
-     * correo) no están registrados con otro usuario, si es así, permite
-     * modificar el cliente.
+     * Método que comprueba si el usuario tiene permiso, el id existe y los
+     * datos proporcionados (cédula y correo) no están registrados con otro
+     * usuario, si es así, permite modificar el cliente.
      * @param objeto
+     * @param token
      */
     @Override
-    public void actualizar(Usuario objeto) {
-        if ((objeto.getId() != null)) {
-            if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
-                if ((!objeto.getCedula().equals(this.repositorio.buscarPorId(objeto.getId()).getCedula()))) {
-                    if (this.repositorio.validarExistenciaPorCedula(objeto.getCedula()) == 1) {
-                        System.out.println("Excepcion: Actualmente, hay un usuario registrado con esa cedula.");
+    public void actualizarTk(Usuario objeto, String token) {
+        if (this.repositorioToken.buscarPorIdUsuario(objeto.getId()).getContenido().equals(token)) {
+            if ((objeto.getId() != null)) {
+                if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
+                    if ((!objeto.getCedula().equals(this.repositorio.buscarPorId(objeto.getId()).getCedula()))) {
+                        if (this.repositorio.validarExistenciaPorCedula(objeto.getCedula()) == 1) {
+                            System.out.println("Excepcion: Actualmente, hay un usuario registrado con esa cedula.");
+                        } else {
+                            objeto.setContrasena(this.encriptarContrasena(objeto.getContrasena()));
+                            this.repositorio.actualizar(objeto);
+                        }
                     } else {
-                        objeto.setContrasena(this.encriptarContrasena(objeto.getContrasena()));
-                        this.repositorio.actualizar(objeto);
+                        System.out.println("Excepcion: No ingreso una cedula diferente.");
                     }
                 } else {
-                    System.out.println("Excepcion: No ingreso una cedula diferente.");
+                    System.out.println("Excepcion: No existe ese id en la base de datos.");
                 }
             } else {
-                System.out.println("Excepcion: No existe ese id en la base de datos.");
+                System.out.println("Excepcion: Es necesario ingresar un id.");
             }
-        } else {
-            System.out.println("Excepcion: Es necesario ingresar un id.");
+        }else{
+            System.out.println("Excepcion: No tiene permisos para esa accion.");
         }
     }
 
     /**
      * Método que comprueba si el id ingresado existe, si es así, procede a
      * eliminar el usuario por dicho id (JPQL).
+     *
      * @param id
      */
     @Override
@@ -318,6 +337,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
     /**
      * Método que comprueba si el id ingresado existe, si es así, procede a
      * eliminar el usuario por dicho id (SQL).
+     *
      * @param id
      */
     @Override
@@ -330,8 +350,9 @@ public class UsuarioServicioImp implements IUsuarioServicio {
     }
 
     /**
-     * Método que permite encriptar la contrasena haciendo uso 
-     * de la librería Jasypt.
+     * Método que permite encriptar la contrasena haciendo uso de la librería
+     * Jasypt.
+     *
      * @param contrasena
      * @return
      */
@@ -343,8 +364,9 @@ public class UsuarioServicioImp implements IUsuarioServicio {
     }
 
     /**
-     * Método que permite desencriptar la contrasena haciendo 
-     * uso de la librería Jasypt.
+     * Método que permite desencriptar la contrasena haciendo uso de la librería
+     * Jasypt.
+     *
      * @param contrasena
      * @return
      */
@@ -353,6 +375,11 @@ public class UsuarioServicioImp implements IUsuarioServicio {
         aesEncryptor.setPassword("/CEJD/");
         String contrasenaDesencriptada = aesEncryptor.decrypt(contrasena);
         return contrasenaDesencriptada;
+    }
+
+    @Override
+    public void actualizar(Usuario objeto) throws BussinessException, ResourceNotFoundException, EntityValidationException, ResourceConflictException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

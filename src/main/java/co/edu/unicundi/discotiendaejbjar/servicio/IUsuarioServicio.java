@@ -5,9 +5,12 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
+import co.edu.unicundi.discotiendaejbjar.dto.TokenDto;
 import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
-import co.edu.unicundi.discotiendaejbjar.entidad.Token;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
+import co.edu.unicundi.discotiendaejbjar.excepciones.BussinessException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import javax.ejb.Local;
 
@@ -49,12 +52,18 @@ public interface IUsuarioServicio extends ICRUDServicio<Usuario, Integer, Usuari
      * @param contrasena
      * @return 
      */
-    public Token iniciarSesion(String apodo, String contrasena);
+    public TokenDto iniciarSesion(String apodo, String contrasena);
     
     /**
      * Método que permite cerrar la sesión del usuario.
      * @param token 
      */
     public void cerrarSesion(String token);
+    
+    /**
+     * Método que permite actualizar.
+     * @param objeto 
+     */
+    public void actualizarTk(Usuario objeto, String token)throws BussinessException, ResourceNotFoundException,  EntityValidationException, ResourceConflictException;
     
 }
