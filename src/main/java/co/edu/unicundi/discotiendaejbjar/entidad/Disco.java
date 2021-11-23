@@ -76,7 +76,7 @@ public class Disco implements Serializable {
      */
     @NotNull(message = "Debe ingresar minimo un nombre.")
     @Size(min = 3, max = 25, message = "Longitud requerida: Minimo 3 - Maximo 25 caracteres")
-    @Column(name = "nombre", nullable = false, length = 25)
+    @Column(name = "nombre", nullable = false, unique = true, length = 25)
     private String nombre;
 
     /**
