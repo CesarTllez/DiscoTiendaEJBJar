@@ -80,7 +80,7 @@ public class Usuario implements Serializable{
      */
     @NotNull(message = "Debe ingresar un apodo.")
     @Size(min = 3, max = 15, message = "Longitud requerida: Minimo 3 - Maximo 15 caracteres")
-    @Column(name = "apodo", nullable = false, length = 15)
+    @Column(name = "apodo", nullable = false, unique = true, length = 15)
     private String apodo;
     
     /**

@@ -76,7 +76,10 @@ public class UsuarioServicioImp implements IUsuarioServicio {
                 //Restringir servicios por roles.
                 Map<String, Object> permisosRol = new HashMap<>();
                 permisosRol.put(
-                        this.repositorio.buscarPorApodo(apodo).getRol().getId().toString(),
+                        "id",
+                        this.repositorio.buscarPorApodo(apodo).getRol().getId());
+                permisosRol.put(
+                        "nombre",
                         this.repositorio.buscarPorApodo(apodo).getRol().getNombre());
 
                 //Creación del token.
@@ -85,7 +88,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
                         .setSubject(apodo)
                         .setIssuedAt(new Date(fecha))
                         .setExpiration(new Date(fecha + 600000))
-                        .claim("permisos", permisosRol)
+                        .claim("rol", permisosRol)
                         .compact();
 
                 //Se valida si ya existe un token de algún usuario en la base de datos.
