@@ -10,8 +10,10 @@ import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
 import co.edu.unicundi.discotiendaejbjar.entidad.Token;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
 import co.edu.unicundi.discotiendaejbjar.excepciones.BussinessException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.UnauthorizedException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IRolRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IUsuarioRep;
@@ -249,20 +251,21 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * @param objeto
      */
     @Override
-    public void registrar(Usuario objeto) {
+    public void registrar(Usuario objeto) throws ResourceConflictException,UnauthorizedException {
         if (this.repositorioRol.buscarPorId(
                 objeto.getIdRol()).getNombre().equalsIgnoreCase("Administrador")) {
-            System.out.println("Excepcion: El id del rol ingresado no es valido.");
+            throw new UnauthorizedException("El id del rol ingresado no es permitido.");
         } else {
             if (this.repositorio.validarExistenciaPorCedula(objeto.getCedula()) == 1
                     && this.repositorio.validarExistenciaPorCorreo(objeto.getCorreo()) == 1) {
-                System.out.println("Excepcion: Actualmente hay un usuario registrado con esa cedula y ese correo.");
+                
+                throw new ResourceConflictException("Actualmente hay un usuario registrado con esa cedula y ese correo.");
             } else {
                 if (this.repositorio.validarExistenciaPorCorreo(objeto.getCorreo()) == 1) {
-                    System.out.println("Excepcion: Actualmente hay un usuario registrado con ese correo.");
+                    throw new ResourceConflictException(" Actualmente hay un usuario registrado con ese correo.");
                 } else {
                     if (this.repositorio.validarExistenciaPorCedula(objeto.getCedula()) == 1) {
-                        System.out.println("Excepcion: Actualmente hay un usuario registrado con esa cedula.");
+                        throw new ResourceConflictException("Actualmente hay un usuario registrado con esa cedula.");
                     } else {
                         Rol rol = new Rol();
                         rol.setId(objeto.getIdRol());
@@ -283,19 +286,19 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      */
     
     @Override
-    public void actualizar(Usuario objeto) throws ResourceConflictException, ResourceNotFoundException, BussinessException{
+    public void actualizar(Usuario objeto) throws ResourceConflictException, ResourceNotFoundException, BussinessException, EntityValidationException{
         if((objeto.getId() != null)){
             if(this.repositorio.validarExistenciaPorId(objeto.getId()) == 1){
                 if((!objeto.getCedula().equals(this.repositorio.buscarPorId(objeto.getId()).getCedula()))){
                     if(this.repositorio.validarExistenciaPorCedula(objeto.getCedula()) == 1){
+                        
                        throw new ResourceConflictException("Actualmente, hay un usuario registrado con esa cedula.");
                     }else{
                         objeto.setContrasena(this.encriptarContrasena(objeto.getContrasena()));
                         this.repositorio.actualizar(objeto);
                     }
                 }else{
-                    
-                    System.out.println("Excepcion: No ingreso una cedula diferente.");
+                    throw new EntityValidationException("No ingreso una cedula diferente.");
                 }
             }else{
                 throw new ResourceNotFoundException("No existe ese id en la base de datos.");

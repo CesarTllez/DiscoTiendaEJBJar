@@ -9,6 +9,7 @@ import co.edu.unicundi.discotiendaejbjar.excepciones.BussinessException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.UnauthorizedException;
 import java.util.List;
 
 /**
@@ -38,7 +39,7 @@ public interface ICRUDServicio <OBJETO, ID, OBJETODTO> {
      * Método que permite registrar.
      * @param objeto 
      */
-    public void registrar(OBJETO objeto)throws ResourceNotFoundException, EntityValidationException, ResourceConflictException;
+    public void registrar(OBJETO objeto)throws ResourceNotFoundException, EntityValidationException, ResourceConflictException, UnauthorizedException;
     
     /**
      * Método que permite actualizar.
