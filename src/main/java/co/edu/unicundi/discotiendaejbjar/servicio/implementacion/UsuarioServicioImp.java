@@ -9,6 +9,8 @@ import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
 import co.edu.unicundi.discotiendaejbjar.entidad.Token;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
+import co.edu.unicundi.discotiendaejbjar.excepciones.BussinessException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IRolRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
@@ -276,25 +278,28 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * modificar el cliente.
      * @param objeto
      */
+    
     @Override
-    public void actualizar(Usuario objeto) {
-        if ((objeto.getId() != null)) {
-            if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
-                if ((!objeto.getCedula().equals(this.repositorio.buscarPorId(objeto.getId()).getCedula()))) {
-                    if (this.repositorio.validarExistenciaPorCedula(objeto.getCedula()) == 1) {
-                        System.out.println("Excepcion: Actualmente, hay un usuario registrado con esa cedula.");
-                    } else {
+    public void actualizar(Usuario objeto) throws ResourceConflictException, ResourceNotFoundException, BussinessException{
+        if((objeto.getId() != null)){
+            if(this.repositorio.validarExistenciaPorId(objeto.getId()) == 1){
+                if((!objeto.getCedula().equals(this.repositorio.buscarPorId(objeto.getId()).getCedula()))){
+                    if(this.repositorio.validarExistenciaPorCedula(objeto.getCedula()) == 1){
+                       throw new ResourceConflictException("Actualmente, hay un usuario registrado con esa cedula.");
+                    }else{
                         objeto.setContrasena(this.encriptarContrasena(objeto.getContrasena()));
                         this.repositorio.actualizar(objeto);
                     }
-                } else {
+                }else{
+                    
                     System.out.println("Excepcion: No ingreso una cedula diferente.");
                 }
-            } else {
-                System.out.println("Excepcion: No existe ese id en la base de datos.");
+            }else{
+                throw new ResourceNotFoundException("No existe ese id en la base de datos.");
             }
-        } else {
-            System.out.println("Excepcion: Es necesario ingresar un id.");
+        }else{
+            throw new BussinessException("Es necesario ingresar un id.");
+
         }
     }
 
