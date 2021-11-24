@@ -10,6 +10,7 @@ import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  * Clase que contiene los métodos necesarios para operar sobre la base de datos
@@ -27,6 +28,17 @@ public class TokenRepImp implements ITokenRep{
      */
     @PersistenceContext(unitName = "conexionPostgresql")
     private EntityManager manager;
+    
+    /**
+     * Método que permite buscar por el id del usuario.
+     * @param id
+     * @return 
+     */
+    @Override
+    public Token buscarPorIdUsuario(Integer idUsuario) {
+        TypedQuery<Token> query = this.manager.createNamedQuery("Token.buscarPorIdUsuario", Token.class);
+        return query.setParameter("idUsuario", idUsuario).getSingleResult();
+    }
     
     /**
      * Método que permite registrar un token en la base de datos.

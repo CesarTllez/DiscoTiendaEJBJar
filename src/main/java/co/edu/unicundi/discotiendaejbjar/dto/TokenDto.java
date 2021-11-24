@@ -11,54 +11,21 @@ package co.edu.unicundi.discotiendaejbjar.dto;
  */
 public class TokenDto {
     
-    private String sub;
-    
-    private Integer iat;
-    
-    private Integer exp;
-    
-    private RolDto rol;
+    private String contenido;
 
     public TokenDto() {
     }
 
-    public TokenDto(String sub, Integer iat, Integer exp, RolDto rol) {
-        this.sub = sub;
-        this.iat = iat;
-        this.exp = exp;
-        this.rol = rol;
+    public TokenDto(String contenido) {
+        this.contenido = contenido;
     }
 
-    public String getSub() {
-        return sub;
+    public String getContenido() {
+        return contenido;
     }
 
-    public void setSub(String sub) {
-        this.sub = sub;
-    }
-
-    public Integer getIat() {
-        return iat;
-    }
-
-    public void setIat(Integer iat) {
-        this.iat = iat;
-    }
-
-    public Integer getExp() {
-        return exp;
-    }
-
-    public void setExp(Integer exp) {
-        this.exp = exp;
-    }
-
-    public RolDto getRol() {
-        return rol;
-    }
-
-    public void setRol(RolDto rol) {
-        this.rol = rol;
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
     }
     
 }

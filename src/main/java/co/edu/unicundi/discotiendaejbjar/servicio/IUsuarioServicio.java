@@ -5,10 +5,14 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
+import co.edu.unicundi.discotiendaejbjar.dto.TokenDto;
 import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
-import co.edu.unicundi.discotiendaejbjar.entidad.Token;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
+
+import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.UnauthorizedException;
 import javax.ejb.Local;
 
 /**
@@ -27,7 +31,7 @@ public interface IUsuarioServicio extends ICRUDServicio<Usuario, Integer, Usuari
      * @param apodo
      * @return 
      */
-    public Usuario buscarPorApodo(String apodo);
+    public Usuario buscarPorApodo(String apodo)throws ResourceNotFoundException;
     
     /**
      * Método que permite buscar a un usuario por correo.
@@ -49,12 +53,18 @@ public interface IUsuarioServicio extends ICRUDServicio<Usuario, Integer, Usuari
      * @param contrasena
      * @return 
      */
-    public Token iniciarSesion(String apodo, String contrasena);
+    public TokenDto iniciarSesion(String apodo, String contrasena)throws UnauthorizedException, ResourceNotFoundException;
     
     /**
      * Método que permite cerrar la sesión del usuario.
      * @param token 
      */
-    public void cerrarSesion(String token);
+    public void cerrarSesion(String token)throws UnauthorizedException;
+    
+    /**
+     * Método que permite actualizar.
+     * @param objeto 
+     */
+    public void actualizarTk(Usuario objeto, String token)throws  ResourceNotFoundException,  EntityValidationException, ResourceConflictException, UnauthorizedException;
     
 }
