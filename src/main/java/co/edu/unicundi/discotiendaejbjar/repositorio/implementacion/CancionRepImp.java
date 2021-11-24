@@ -117,7 +117,8 @@ public class CancionRepImp implements ICancionRep {
                 .setParameter(1, objeto.getNombre())
                 .setParameter(2, objeto.getDuracion())
                 .setParameter(3, objeto.getPrecio())
-                .setParameter(4, objeto.getDisco().getId())
+                .setParameter(4, objeto.getPortada())
+                .setParameter(5, objeto.getDisco().getId())
                 .executeUpdate();
     }
 
@@ -134,6 +135,7 @@ public class CancionRepImp implements ICancionRep {
                 .setParameter("nombre", objeto.getNombre())
                 .setParameter("duracion", objeto.getDuracion())
                 .setParameter("precio", objeto.getPrecio())
+                .setParameter("portada", objeto.getPortada())
                 .executeUpdate();
     }
 

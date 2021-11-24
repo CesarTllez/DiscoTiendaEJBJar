@@ -102,6 +102,22 @@ public class DiscoServicioImp implements IDiscoServicio {
         }
         return discoDto;
     }
+    /**
+     * Buscar todos los discos por id del artista.
+     * @param idArtista
+     * @return 
+     */
+    @Override
+    public List<DiscoDto> buscarTodosPorIdArtista(Integer idArtista) {
+        ModelMapper mapper = new ModelMapper();
+        
+        //Mapeo de listas con TypeToken.
+        List<DiscoDto> discoDto = mapper.map(
+                this.repositorio.buscarTodosPorIdArtista(idArtista), 
+                new TypeToken<List<DiscoDto>>(){}.getType());
+        
+        return discoDto;
+    }
 
     /**
      * Metodo que comprueba si hay un disco que existe con el mismo nombre.

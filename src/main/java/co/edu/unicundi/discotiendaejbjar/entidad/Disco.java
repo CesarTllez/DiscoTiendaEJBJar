@@ -41,19 +41,21 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     //Buscar todos los discos.
     @NamedQuery(name = "Disco.buscarTodos", query = "SELECT d FROM Disco d"),
+    //Buscar todos los discos por id del artista.
+    @NamedQuery(name = "Disco.buscarTodosPorIdArtista", query = "SELECT d FROM Disco d WHERE d.artista.id = :idArtista"),
     //Buscar discos por id.
     @NamedQuery(name = "Disco.buscarPorId", query = "SELECT d FROM Disco d WHERE d.id = :id"),
     //Buscar discos por nombre.
     @NamedQuery(name = "Disco.buscarPorNombre", query = "SELECT d FROM Disco d WHERE d.nombre = :nombre"),
     //Actualizar discos por id.
-    @NamedQuery(name = "Disco.actualizar", query = "UPDATE Disco d SET d.nombre = :nombre, d.precio = :precio, d.numCanciones = :numCanciones, d.anio = :anio WHERE d.id = :id"),
+    @NamedQuery(name = "Disco.actualizar", query = "UPDATE Disco d SET d.nombre = :nombre, d.precio = :precio, d.numCanciones = :numCanciones, d.anio = :anio, d.portada = portada WHERE d.id = :id"),
     //Eliminar disco por id.
     @NamedQuery(name = "Disco.eliminarPorIdJPQL", query = "DELETE FROM Disco d WHERE d.id = :id")
 })
 //Anotación para queries SQL's
 @NamedNativeQueries({
     //Registrar discos.
-    @NamedNativeQuery(name = "Disco.registrar", query = "INSERT INTO disco (nombre, precio, num_canciones, anio, id_artista) VALUES (?, ?, ?, ?, ?)"),
+    @NamedNativeQuery(name = "Disco.registrar", query = "INSERT INTO disco (nombre, precio, num_canciones, anio, portada, id_artista) VALUES (?, ?, ?, ?, ?, ?)"),
     //Validar la existencia del disco en la BD por id.
     @NamedNativeQuery(name = "Disco.validarExistenciaPorId", query = "SELECT COUNT(*) FROM disco WHERE id = ?"),
     //Validar la existencia del disco en la BD por nombre.
@@ -82,8 +84,8 @@ public class Disco implements Serializable {
     /**
      * Almacena el precio del disco
      */
-    @NotNull(message = "Debe ingresar minimo un precio.")
-    @Column(name = "precio", nullable = false, length = 25)
+    @NotNull(message = "Debe ingresar un precio.")
+    @Column(name = "precio", nullable = false)
     private double precio;
 
     /**
@@ -102,6 +104,9 @@ public class Disco implements Serializable {
     @Size(min = 2, max = 4, message = "Longitud requerida: Minimo 3 - Maximo 25 caracteres")
     @Column(name = "anio", nullable = false, length = 25)
     private String anio;
+    
+    @Column(name = "portada", nullable = false)
+    private String portada;
     
     /**
      * Relación muchos a uno con artista.
@@ -138,13 +143,14 @@ public class Disco implements Serializable {
      * @param anio
      * @param artista
      */
-    public Disco(Integer id, String nombre, double precio, Integer numCanciones, String anio, Artista artista) {
+    public Disco(Integer id, String nombre, double precio, Integer numCanciones, String anio, Artista artista, String portada) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.numCanciones = numCanciones;
         this.anio = anio;
         this.artista = artista;
+        this.portada = portada;
     }
 
     public Integer getId() {
@@ -185,6 +191,14 @@ public class Disco implements Serializable {
 
     public void setAnio(String anio) {
         this.anio = anio;
+    }
+
+    public String getPortada() {
+        return portada;
+    }
+
+    public void setPortada(String portada) {
+        this.portada = portada;
     }
 
     public Artista getArtista() {

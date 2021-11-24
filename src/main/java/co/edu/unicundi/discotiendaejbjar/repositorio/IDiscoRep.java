@@ -6,6 +6,7 @@
 package co.edu.unicundi.discotiendaejbjar.repositorio;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -20,13 +21,21 @@ import javax.ejb.Local;
 @Local
 public interface IDiscoRep extends ICRUDRep<Disco, Integer>{
     
-        /**
+     /**
      * Método que permite buscar la informacion con el nombre de una cancion 
      * si existe en la base de datos.
      * @param nombre
      * @return 
      */
     public Disco buscarPorNombre(String nombre);
+    
+    /**
+     * Método que permite buscar todos los discos con el id del artista
+     * si existe en la base de datos.
+     * @param idArtista
+     * @return 
+     */
+    public List<Disco> buscarTodosPorIdArtista(Integer idArtista);
         /**
      * Método que permite validar con el id si una cancion existe en la base de datos.
      * @param id
