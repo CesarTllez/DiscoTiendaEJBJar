@@ -133,7 +133,6 @@ public class CancionServicioImp implements ICancionServicio {
     public void registrar(Cancion objeto) throws EntityValidationException, ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1) {
             throw new EntityValidationException("Actualmente hay una cancion registrada con ese nombre.");
-         
         } else {
             if(this.repositorioDisco.validarExistenciaPorId(objeto.getIdDisco()) == 1){
                 Disco disco = new Disco();

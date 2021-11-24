@@ -42,14 +42,14 @@ import javax.validation.constraints.Size;
     //Buscar canciones por disco.
     @NamedQuery(name = "Cancion.buscarTodosPorIdDisco", query = "SELECT c FROM Cancion c WHERE c.disco.id = :idDisco"),
     //Actualizar canciones por id.
-    @NamedQuery(name = "Cancion.actualizar", query = "UPDATE Cancion c SET c.nombre = :nombre, c.duracion = :duracion, c.precio = :precio, c.portada = portada  WHERE c.id = :id"),
+    @NamedQuery(name = "Cancion.actualizar", query = "UPDATE Cancion c SET c.nombre = :nombre, c.duracion = :duracion, c.precio = :precio  WHERE c.id = :id"),
     //Eliminar cancion por id.
     @NamedQuery(name = "Cancion.eliminarPorIdJPQL", query = "DELETE FROM Cancion c WHERE c.id = :id")
 })
 //Anotación para queries SQL's
 @NamedNativeQueries({
      //Registrar cancion.
-    @NamedNativeQuery(name = "Cancion.registrar", query = "INSERT INTO cancion (nombre, duracion, precio, portada, id_disco) VALUES (?, ?, ?, ?, ?)"),
+    @NamedNativeQuery(name = "Cancion.registrar", query = "INSERT INTO cancion (nombre, duracion, precio, id_disco) VALUES (?, ?, ?, ?)"),
     //Validar la existencia de la canción en la BD por id.
     @NamedNativeQuery(name = "Cancion.validarExistenciaPorId", query = "SELECT COUNT(*) FROM cancion WHERE id = ?") ,
     //Validar la existencia de la canción en la BD por nombre.
@@ -90,9 +90,6 @@ public class Cancion implements Serializable{
     @Column(name = "precio", nullable = false)
     private double precio;
     
-    @Column(name = "portada", nullable = false)
-    private String portada;
-    
     /**
      * Relación muchos a uno con rol.
      */
@@ -119,15 +116,13 @@ public class Cancion implements Serializable{
      * @param nombre
      * @param duracion
      * @param precio
-     * @param portada
      * @param disco 
      */
-    public Cancion(Integer id, String nombre, String duracion, double precio, String portada, Disco disco) {
+    public Cancion(Integer id, String nombre, String duracion, double precio, Disco disco) {
         this.id = id;
         this.nombre = nombre;
         this.duracion = duracion;
         this.precio = precio;
-        this.portada = portada;
         this.disco = disco;
     }
 
@@ -160,14 +155,6 @@ public class Cancion implements Serializable{
 
     public void setPrecio(double precio) {
         this.precio = precio;
-    }
-
-    public String getPortada() {
-        return portada;
-    }
-
-    public void setPortada(String portada) {
-        this.portada = portada;
     }
 
     public Disco getDisco() {

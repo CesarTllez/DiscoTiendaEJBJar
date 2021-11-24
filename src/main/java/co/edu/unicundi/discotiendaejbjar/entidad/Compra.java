@@ -7,12 +7,18 @@ package co.edu.unicundi.discotiendaejbjar.entidad;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -23,6 +29,13 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "compra")
+//Anotación para queries JPQL's.
+@NamedQueries({
+    //Buscar compra por el id del usuario.
+    @NamedQuery(name = "Compra.buscarTodos", query = "SELECT c FROM Compra c"),
+    //Buscar compra por el nombre del producto y el precio del mismo
+    @NamedQuery(name = "Compra.buscarPorNombrePdYPrecio", query = "SELECT c FROM Compra c WHERE c.nombreProducto = :nombreProducto AND c.precioProducto = :precioProducto"),
+})
 public class Compra implements Serializable{
     
     /**
@@ -33,7 +46,7 @@ public class Compra implements Serializable{
     private Integer id;
     
     /**
-     * Almacena el nombre..
+     * Almacena el nombre del producto.
      */
     @NotNull(message = "Debe ingresar un nombre.")
     @Size(min = 3, max = 25, message = "Longitud requerida: Minimo 3 - Maximo 25 caracteres")
@@ -41,7 +54,7 @@ public class Compra implements Serializable{
     private String nombreProducto;
     
     /**
-     * Almacena el precio.
+     * Almacena el precio del producto.
      */
     @NotNull(message = "Debe ingresar un precio.")
     @Column(name = "precio_producto", nullable = false)
@@ -53,6 +66,12 @@ public class Compra implements Serializable{
     @Column(name = "fecha", nullable = false)
     private String fecha;
 
+    /**
+     * Relación uno a muchos con usuario.
+     */
+    @OneToMany(mappedBy = "compra", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<UsuarioCompra> usuarioCompra;
+    
     /**
      * Contructor pot defecto de la clase.
      */
@@ -104,6 +123,14 @@ public class Compra implements Serializable{
         this.fecha = fecha;
     }
 
+    public List<UsuarioCompra> getUsuarioCompra() {
+        return usuarioCompra;
+    }
+
+    public void setUsuarioCompra(List<UsuarioCompra> usuarioCompra) {
+        this.usuarioCompra = usuarioCompra;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
