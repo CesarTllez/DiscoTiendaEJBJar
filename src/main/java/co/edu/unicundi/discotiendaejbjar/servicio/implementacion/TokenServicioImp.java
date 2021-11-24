@@ -5,6 +5,7 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
+import co.edu.unicundi.discotiendaejbjar.excepciones.UnauthorizedException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
 import co.edu.unicundi.discotiendaejbjar.servicio.ITokenServicio;
 import javax.ejb.EJB;
@@ -34,7 +35,7 @@ public class TokenServicioImp implements ITokenServicio{
      * @return 
      */
     @Override
-    public Long validarExistenciaPorContenido(String contenido) {
+    public Long validarExistenciaPorContenido(String contenido){
         return this.repositorio.validarExistenciaPorContenido(contenido);
     }
     

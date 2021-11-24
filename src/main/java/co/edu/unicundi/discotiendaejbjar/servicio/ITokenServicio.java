@@ -5,6 +5,7 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
+import co.edu.unicundi.discotiendaejbjar.excepciones.UnauthorizedException;
 import javax.ejb.Local;
 
 /**

@@ -9,11 +9,9 @@ package co.edu.unicundi.discotiendaejbjar.excepciones;
  *
  * @author eison
  */
-public class BussinessException extends Exception{
-
-    public BussinessException(String string) {
-        super(string);
+public class UnauthorizedException extends Exception{
+    
+        public UnauthorizedException(String string) {
+        super(string); 
     }
-    
-    
 }

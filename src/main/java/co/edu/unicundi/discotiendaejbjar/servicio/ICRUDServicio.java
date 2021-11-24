@@ -5,10 +5,11 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
-import co.edu.unicundi.discotiendaejbjar.excepciones.BussinessException;
+
 import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.UnauthorizedException;
 import java.util.List;
 
 /**
@@ -38,13 +39,13 @@ public interface ICRUDServicio <OBJETO, ID, OBJETODTO> {
      * Método que permite registrar.
      * @param objeto 
      */
-    public void registrar(OBJETO objeto)throws ResourceNotFoundException, EntityValidationException, ResourceConflictException;
+    public void registrar(OBJETO objeto)throws ResourceNotFoundException, EntityValidationException, ResourceConflictException, UnauthorizedException;
     
     /**
      * Método que permite actualizar.
      * @param objeto 
      */
-    public void actualizar(OBJETO objeto)throws BussinessException, ResourceNotFoundException,  EntityValidationException, ResourceConflictException;
+    public void actualizar(OBJETO objeto)throws  ResourceNotFoundException,  EntityValidationException, ResourceConflictException;
     
     /**
      * Método que permite eliminar por JPQL.

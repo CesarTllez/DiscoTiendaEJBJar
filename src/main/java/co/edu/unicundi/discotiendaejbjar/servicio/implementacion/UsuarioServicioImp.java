@@ -10,10 +10,10 @@ import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
 import co.edu.unicundi.discotiendaejbjar.entidad.Token;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
-import co.edu.unicundi.discotiendaejbjar.excepciones.BussinessException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.UnauthorizedException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IRolRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IUsuarioRep;
@@ -68,7 +68,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * @return token
      */
     @Override
-    public TokenDto iniciarSesion(String apodo, String contrasena) {
+    public TokenDto iniciarSesion(String apodo, String contrasena)throws UnauthorizedException, ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorApodo(apodo) == 1) {
             if (this.desencriptarContrasena(
                     this.repositorio.buscarPorApodo(apodo).getContrasena())
@@ -112,16 +112,12 @@ public class UsuarioServicioImp implements IUsuarioServicio {
                 return tokenDto;
             } else {
                 //Crear excepción personalizada - 401 No autorizado
-                System.out.println("Excepcion: La contrasena ingresada es incorrecta.");
+                throw new UnauthorizedException("La contrasena ingresada es incorrecta.");
             }
         } else {
-            System.out.println("Excepcion: El apodo ingresado no existe en la base de datos.");
+            throw new ResourceNotFoundException("El apodo ingresado no existe en la base de datos.");
         }
-        /*Eliminar cuando se implementen las excepciones.
-         */
-        TokenDto t = new TokenDto();
-        return t;
-        //----------------------------------------------
+
     }
 
     /**
@@ -130,11 +126,11 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * @param token
      */
     @Override
-    public void cerrarSesion(String token) {
+    public void cerrarSesion(String token)throws UnauthorizedException{
         if (this.repositorioToken.validarExistenciaPorContenido(token) == 1) {
             this.repositorioToken.eliminarPorContenidoJPQL(token);
         } else {
-            System.out.println("Excepcion: El usuario no tiene ninguna sesion activa.");
+            throw new UnauthorizedException("El usuario no tiene ninguna sesion activa.");
         }
     }
 
@@ -168,18 +164,12 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * @return
      */
     @Override
-    public Usuario buscarPorApodo(String apodo) {
+    public Usuario buscarPorApodo(String apodo)throws ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorApodo(apodo) == 1) {
             return this.repositorio.buscarPorApodo(apodo);
         } else {
-            System.out.println("Excepcion: El apodo ingresado no existe en la base de datos.");
+            throw new ResourceNotFoundException("El apodo ingresado no existe en la base de datos.");
         }
-        /*Objeto que debe borrarse cuando se implementen las excepciones.
-         */
-        Usuario u = new Usuario();
-        /**/
-        return u;
-        /*---------------------------------------------------------*/
     }
 
     /**
@@ -260,20 +250,21 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * @param objeto
      */
     @Override
-    public void registrar(Usuario objeto) {
+    public void registrar(Usuario objeto) throws ResourceConflictException,UnauthorizedException {
         if (this.repositorioRol.buscarPorId(
                 objeto.getIdRol()).getNombre().equalsIgnoreCase("Administrador")) {
-            System.out.println("Excepcion: El id del rol ingresado no es valido.");
+            throw new UnauthorizedException("El id del rol ingresado no es permitido.");
         } else {
             if (this.repositorio.validarExistenciaPorCedula(objeto.getCedula()) == 1
                     && this.repositorio.validarExistenciaPorCorreo(objeto.getCorreo()) == 1) {
-                System.out.println("Excepcion: Actualmente hay un usuario registrado con esa cedula y ese correo.");
+                
+                throw new ResourceConflictException("Actualmente hay un usuario registrado con esa cedula y ese correo.");
             } else {
                 if (this.repositorio.validarExistenciaPorCorreo(objeto.getCorreo()) == 1) {
-                    System.out.println("Excepcion: Actualmente hay un usuario registrado con ese correo.");
+                    throw new ResourceConflictException(" Actualmente hay un usuario registrado con ese correo.");
                 } else {
                     if (this.repositorio.validarExistenciaPorCedula(objeto.getCedula()) == 1) {
-                        System.out.println("Excepcion: Actualmente hay un usuario registrado con esa cedula.");
+                        throw new ResourceConflictException("Actualmente hay un usuario registrado con esa cedula.");
                     } else {
                         Rol rol = new Rol();
                         rol.setId(objeto.getIdRol());
@@ -293,29 +284,31 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * @param objeto
      * @param token
      */
+    
     @Override
-    public void actualizarTk(Usuario objeto, String token) {
+    public void actualizarTk(Usuario objeto, String token) throws ResourceConflictException, EntityValidationException, ResourceNotFoundException, UnauthorizedException{
         if (this.repositorioToken.buscarPorIdUsuario(objeto.getId()).getContenido().equals(token)) {
             if ((objeto.getId() != null)) {
                 if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
                     if ((!objeto.getCedula().equals(this.repositorio.buscarPorId(objeto.getId()).getCedula()))) {
                         if (this.repositorio.validarExistenciaPorCedula(objeto.getCedula()) == 1) {
-                            System.out.println("Excepcion: Actualmente, hay un usuario registrado con esa cedula.");
+                            throw new ResourceConflictException("Actualmente, hay un usuario registrado con esa cedula.");
                         } else {
                             objeto.setContrasena(this.encriptarContrasena(objeto.getContrasena()));
                             this.repositorio.actualizar(objeto);
                         }
                     } else {
-                        System.out.println("Excepcion: No ingreso una cedula diferente.");
+                        throw new EntityValidationException("No ingreso una cedula diferente.");
                     }
                 } else {
-                    System.out.println("Excepcion: No existe ese id en la base de datos.");
+                    throw new ResourceNotFoundException("No existe ese id en la base de datos.");
                 }
             } else {
-                System.out.println("Excepcion: Es necesario ingresar un id.");
+                throw new EntityValidationException("Es necesario ingresar un id.");
             }
         }else{
-            System.out.println("Excepcion: No tiene permisos para esa accion.");
+            throw new UnauthorizedException("No tiene permisos para realizar esta accion.");
+
         }
     }
 
@@ -378,7 +371,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
     }
 
     @Override
-    public void actualizar(Usuario objeto) throws BussinessException, ResourceNotFoundException, EntityValidationException, ResourceConflictException {
+    public void actualizar(Usuario objeto) throws  ResourceNotFoundException, EntityValidationException, ResourceConflictException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

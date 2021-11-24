@@ -6,7 +6,7 @@
 package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Artista;
-import co.edu.unicundi.discotiendaejbjar.excepciones.BussinessException;
+
 import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
@@ -80,7 +80,7 @@ public class ArtistaServicioImp implements IArtistaServicio{
      * @param objeto 
      */
     @Override
-    public void actualizar(Artista objeto) throws BussinessException, EntityValidationException, ResourceNotFoundException, ResourceConflictException{
+    public void actualizar(Artista objeto) throws  EntityValidationException, ResourceNotFoundException, ResourceConflictException{
         if((objeto.getId() != null)){
             if(this.repositorio.validarExistenciaPorId(objeto.getId()) == 1){
                 if((!objeto.getNombre().equals(this.repositorio.buscarPorId(objeto.getId()).getNombre()))){
@@ -92,7 +92,7 @@ public class ArtistaServicioImp implements IArtistaServicio{
                 throw  new ResourceNotFoundException("No existe ese id en la base de datos.");
             }
         }else{
-            throw  new BussinessException("Es necesario ingresar un id.");
+            throw  new EntityValidationException("Es necesario ingresar un id.");
         }
     }
 

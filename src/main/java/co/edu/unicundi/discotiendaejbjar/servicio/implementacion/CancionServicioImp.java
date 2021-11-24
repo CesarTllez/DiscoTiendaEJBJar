@@ -8,7 +8,6 @@ package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 import co.edu.unicundi.discotiendaejbjar.dto.CancionDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
-import co.edu.unicundi.discotiendaejbjar.excepciones.BussinessException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ICancionRep;
@@ -156,7 +155,7 @@ public class CancionServicioImp implements ICancionServicio {
      * @param objeto
      */
     @Override
-    public void actualizar(Cancion objeto)throws ResourceNotFoundException, BussinessException{
+    public void actualizar(Cancion objeto)throws ResourceNotFoundException, EntityValidationException{
         if ((objeto.getId() != null)) {
             if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
                 this.repositorio.actualizar(objeto);
@@ -165,7 +164,7 @@ public class CancionServicioImp implements ICancionServicio {
               
             }
         } else {
-            throw new BussinessException("Es necesario ingresar un id.");
+            throw new EntityValidationException("Es necesario ingresar un id.");
         }
     }
 
