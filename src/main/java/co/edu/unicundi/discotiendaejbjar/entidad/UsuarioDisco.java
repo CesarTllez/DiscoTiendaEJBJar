@@ -10,6 +10,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
 
 /**
@@ -18,6 +20,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "usuario_disco")
+//Anotación para queries SQL's
+@NamedNativeQueries({
+    //Registrar usuario - disco..
+    @NamedNativeQuery(name = "UsuarioDisco.registrar", query = "INSERT INTO usuario_disco (disco_id, usuario_id) VALUES (?, ?)"),
+})
 public class UsuarioDisco implements Serializable {
     
     @EmbeddedId

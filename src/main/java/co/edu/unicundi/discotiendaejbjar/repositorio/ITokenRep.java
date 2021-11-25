@@ -26,6 +26,13 @@ public interface ITokenRep {
     public Token buscarPorIdUsuario(Integer idUsuario);
     
     /**
+     * Método que permite buscar por contenido.
+     * @param token
+     * @return 
+     */
+    public Token buscarPorContenido(String token);
+    
+    /**
      * Método que permite registrar un token en la base de datos.
      * @param token 
      */

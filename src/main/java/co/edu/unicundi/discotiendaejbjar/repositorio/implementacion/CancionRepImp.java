@@ -161,4 +161,17 @@ public class CancionRepImp implements ICancionRep {
                 .executeUpdate();
     }
 
+    /**
+     * Método que permite registrar en la base de datos una compra de una canción.
+     * @param idCancion
+     * @param idUsuario 
+     */
+    @Override
+    public void registrarCompra(Integer idCancion, Integer idUsuario) {
+        this.manager.createNamedQuery("UsuarioCancion.registrar")
+                .setParameter(1, idCancion)
+                .setParameter(2, idUsuario)
+                .executeUpdate();
+    }
+
 }

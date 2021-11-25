@@ -158,5 +158,18 @@ public class DiscoRepImp implements IDiscoRep {
                 .setParameter(1, id)
                 .executeUpdate();
     }
+    
+    /**
+     * Método que permite registrar en la base de datos una compra del disco.
+     * @param idDisco
+     * @param idUsuario 
+     */
+    @Override
+    public void registrarCompra(Integer idDisco, Integer idUsuario) {
+        this.manager.createNamedQuery("UsuarioDisco.registrar")
+                .setParameter(1, idDisco)
+                .setParameter(2, idUsuario)
+                .executeUpdate();
+    }
 
 }

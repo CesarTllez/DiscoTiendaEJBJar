@@ -50,4 +50,11 @@ public interface IDiscoRep extends ICRUDRep<Disco, Integer>{
      */
     public Long validarExistenciaPorNombre(String nombre);
     
+    /**
+     * Método que permite registrar una compra de un disco en la base de datos.
+     * @param idDisco
+     * @param idUsuario 
+     */
+    public void registrarCompra(Integer idDisco, Integer idUsuario);
+    
 }

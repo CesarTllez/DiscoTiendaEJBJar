@@ -31,13 +31,24 @@ public class TokenRepImp implements ITokenRep{
     
     /**
      * Método que permite buscar por el id del usuario.
-     * @param id
+     * @param idUsuario
      * @return 
      */
     @Override
     public Token buscarPorIdUsuario(Integer idUsuario) {
         TypedQuery<Token> query = this.manager.createNamedQuery("Token.buscarPorIdUsuario", Token.class);
         return query.setParameter("idUsuario", idUsuario).getSingleResult();
+    }
+    
+    /**
+     * Método que permite buscar por el contenido en la base de datos.
+     * @param contenido
+     * @return 
+     */
+    @Override
+    public Token buscarPorContenido(String contenido) {
+        TypedQuery<Token> query = this.manager.createNamedQuery("Token.buscarPorContenido", Token.class);
+        return query.setParameter("contenido", contenido).getSingleResult();
     }
     
     /**

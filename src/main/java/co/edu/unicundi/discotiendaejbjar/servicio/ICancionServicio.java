@@ -6,9 +6,8 @@
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
 import co.edu.unicundi.discotiendaejbjar.dto.CancionDto;
+import co.edu.unicundi.discotiendaejbjar.dto.CompraDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
-import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
-import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import java.util.List;
 import javax.ejb.Local;
@@ -35,8 +34,16 @@ public interface ICancionServicio extends ICRUDServicio<Cancion, Integer, Cancio
     
     /**
      * Método que permite buscar todas las canciones por id del disco.
+     * @param idDisco
      * @return 
      */
     public List<CancionDto> buscarTodosPorIdDisco(Integer idDisco)throws  ResourceNotFoundException;
 
+    /**
+     * Método que permite registrar una compra de una canción en la base de datos.
+     * @param idDisco
+     * @param token 
+     */
+    public void registrarCompra(CompraDto idDisco, String token);
+    
 }

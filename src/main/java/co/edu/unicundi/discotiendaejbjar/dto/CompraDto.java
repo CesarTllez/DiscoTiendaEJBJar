@@ -13,12 +13,6 @@ public class CompraDto {
     
     private Integer id;
     
-    private String nombreProducto;
-    
-    private double precioProducto;
-    
-    private String fecha;
-
     public CompraDto() {
     }
 
@@ -28,30 +22,6 @@ public class CompraDto {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getNombreProducto() {
-        return nombreProducto;
-    }
-
-    public void setNombreProducto(String nombreProducto) {
-        this.nombreProducto = nombreProducto;
-    }
-
-    public double getPrecioProducto() {
-        return precioProducto;
-    }
-
-    public void setPrecioProducto(double precioProducto) {
-        this.precioProducto = precioProducto;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
     }
     
 }

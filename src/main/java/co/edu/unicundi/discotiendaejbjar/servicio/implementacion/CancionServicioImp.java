@@ -6,18 +6,19 @@
 package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
 import co.edu.unicundi.discotiendaejbjar.dto.CancionDto;
+import co.edu.unicundi.discotiendaejbjar.dto.CompraDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
 import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ICancionRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IDiscoRep;
+import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
 
 import co.edu.unicundi.discotiendaejbjar.servicio.ICancionServicio;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.resource.spi.ResourceAdapterInternalException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 
@@ -43,6 +44,12 @@ public class CancionServicioImp implements ICancionServicio {
      */
     @EJB
     private IDiscoRep repositorioDisco;
+    
+    /**
+     * Permite acceder a los métodos que operan la base de datos.
+     */
+    @EJB
+    private ITokenRep repositorioToken;
 
     /**
      * Método que comprueba si el nombre existe, si es así, busca la cancion con
@@ -196,6 +203,15 @@ public class CancionServicioImp implements ICancionServicio {
         } else {
             throw new ResourceNotFoundException("No existe ese id en la base de datos.");
         }
+    }
+
+    @Override
+    public void registrarCompra(CompraDto idDisco, String token) {
+        this.repositorio.registrarCompra(idDisco.getId(), 
+                this.repositorioToken
+                      .buscarPorContenido(token)
+                      .getUsuario()
+                      .getId());
     }
 
 }

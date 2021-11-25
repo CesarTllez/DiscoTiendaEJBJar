@@ -5,6 +5,7 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
+import co.edu.unicundi.discotiendaejbjar.dto.CompraDto;
 import co.edu.unicundi.discotiendaejbjar.dto.DiscoDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Artista;
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
@@ -13,6 +14,7 @@ import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IArtistaRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IDiscoRep;
+import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
 import co.edu.unicundi.discotiendaejbjar.servicio.IDiscoServicio;
 import java.util.List;
 import javax.ejb.EJB;
@@ -32,16 +34,22 @@ import org.modelmapper.TypeToken;
 public class DiscoServicioImp implements IDiscoServicio {
 
     /**
-     * Permite acceder a los métodos que operan la base de datos.
+     * Permite acceder a los métodos del disco que operan la base de datos.
      */
     @EJB
     private IDiscoRep repositorio;
     
     /**
-     * Permite acceder a los métodos que operan la base de datos.
+     * Permite acceder a los métodos del artista que operan la base de datos.
      */
     @EJB
     private IArtistaRep repositorioArtista;
+    
+    /**
+     * Permite acceder a los métodos que operan la base de datos.
+     */
+    @EJB
+    private ITokenRep repositorioToken;
 
     /**
      * Método que comprueba si el nombre existe, si es así, busca el disco con
@@ -184,8 +192,16 @@ public class DiscoServicioImp implements IDiscoServicio {
             this.repositorio.eliminarSQL(id);
         } else {  
             throw new ResourceNotFoundException("No existe ese id en la base de datos.");
-
         }
+    }
+
+    @Override
+    public void registrarCompra(CompraDto idDisco, String token) {
+        this.repositorio.registrarCompra(idDisco.getId(), 
+                this.repositorioToken
+                      .buscarPorContenido(token)
+                      .getUsuario()
+                      .getId());
     }
 
 }
