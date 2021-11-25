@@ -6,6 +6,8 @@
 package co.edu.unicundi.discotiendaejbjar.repositorio;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
+import co.edu.unicundi.discotiendaejbjar.entidad.UsuarioCancion;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -68,5 +70,12 @@ public interface IUsuarioRep extends ICRUDRep<Usuario, Integer>{
      * @return existencia
      */
     public Long validarExistenciaPorCorreo(String correo);
+    
+    /**
+     * Método que permite buscar los id de las canciones compradas por el id del usuario.
+     * @param idUsuario
+     * @return 
+     */
+    public List<UsuarioCancion> buscarCancionesPorIdUsuario(Integer idUsuario);
     
 }

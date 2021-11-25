@@ -10,18 +10,22 @@ import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
 import co.edu.unicundi.discotiendaejbjar.entidad.Token;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
+import co.edu.unicundi.discotiendaejbjar.entidad.UsuarioCancion;
 import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.UnauthorizedException;
+import co.edu.unicundi.discotiendaejbjar.repositorio.ICancionRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IRolRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IUsuarioRep;
 import co.edu.unicundi.discotiendaejbjar.servicio.IUsuarioServicio;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -59,6 +63,12 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      */
     @EJB
     private IRolRep repositorioRol;
+    
+    /**
+     * Permite acceder a los métodos de la cancion que operan la base de datos.
+     */
+    @EJB
+    private ICancionRep repositorioCancion;
 
     /**
      * Método que retorna el token para el inicio de sesión.
@@ -164,9 +174,14 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * @return
      */
     @Override
-    public Usuario buscarPorApodo(String apodo)throws ResourceNotFoundException{
+    public UsuarioDto buscarPorApodo(String apodo)throws ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorApodo(apodo) == 1) {
-            return this.repositorio.buscarPorApodo(apodo);
+            UsuarioDto usuarioDto = new UsuarioDto();
+            ModelMapper mapper = new ModelMapper();
+            mapper.map(this.repositorio.buscarPorApodo(apodo), usuarioDto);
+            usuarioDto.setContrasena(this.desencriptarContrasena(this.repositorio.buscarPorApodo(apodo).getContrasena()));
+            usuarioDto.setIdRol(this.repositorio.buscarPorApodo(apodo).getRol().getId());
+            return usuarioDto;
         } else {
             throw new ResourceNotFoundException("El apodo ingresado no existe en la base de datos.");
         }
@@ -284,7 +299,6 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * @param objeto
      * @param token
      */
-    
     @Override
     public void actualizarTk(Usuario objeto, String token) throws ResourceConflictException, EntityValidationException, ResourceNotFoundException, UnauthorizedException{
         if (this.repositorioToken.buscarPorIdUsuario(objeto.getId()).getContenido().equals(token)) {
@@ -370,6 +384,27 @@ public class UsuarioServicioImp implements IUsuarioServicio {
         return contrasenaDesencriptada;
     }
 
+    /**
+     * Método que permite mostrar el historial de compras.
+     * @param token
+     * @return 
+     */
+    @Override
+    public List<UsuarioCancion> mostrarCompras(String token) {
+        ModelMapper mapper = new ModelMapper();
+        Integer idUsuario = this.repositorioToken
+                .buscarPorContenido(token)
+                .getUsuario()
+                .getId();
+        
+        Iterator<UsuarioCancion> it = this.repositorio.buscarCancionesPorIdUsuario(idUsuario).iterator();
+        while(it.hasNext()){
+            System.out.println(it.next());
+        }
+        
+        return this.repositorio.buscarCancionesPorIdUsuario(idUsuario);
+    }
+    
     @Override
     public void actualizar(Usuario objeto) throws  ResourceNotFoundException, EntityValidationException, ResourceConflictException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

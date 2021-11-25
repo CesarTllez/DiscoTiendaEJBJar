@@ -11,13 +11,13 @@ import java.io.Serializable;
  *
  * @author cesar
  */
-public class UsuarioCompraDto implements Serializable{
+public class UsuarioCancionDto implements Serializable{
     
     private UsuarioDto usuarioDto;
     
-    private CompraDto compraDto;
+    private CancionDto cancionDto;
 
-    public UsuarioCompraDto() {
+    public UsuarioCancionDto() {
     }
 
     public UsuarioDto getUsuarioDto() {
@@ -28,12 +28,12 @@ public class UsuarioCompraDto implements Serializable{
         this.usuarioDto = usuarioDto;
     }
 
-    public CompraDto getCompraDto() {
-        return compraDto;
+    public CancionDto getCancionDto() {
+        return cancionDto;
     }
 
-    public void setCompraDto(CompraDto compraDto) {
-        this.compraDto = compraDto;
+    public void setCancionDto(CancionDto cancionDto) {
+        this.cancionDto = cancionDto;
     }
     
 }

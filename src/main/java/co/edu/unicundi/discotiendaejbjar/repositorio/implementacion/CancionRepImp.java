@@ -117,7 +117,8 @@ public class CancionRepImp implements ICancionRep {
                 .setParameter(1, objeto.getNombre())
                 .setParameter(2, objeto.getDuracion())
                 .setParameter(3, objeto.getPrecio())
-                .setParameter(5, objeto.getDisco().getId())
+                .setParameter(5, objeto.getIdDisco())
+                .setParameter(6, objeto.getIdFormato())
                 .executeUpdate();
     }
 

@@ -20,16 +20,19 @@ public class CancionDto {
     private double precio;
     
     private Integer idDisco;
+    
+    private Integer idFormato;
 
     public CancionDto() {
     }
 
-    public CancionDto(Integer id, String nombre, String duracion, double precio, Integer idDisco) {
+    public CancionDto(Integer id, String nombre, String duracion, double precio, Integer idDisco, Integer idFormato) {
         this.id = id;
         this.nombre = nombre;
         this.duracion = duracion;
         this.precio = precio;
         this.idDisco = idDisco;
+        this.idFormato = idFormato;
     }
 
     public Integer getId() {
@@ -70,6 +73,14 @@ public class CancionDto {
 
     public void setIdDisco(Integer idDisco) {
         this.idDisco = idDisco;
+    }
+
+    public Integer getIdFormato() {
+        return idFormato;
+    }
+
+    public void setIdFormato(Integer idFormato) {
+        this.idFormato = idFormato;
     }
     
 }

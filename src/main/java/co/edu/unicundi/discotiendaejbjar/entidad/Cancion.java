@@ -50,7 +50,7 @@ import javax.validation.constraints.Size;
 //Anotación para queries SQL's
 @NamedNativeQueries({
      //Registrar cancion.
-    @NamedNativeQuery(name = "Cancion.registrar", query = "INSERT INTO cancion (nombre, duracion, precio, id_disco) VALUES (?, ?, ?, ?)"),
+    @NamedNativeQuery(name = "Cancion.registrar", query = "INSERT INTO cancion (nombre, duracion, precio, id_disco, id_formato) VALUES (?, ?, ?, ?, ?)"),
     //Validar la existencia de la canción en la BD por id.
     @NamedNativeQuery(name = "Cancion.validarExistenciaPorId", query = "SELECT COUNT(*) FROM cancion WHERE id = ?") ,
     //Validar la existencia de la canción en la BD por nombre.
@@ -99,10 +99,23 @@ public class Cancion implements Serializable{
     private Disco disco;
     
     /**
+     * Relación muchos a uno con formato.
+     */
+    @ManyToOne()
+    @JoinColumn(name = "id_formato", nullable = false)
+    private Formato formato;
+    
+    /**
      * Atributo volàtil que almacena el id del disco.
      */
     @Transient
     private Integer idDisco;
+    
+    /**
+     * Atributo volàtil que almacena el id del formato.
+     */
+    @Transient
+    private Integer idFormato;
 
      /**
      * Contructor pot defecto de la clase.
@@ -119,12 +132,13 @@ public class Cancion implements Serializable{
      * @param precio
      * @param disco 
      */
-    public Cancion(Integer id, String nombre, String duracion, double precio, Disco disco) {
+    public Cancion(Integer id, String nombre, String duracion, double precio, Disco disco, Formato formato) {
         this.id = id;
         this.nombre = nombre;
         this.duracion = duracion;
         this.precio = precio;
         this.disco = disco;
+        this.formato = formato;
     }
 
     public Integer getId() {
@@ -172,6 +186,22 @@ public class Cancion implements Serializable{
 
     public void setIdDisco(Integer idDisco) {
         this.idDisco = idDisco;
+    }
+
+    public Formato getFormato() {
+        return formato;
+    }
+
+    public void setFormato(Formato formato) {
+        this.formato = formato;
+    }
+
+    public Integer getIdFormato() {
+        return idFormato;
+    }
+
+    public void setIdFormato(Integer idFormato) {
+        this.idFormato = idFormato;
     }
 
     @Override

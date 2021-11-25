@@ -75,7 +75,7 @@ public class Disco implements Serializable {
     private Integer id;
 
     /**
-     * Almacena los nombres.
+     * Almacena el nombre.
      */
     @NotNull(message = "Debe ingresar minimo un nombre.")
     @Size(min = 3, max = 25, message = "Longitud requerida: Minimo 3 - Maximo 25 caracteres")
@@ -95,7 +95,7 @@ public class Disco implements Serializable {
     @NotNull(message = "Debe ingresar minimo un numero de canciones.")
     @Min(value = 1, message = "Debe tener como minimo una cancion")
     @Max(value = 1000, message = "maximo son 1000")
-    @Column(name = "num_canciones", nullable = false, length = 25)
+    @Column(name = "num_canciones", nullable = true, length = 25)
     private Integer numCanciones;
 
     /**
@@ -106,6 +106,9 @@ public class Disco implements Serializable {
     @Column(name = "anio", nullable = false, length = 25)
     private String anio;
     
+    /**
+     * Almacena la portada.
+     */
     @Column(name = "portada", nullable = false)
     private String portada;
     

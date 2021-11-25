@@ -6,6 +6,7 @@
 package co.edu.unicundi.discotiendaejbjar.repositorio.implementacion;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
+import co.edu.unicundi.discotiendaejbjar.entidad.UsuarioCancion;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IUsuarioRep;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -191,6 +192,20 @@ public class UsuarioRepImp implements IUsuarioRep{
                 .setParameter(1, correo)
                 .getSingleResult();
         return query;
+    }
+    
+    /**
+     * Método que permite buscar en la base de datos los id de las 
+     * canciones compradas por el id del usuario.
+     * @param idUsuario
+     * @return 
+     */
+    @Override
+    public List<UsuarioCancion> buscarCancionesPorIdUsuario(Integer idUsuario) {
+        TypedQuery<UsuarioCancion> query = this.manager.createNamedQuery("UsuarioCancion.buscarUCPorIdUsuario", UsuarioCancion.class);
+        return query
+                .setParameter(1, idUsuario)
+                .getResultList();
     }
     
 }

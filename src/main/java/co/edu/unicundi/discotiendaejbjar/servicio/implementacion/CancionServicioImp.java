@@ -9,6 +9,7 @@ import co.edu.unicundi.discotiendaejbjar.dto.CancionDto;
 import co.edu.unicundi.discotiendaejbjar.dto.CompraDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
+import co.edu.unicundi.discotiendaejbjar.entidad.Formato;
 import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ICancionRep;
@@ -64,6 +65,7 @@ public class CancionServicioImp implements ICancionServicio {
             ModelMapper mapper = new ModelMapper();
             mapper.map( this.repositorio.buscarPorNombre(nombre), cancionDto);
             cancionDto.setIdDisco(this.repositorio.buscarPorNombre(nombre).getDisco().getId());
+            cancionDto.setIdFormato(this.repositorio.buscarPorNombre(nombre).getFormato().getId());
             return cancionDto;
         } else {
             throw new ResourceNotFoundException("Ese nombre de la cancion no existe en la base de datos."); 
@@ -84,6 +86,7 @@ public class CancionServicioImp implements ICancionServicio {
             ModelMapper mapper = new ModelMapper();
             mapper.map( this.repositorio.buscarPorId(id), cancionDto);
             cancionDto.setIdDisco(this.repositorio.buscarPorId(id).getDisco().getId());
+            cancionDto.setIdFormato(this.repositorio.buscarPorId(id).getFormato().getId());
             return cancionDto;
         } else {
             throw new ResourceNotFoundException("Ese id no existe en la base de datos."); 
@@ -105,8 +108,9 @@ public class CancionServicioImp implements ICancionServicio {
                 this.repositorio.buscarTodosPorIdDisco(idDisco), 
                 new TypeToken<List<CancionDto>>(){}.getType());
         
-        for (CancionDto discoDtoAux : cancionDto) {
-            discoDtoAux.setIdDisco(this.repositorio.buscarPorId(discoDtoAux.getId()).getDisco().getId());
+        for (CancionDto cancionDtoAux : cancionDto) {
+            cancionDtoAux.setIdDisco(this.repositorio.buscarPorId(cancionDtoAux.getId()).getDisco().getId());
+            cancionDtoAux.setIdFormato(this.repositorio.buscarPorId(cancionDtoAux.getId()).getFormato().getId());
         }
         return cancionDto;
     }
@@ -125,8 +129,9 @@ public class CancionServicioImp implements ICancionServicio {
                 this.repositorio.buscarTodo(), 
                 new TypeToken<List<CancionDto>>(){}.getType());
         
-        for (CancionDto discoDtoAux : cancionDto) {
-            discoDtoAux.setIdDisco(this.repositorio.buscarPorId(discoDtoAux.getId()).getDisco().getId());
+        for (CancionDto cancionDtoAux : cancionDto) {
+            cancionDtoAux.setIdDisco(this.repositorio.buscarPorId(cancionDtoAux.getId()).getDisco().getId());
+            cancionDtoAux.setIdFormato(this.repositorio.buscarPorId(cancionDtoAux.getId()).getFormato().getId());
         }
         return cancionDto;
     }
@@ -142,9 +147,6 @@ public class CancionServicioImp implements ICancionServicio {
             throw new EntityValidationException("Actualmente hay una cancion registrada con ese nombre.");
         } else {
             if(this.repositorioDisco.validarExistenciaPorId(objeto.getIdDisco()) == 1){
-                Disco disco = new Disco();
-                disco.setId(objeto.getIdDisco());
-                objeto.setDisco(disco);
                 this.repositorio.registrar(objeto);
             }else{
                 throw new ResourceNotFoundException("El id del disco ingresado no existe en la base de datos.");

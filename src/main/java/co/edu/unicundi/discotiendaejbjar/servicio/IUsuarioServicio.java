@@ -8,11 +8,13 @@ package co.edu.unicundi.discotiendaejbjar.servicio;
 import co.edu.unicundi.discotiendaejbjar.dto.TokenDto;
 import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
+import co.edu.unicundi.discotiendaejbjar.entidad.UsuarioCancion;
 
 import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.UnauthorizedException;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -31,7 +33,7 @@ public interface IUsuarioServicio extends ICRUDServicio<Usuario, Integer, Usuari
      * @param apodo
      * @return 
      */
-    public Usuario buscarPorApodo(String apodo)throws ResourceNotFoundException;
+    public UsuarioDto buscarPorApodo(String apodo)throws ResourceNotFoundException;
     
     /**
      * Método que permite buscar a un usuario por correo.
@@ -64,7 +66,15 @@ public interface IUsuarioServicio extends ICRUDServicio<Usuario, Integer, Usuari
     /**
      * Método que permite actualizar.
      * @param objeto 
+     * @param token
      */
     public void actualizarTk(Usuario objeto, String token)throws  ResourceNotFoundException,  EntityValidationException, ResourceConflictException, UnauthorizedException;
+    
+    /**
+     * Método que permite mostrar el historial de compras del usuario.
+     * @param token
+     * @return 
+     */
+    public List<UsuarioCancion> mostrarCompras(String token);
     
 }
