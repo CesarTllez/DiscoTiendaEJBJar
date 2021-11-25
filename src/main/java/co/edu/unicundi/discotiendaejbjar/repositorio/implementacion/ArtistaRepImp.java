@@ -7,6 +7,7 @@ package co.edu.unicundi.discotiendaejbjar.repositorio.implementacion;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Artista;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IArtistaRep;
+import co.edu.unicundi.discotiendaejbjar.vista.Vista;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -118,6 +119,12 @@ public class ArtistaRepImp implements IArtistaRep{
                 .setParameter(1, nombre)
                 .getSingleResult();
         return query;
+    }
+
+    @Override
+    public List<Vista> vistaBuscar() {
+                TypedQuery<Vista> query = this.manager.createNamedQuery("Vista.buscarTodos", Vista.class);
+        return query.getResultList();
     }
     
 }

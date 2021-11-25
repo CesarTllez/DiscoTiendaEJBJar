@@ -12,9 +12,11 @@ import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IArtistaRep;
 import co.edu.unicundi.discotiendaejbjar.servicio.IArtistaServicio;
+import co.edu.unicundi.discotiendaejbjar.vista.Vista;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.TypedQuery;
 import org.modelmapper.ValidationException;
 
 /**
@@ -60,6 +62,10 @@ public class ArtistaServicioImp implements IArtistaServicio{
         return this.repositorio.buscarTodo();
     }
 
+      @Override
+    public List<Vista> vistaBuscar() {
+    return this.repositorio.vistaBuscar();
+    }
     /**
      * Método que comprueba si el nombre no están registrado con 
      * otro artista, si es así, permite efectur el registro.
