@@ -6,6 +6,8 @@
 package co.edu.unicundi.discotiendaejbjar.repositorio;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Artista;
+import co.edu.unicundi.discotiendaejbjar.vista.Vista;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -32,5 +34,8 @@ public interface IArtistaRep extends ICRUDRep<Artista, Integer>{
      * @return existencia
      */
     public Long validarExistenciaPorNombre(String nombre);
+    
+    public List<Vista> vistaBuscar();
+    
     
 }
