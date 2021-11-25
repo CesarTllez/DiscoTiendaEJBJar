@@ -17,35 +17,35 @@ import javax.persistence.Table;
  * @author cesar
  */
 @Entity
-@Table(name = "usuario_compra")
-public class UsuarioCompra implements Serializable {
+@Table(name = "usuario_disco")
+public class UsuarioDisco implements Serializable {
     
     @EmbeddedId
-    private UsuarioCompraPK usuarioCompraId;
+    private UsuarioDiscoPK usuarioDiscoId;
     
     @ManyToOne()
     @MapsId("idUsuario")
     private Usuario usuario;
     
     @ManyToOne()
-    @MapsId("idCompra")
-    private Compra compra;
+    @MapsId("idDisco")
+    private Disco disco;
 
-    public UsuarioCompra() {
+    public UsuarioDisco() {
     }
 
-    public UsuarioCompra(UsuarioCompraPK usuarioCompraId, Usuario usuario, Compra compra) {
-        this.usuarioCompraId = usuarioCompraId;
+    public UsuarioDisco(UsuarioDiscoPK usuarioDiscoId, Usuario usuario, Disco disco) {
+        this.usuarioDiscoId = usuarioDiscoId;
         this.usuario = usuario;
-        this.compra = compra;
+        this.disco = disco;
     }
 
-    public UsuarioCompraPK getUsuarioCompraId() {
-        return usuarioCompraId;
+    public UsuarioDiscoPK getUsuarioDiscoId() {
+        return usuarioDiscoId;
     }
 
-    public void setUsuarioCompraId(UsuarioCompraPK usuarioCompraId) {
-        this.usuarioCompraId = usuarioCompraId;
+    public void setUsuarioDiscoId(UsuarioDiscoPK usuarioDiscoId) {
+        this.usuarioDiscoId = usuarioDiscoId;
     }
 
     public Usuario getUsuario() {
@@ -56,12 +56,12 @@ public class UsuarioCompra implements Serializable {
         this.usuario = usuario;
     }
 
-    public Compra getCompra() {
-        return compra;
+    public Disco getDisco() {
+        return disco;
     }
 
-    public void setCompra(Compra compra) {
-        this.compra = compra;
+    public void setDisco(Disco disco) {
+        this.disco = disco;
     }
     
 }

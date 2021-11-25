@@ -15,19 +15,19 @@ import javax.persistence.Embeddable;
  * @author cesar
  */
 @Embeddable
-public class UsuarioCompraPK implements Serializable{
+public class UsuarioDiscoPK implements Serializable {
     
     @Column(name = "id_usuario", nullable = false)
     private Integer idUsuario;
     
-    @Column(name = "id_compra", nullable = false)
-    private Integer idCompra;
+    @Column(name = "id_disco", nullable = false)
+    private Integer idDisco;
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.idUsuario);
-        hash = 59 * hash + Objects.hashCode(this.idCompra);
+        hash = 67 * hash + Objects.hashCode(this.idUsuario);
+        hash = 67 * hash + Objects.hashCode(this.idDisco);
         return hash;
     }
 
@@ -42,11 +42,11 @@ public class UsuarioCompraPK implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final UsuarioCompraPK other = (UsuarioCompraPK) obj;
+        final UsuarioDiscoPK other = (UsuarioDiscoPK) obj;
         if (!Objects.equals(this.idUsuario, other.idUsuario)) {
             return false;
         }
-        if (!Objects.equals(this.idCompra, other.idCompra)) {
+        if (!Objects.equals(this.idDisco, other.idDisco)) {
             return false;
         }
         return true;
