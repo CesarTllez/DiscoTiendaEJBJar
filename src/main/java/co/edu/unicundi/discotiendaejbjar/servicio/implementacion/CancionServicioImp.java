@@ -147,6 +147,12 @@ public class CancionServicioImp implements ICancionServicio {
             throw new EntityValidationException("Actualmente hay una cancion registrada con ese nombre.");
         } else {
             if(this.repositorioDisco.validarExistenciaPorId(objeto.getIdDisco()) == 1){
+                Disco disco = new Disco();
+                disco.setId(objeto.getIdDisco());
+                Formato formato = new Formato();
+                formato.setId(objeto.getIdFormato());
+                objeto.setDisco(disco);
+                objeto.setFormato(formato);
                 this.repositorio.registrar(objeto);
             }else{
                 throw new ResourceNotFoundException("El id del disco ingresado no existe en la base de datos.");
@@ -179,7 +185,6 @@ public class CancionServicioImp implements ICancionServicio {
     /**
      * Método que comprueba si el id ingresado existe, si es así, procede a
      * eliminar la cancion de dicho id.
-     *
      * @param id
      */
     @Override

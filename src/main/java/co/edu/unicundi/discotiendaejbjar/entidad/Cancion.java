@@ -49,8 +49,6 @@ import javax.validation.constraints.Size;
 })
 //Anotación para queries SQL's
 @NamedNativeQueries({
-     //Registrar cancion.
-    @NamedNativeQuery(name = "Cancion.registrar", query = "INSERT INTO cancion (nombre, duracion, precio, id_disco, id_formato) VALUES (?, ?, ?, ?, ?)"),
     //Validar la existencia de la canción en la BD por id.
     @NamedNativeQuery(name = "Cancion.validarExistenciaPorId", query = "SELECT COUNT(*) FROM cancion WHERE id = ?") ,
     //Validar la existencia de la canción en la BD por nombre.

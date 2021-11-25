@@ -107,19 +107,12 @@ public class CancionRepImp implements ICancionRep {
     }
 
     /**
-     * Metodo que permite registrar las canciones a la base de datos
-     *
+     * Metodo que permite registrar las canciones a la base de datos.
      * @param objeto
      */
     @Override
     public void registrar(Cancion objeto) {
-        this.manager.createNamedQuery("Cancion.registrar")
-                .setParameter(1, objeto.getNombre())
-                .setParameter(2, objeto.getDuracion())
-                .setParameter(3, objeto.getPrecio())
-                .setParameter(5, objeto.getIdDisco())
-                .setParameter(6, objeto.getIdFormato())
-                .executeUpdate();
+        this.manager.persist(objeto);
     }
 
     /**
