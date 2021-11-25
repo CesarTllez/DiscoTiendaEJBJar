@@ -5,9 +5,11 @@
  */
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
+import co.edu.unicundi.discotiendaejbjar.dto.CompraDto;
 import co.edu.unicundi.discotiendaejbjar.dto.DiscoDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -28,5 +30,20 @@ public interface IDiscoServicio extends ICRUDServicio<Disco, Integer, DiscoDto> 
      * @return
      */
     public DiscoDto buscarPorNombre(String nombre) throws ResourceNotFoundException;
+    
+    /**
+     * Método que permite buscar todos los discos con el id del artista
+     * si existe en la base de datos.
+     * @param idArtista
+     * @return 
+     */
+    public List<DiscoDto> buscarTodosPorIdArtista(Integer idArtista);
+    
+    /**
+     * Método que permite registrar una compra de un disco en la base de datos.
+     * @param idDisco
+     * @param token
+     */
+    public void registrarCompra(CompraDto idDisco, String token);
     
 }

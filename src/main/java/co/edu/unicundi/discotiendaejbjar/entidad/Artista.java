@@ -38,14 +38,14 @@ import javax.validation.constraints.Size;
     //Buscar artista por id.
     @NamedQuery(name = "Artista.buscarPorId", query = "SELECT a FROM Artista a WHERE a.id = :id"),
     //Actualizar artista.
-    @NamedQuery(name = "Artista.actualizar", query = "UPDATE Artista a SET a.nombre = :nombre WHERE a.id = :id"),
+    @NamedQuery(name = "Artista.actualizar", query = "UPDATE Artista a SET a.nombre = :nombre, a.portada = portada WHERE a.id = :id"),
     //Eliminar artista por id.
     @NamedQuery(name = "Artista.eliminarPorIdJPQL", query = "DELETE FROM Artista a WHERE a.id = :id")
 })
 //Anotación para queries SQL's
 @NamedNativeQueries({
     //Registrar artista.
-    @NamedNativeQuery(name = "Artista.registrar", query = "INSERT INTO artista (nombre) VALUES (?)"),
+    @NamedNativeQuery(name = "Artista.registrar", query = "INSERT INTO artista (nombre, portada) VALUES (?, ?)"),
     //Validar la existencia del artista en la BD por id.
     @NamedNativeQuery(name = "Artista.validarExistenciaPorId", query = "SELECT COUNT(*) FROM artista WHERE id = ?") ,
     //Validar la existencia del artista en la BD por nombre.
@@ -70,6 +70,9 @@ public class Artista implements Serializable {
     @Column(name = "nombre", nullable = false, length = 25)
     private String nombre;
     
+    @Column(name = "portada", nullable = false)
+    private String portada;
+    
     /**
      * Relación uno a muchos con disco.
      */
@@ -86,10 +89,12 @@ public class Artista implements Serializable {
      * Constructor en donde se inicializan los atributos de la clase.
      * @param id
      * @param nombre 
+     * @param portada
      */
-    public Artista(Integer id, String nombre) {
+    public Artista(Integer id, String portada, String nombre) {
         this.id = id;
         this.nombre = nombre;
+        this.portada = portada;
     }
 
     public Integer getId() {
@@ -106,6 +111,14 @@ public class Artista implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getPortada() {
+        return portada;
+    }
+
+    public void setPortada(String portada) {
+        this.portada = portada;
     }
     
 }

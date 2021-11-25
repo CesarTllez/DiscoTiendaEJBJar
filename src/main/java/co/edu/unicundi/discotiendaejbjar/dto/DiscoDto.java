@@ -21,17 +21,20 @@ public class DiscoDto {
 
     private String anio;
     
+    private String portada;
+    
     private Integer idArtista;
 
     public DiscoDto() {
     }
 
-    public DiscoDto(Integer id, String nombre, double precio, Integer numCanciones, String anio, Integer idArtista) {
+    public DiscoDto(Integer id, String nombre, double precio, Integer numCanciones, String anio, String portada, Integer idArtista) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.numCanciones = numCanciones;
         this.anio = anio;
+        this.portada = portada;
         this.idArtista = idArtista;
     }
 
@@ -73,6 +76,14 @@ public class DiscoDto {
 
     public void setAnio(String anio) {
         this.anio = anio;
+    }
+
+    public String getPortada() {
+        return portada;
+    }
+
+    public void setPortada(String portada) {
+        this.portada = portada;
     }
 
     public Integer getIdArtista() {

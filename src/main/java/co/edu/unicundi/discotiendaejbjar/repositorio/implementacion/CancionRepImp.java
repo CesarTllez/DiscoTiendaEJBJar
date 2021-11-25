@@ -117,7 +117,7 @@ public class CancionRepImp implements ICancionRep {
                 .setParameter(1, objeto.getNombre())
                 .setParameter(2, objeto.getDuracion())
                 .setParameter(3, objeto.getPrecio())
-                .setParameter(4, objeto.getDisco().getId())
+                .setParameter(5, objeto.getDisco().getId())
                 .executeUpdate();
     }
 
@@ -158,6 +158,19 @@ public class CancionRepImp implements ICancionRep {
     public void eliminarSQL(Integer id) {
         this.manager.createNamedQuery("Cancion.eliminarPorIdSQL")
                 .setParameter(1, id)
+                .executeUpdate();
+    }
+
+    /**
+     * Método que permite registrar en la base de datos una compra de una canción.
+     * @param idCancion
+     * @param idUsuario 
+     */
+    @Override
+    public void registrarCompra(Integer idCancion, Integer idUsuario) {
+        this.manager.createNamedQuery("UsuarioCancion.registrar")
+                .setParameter(1, idCancion)
+                .setParameter(2, idUsuario)
                 .executeUpdate();
     }
 

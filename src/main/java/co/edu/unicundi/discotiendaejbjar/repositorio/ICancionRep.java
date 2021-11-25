@@ -45,8 +45,16 @@ public interface ICancionRep extends ICRUDRep<Cancion, Integer> {
     
     /**
      * Método que permite buscar todas las canciones por id del disco.
+     * @param idDisco
      * @return 
      */
     public List<Cancion> buscarTodosPorIdDisco(Integer idDisco);
+    
+    /**
+     * Método que permite registrar una compra de una canción en la base de datos.
+     * @param idCancion
+     * @param idUsuario 
+     */
+    public void registrarCompra(Integer idCancion, Integer idUsuario);
     
 }

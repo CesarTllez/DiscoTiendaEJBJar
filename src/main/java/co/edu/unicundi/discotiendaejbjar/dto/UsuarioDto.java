@@ -5,11 +5,13 @@
  */
 package co.edu.unicundi.discotiendaejbjar.dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author cesar
  */
-public class UsuarioDto {
+public class UsuarioDto{
     
     private Integer id;
     

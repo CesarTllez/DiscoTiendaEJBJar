@@ -56,6 +56,7 @@ public class ArtistaRepImp implements IArtistaRep{
     public void registrar(Artista objeto) {
         this.manager.createNamedQuery("Artista.registrar")
                 .setParameter( 1, objeto.getNombre())
+                .setParameter( 2, objeto.getPortada())
                  .executeUpdate();
     }
 
@@ -68,6 +69,7 @@ public class ArtistaRepImp implements IArtistaRep{
         this.manager.createNamedQuery("Artista.actualizar")
                 .setParameter("id", objeto.getId())
                 .setParameter("nombre", objeto.getNombre())
+                .setParameter("portada", objeto.getPortada())
                 .executeUpdate();
     }
 

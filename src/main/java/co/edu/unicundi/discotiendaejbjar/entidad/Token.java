@@ -34,6 +34,8 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     //Buscar token por el id del usuario..
     @NamedQuery(name = "Token.buscarPorIdUsuario", query = "SELECT t FROM Token t WHERE t.usuario.id = :idUsuario"),
+    //Buscar token por el id del usuario..
+    @NamedQuery(name = "Token.buscarPorContenido", query = "SELECT t FROM Token t WHERE t.contenido = :contenido"),
     //Validar existencia token por contenido.
     @NamedQuery(name = "Token.validarExistenciaPorContenido", query = "SELECT COUNT(t) FROM Token t WHERE t.contenido = :contenido"),
     //Validar existencia token por id del usuario.

@@ -90,6 +90,19 @@ public class DiscoRepImp implements IDiscoRep {
         TypedQuery<Disco> query = this.manager.createNamedQuery("Disco.buscarTodos", Disco.class);
         return query.getResultList();
     }
+    
+    /**
+     * Metodo que permite buscar todos los discos por id del artista en la base de datos.
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Disco> buscarTodosPorIdArtista(Integer id) {
+        TypedQuery<Disco> query = this.manager.createNamedQuery("Disco.buscarTodosPorIdArtista", Disco.class);
+        return query
+                .setParameter("idArtista", id)
+                .getResultList();
+    }
 
     /**
      * Metodo que permite registrar el disco en la base de datos.
@@ -102,7 +115,8 @@ public class DiscoRepImp implements IDiscoRep {
                 .setParameter(2, objeto.getPrecio())
                 .setParameter(3, objeto.getNumCanciones())
                 .setParameter(4, objeto.getAnio())
-                .setParameter(5, objeto.getArtista().getId())
+                .setParameter(5, objeto.getPortada())
+                .setParameter(6, objeto.getArtista().getId())
                 .executeUpdate();
     }
 
@@ -119,6 +133,7 @@ public class DiscoRepImp implements IDiscoRep {
                 .setParameter("precio", objeto.getPrecio())
                 .setParameter("numCanciones", objeto.getNumCanciones())
                 .setParameter("año", objeto.getAnio())
+                .setParameter("portada", objeto.getPortada())
                 .executeUpdate();
     }
 
@@ -141,6 +156,19 @@ public class DiscoRepImp implements IDiscoRep {
     public void eliminarSQL(Integer id) {
         this.manager.createNamedQuery("Disco.eliminarPorIdSQL")
                 .setParameter(1, id)
+                .executeUpdate();
+    }
+    
+    /**
+     * Método que permite registrar en la base de datos una compra del disco.
+     * @param idDisco
+     * @param idUsuario 
+     */
+    @Override
+    public void registrarCompra(Integer idDisco, Integer idUsuario) {
+        this.manager.createNamedQuery("UsuarioDisco.registrar")
+                .setParameter(1, idDisco)
+                .setParameter(2, idUsuario)
                 .executeUpdate();
     }
 
