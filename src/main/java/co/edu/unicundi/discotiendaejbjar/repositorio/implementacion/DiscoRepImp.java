@@ -7,6 +7,7 @@ package co.edu.unicundi.discotiendaejbjar.repositorio.implementacion;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IDiscoRep;
+import co.edu.unicundi.discotiendaejbjar.vista.HistorialVentaDisco;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -170,6 +171,12 @@ public class DiscoRepImp implements IDiscoRep {
                 .setParameter(1, idDisco)
                 .setParameter(2, idUsuario)
                 .executeUpdate();
+    }
+
+    @Override
+    public List<HistorialVentaDisco> historialVentaDisco() {
+       TypedQuery<HistorialVentaDisco> query = this.manager.createNamedQuery("HistorialVentaDisco.buscarTodos", HistorialVentaDisco.class);
+        return query.getResultList();
     }
 
 }

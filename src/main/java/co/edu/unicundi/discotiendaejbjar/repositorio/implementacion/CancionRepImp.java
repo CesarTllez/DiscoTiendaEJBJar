@@ -7,6 +7,7 @@ package co.edu.unicundi.discotiendaejbjar.repositorio.implementacion;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ICancionRep;
+import co.edu.unicundi.discotiendaejbjar.vista.HistorialVentaCancion;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -166,6 +167,12 @@ public class CancionRepImp implements ICancionRep {
                 .setParameter(1, idCancion)
                 .setParameter(2, idUsuario)
                 .executeUpdate();
+    }
+
+    @Override
+    public List<HistorialVentaCancion> historialVentaCancion() {
+        TypedQuery<HistorialVentaCancion> query = this.manager.createNamedQuery("HistorialVentaCancion.buscarTodos", HistorialVentaCancion.class);
+        return query.getResultList();
     }
 
 }

@@ -36,6 +36,7 @@ public interface IArtistaRep extends ICRUDRep<Artista, Integer>{
     public Long validarExistenciaPorNombre(String nombre);
     
     public List<Vista> vistaBuscar();
+   
     
     
 }

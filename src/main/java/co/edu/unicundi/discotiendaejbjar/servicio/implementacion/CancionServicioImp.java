@@ -17,6 +17,7 @@ import co.edu.unicundi.discotiendaejbjar.repositorio.IDiscoRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
 
 import co.edu.unicundi.discotiendaejbjar.servicio.ICancionServicio;
+import co.edu.unicundi.discotiendaejbjar.vista.HistorialVentaCancion;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -220,5 +221,12 @@ public class CancionServicioImp implements ICancionServicio {
                       .getUsuario()
                       .getId());
     }
+
+    @Override
+    public List<HistorialVentaCancion> historialVentaCancion() {
+       return this.repositorio.historialVentaCancion();   //To change body of generated methods, choose Tools | Templates.
+    }
+
+ 
 
 }

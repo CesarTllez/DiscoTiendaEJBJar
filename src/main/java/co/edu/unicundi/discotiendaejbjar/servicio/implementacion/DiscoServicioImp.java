@@ -16,6 +16,7 @@ import co.edu.unicundi.discotiendaejbjar.repositorio.IArtistaRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IDiscoRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
 import co.edu.unicundi.discotiendaejbjar.servicio.IDiscoServicio;
+import co.edu.unicundi.discotiendaejbjar.vista.HistorialVentaDisco;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -202,6 +203,11 @@ public class DiscoServicioImp implements IDiscoServicio {
                       .buscarPorContenido(token)
                       .getUsuario()
                       .getId());
+    }
+
+    @Override
+    public List<HistorialVentaDisco> historialVentaDisco() {
+        return this.repositorio.historialVentaDisco(); 
     }
 
 }

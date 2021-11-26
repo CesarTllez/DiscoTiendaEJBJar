@@ -6,6 +6,7 @@
 package co.edu.unicundi.discotiendaejbjar.repositorio;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
+import co.edu.unicundi.discotiendaejbjar.vista.HistorialVentaCancion;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -57,4 +58,6 @@ public interface ICancionRep extends ICRUDRep<Cancion, Integer> {
      */
     public void registrarCompra(Integer idCancion, Integer idUsuario);
     
+    
+    public List<HistorialVentaCancion> historialVentaCancion();
 }

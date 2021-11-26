@@ -9,6 +9,7 @@ import co.edu.unicundi.discotiendaejbjar.dto.CancionDto;
 import co.edu.unicundi.discotiendaejbjar.dto.CompraDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
+import co.edu.unicundi.discotiendaejbjar.vista.HistorialVentaCancion;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -45,5 +46,8 @@ public interface ICancionServicio extends ICRUDServicio<Cancion, Integer, Cancio
      * @param token 
      */
     public void registrarCompra(CompraDto idDisco, String token);
+    
+     public List<HistorialVentaCancion> historialVentaCancion();
+   
     
 }
