@@ -329,12 +329,12 @@ public class UsuarioServicioImp implements IUsuarioServicio {
     /**
      * Método que comprueba si el id ingresado existe, si es así, procede a
      * eliminar el usuario por dicho id (JPQL).
-     *
      * @param id
      */
     @Override
     public void eliminarJPQL(Integer id) throws ResourceNotFoundException {
         if (this.repositorio.validarExistenciaPorId(id) == 1) {
+            this.repositorioToken.eliminarPorIdJPQL(id);
             this.repositorio.eliminarJPQL(id);
         } else {
             throw new ResourceNotFoundException("No existe ese id en la base de datos.");
@@ -350,6 +350,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
     @Override
     public void eliminarSQL(Integer id) throws ResourceNotFoundException {
         if (this.repositorio.validarExistenciaPorId(id) == 1) {
+            this.repositorioToken.eliminarPorIdJPQL(id);
             this.repositorio.eliminarSQL(id);
         } else {
             throw new ResourceNotFoundException("No existe ese id en la base de datos.");
