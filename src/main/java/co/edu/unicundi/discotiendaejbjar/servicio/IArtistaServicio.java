@@ -9,7 +9,6 @@ import co.edu.unicundi.discotiendaejbjar.entidad.Artista;
 import co.edu.unicundi.discotiendaejbjar.vista.Vista;
 import java.util.List;
 import javax.ejb.Local;
-import javax.persistence.TypedQuery;
 
 /**
  *
