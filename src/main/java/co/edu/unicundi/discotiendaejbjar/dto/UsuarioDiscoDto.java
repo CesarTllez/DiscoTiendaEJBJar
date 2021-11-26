@@ -9,20 +9,16 @@ package co.edu.unicundi.discotiendaejbjar.dto;
  *
  * @author cesar
  */
-public class UsuarioCancionDto {
+public class UsuarioDiscoDto {
     
-    private CancionDto cancion;
-    
-    public UsuarioCancionDto(){
-        
+    public DiscoDto disco;
+
+    public DiscoDto getDisco() {
+        return disco;
     }
 
-    public CancionDto getCancion() {
-        return cancion;
-    }
-
-    public void setCancion(CancionDto cancion) {
-        this.cancion = cancion;
+    public void setDisco(DiscoDto disco) {
+        this.disco = disco;
     }
     
 }

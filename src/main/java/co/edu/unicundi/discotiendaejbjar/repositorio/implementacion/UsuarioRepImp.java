@@ -7,6 +7,7 @@ package co.edu.unicundi.discotiendaejbjar.repositorio.implementacion;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
 import co.edu.unicundi.discotiendaejbjar.entidad.UsuarioCancion;
+import co.edu.unicundi.discotiendaejbjar.entidad.UsuarioDisco;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IUsuarioRep;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -204,7 +205,21 @@ public class UsuarioRepImp implements IUsuarioRep{
     public List<UsuarioCancion> buscarCancionesPorIdUsuario(Integer idUsuario) {
         TypedQuery<UsuarioCancion> query = this.manager.createNamedQuery("UsuarioCancion.buscarUCPorIdUsuario", UsuarioCancion.class);
         return query
-                .setParameter(1, idUsuario)
+                .setParameter("idUsuario", idUsuario)
+                .getResultList();
+    }
+
+    /**
+     * Método que permite buscar en la base de datos los id de los
+     * discos comprados por el id del usuario.
+     * @param idUsuario
+     * @return 
+     */
+    @Override
+    public List<UsuarioDisco> buscarDiscosPorIdUsuario(Integer idUsuario) {
+        TypedQuery<UsuarioDisco> query = this.manager.createNamedQuery("UsuarioDisco.buscarUCPorIdUsuario", UsuarioDisco.class);
+        return query
+                .setParameter("idUsuario", idUsuario)
                 .getResultList();
     }
     

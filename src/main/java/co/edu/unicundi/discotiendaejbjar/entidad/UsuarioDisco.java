@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -20,6 +22,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "usuario_disco")
+//Anotación para queries JPQL's.
+@NamedQueries({
+    //Buscar usuario - cancion por id del usuario.
+    @NamedQuery(name = "UsuarioDisco.buscarUCPorIdUsuario", query = "SELECT ud FROM UsuarioDisco ud WHERE ud.usuario.id = :idUsuario"),
+})
 //Anotación para queries SQL's
 @NamedNativeQueries({
     //Registrar usuario - disco..

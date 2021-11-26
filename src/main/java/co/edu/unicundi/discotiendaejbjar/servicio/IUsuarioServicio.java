@@ -6,9 +6,10 @@
 package co.edu.unicundi.discotiendaejbjar.servicio;
 
 import co.edu.unicundi.discotiendaejbjar.dto.TokenDto;
+import co.edu.unicundi.discotiendaejbjar.dto.UsuarioCancionDto;
+import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDiscoDto;
 import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
-import co.edu.unicundi.discotiendaejbjar.entidad.UsuarioCancion;
 
 import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
@@ -71,10 +72,17 @@ public interface IUsuarioServicio extends ICRUDServicio<Usuario, Integer, Usuari
     public void actualizarTk(Usuario objeto, String token)throws  ResourceNotFoundException,  EntityValidationException, ResourceConflictException, UnauthorizedException;
     
     /**
-     * Método que permite mostrar el historial de compras del usuario.
+     * Método que permite mostrar el historial de canciones compradas.
      * @param token
      * @return 
      */
-    public List<UsuarioCancion> mostrarCompras(String token);
+    public List<UsuarioCancionDto> mostrarComprasCanciones(String token);
+    
+    /**
+     * Método que permite mostrar el historial de discos comprados.
+     * @param token
+     * @return 
+     */
+    public List<UsuarioDiscoDto> mostrarComprasDiscos(String token);
     
 }

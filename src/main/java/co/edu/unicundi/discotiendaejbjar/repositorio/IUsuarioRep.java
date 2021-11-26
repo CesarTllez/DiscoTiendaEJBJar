@@ -7,6 +7,7 @@ package co.edu.unicundi.discotiendaejbjar.repositorio;
 
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
 import co.edu.unicundi.discotiendaejbjar.entidad.UsuarioCancion;
+import co.edu.unicundi.discotiendaejbjar.entidad.UsuarioDisco;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -77,5 +78,12 @@ public interface IUsuarioRep extends ICRUDRep<Usuario, Integer>{
      * @return 
      */
     public List<UsuarioCancion> buscarCancionesPorIdUsuario(Integer idUsuario);
+    
+    /**
+     * Método que permite buscar los id de los discos comprados por el id del usuario.
+     * @param idUsuario
+     * @return 
+     */
+    public List<UsuarioDisco> buscarDiscosPorIdUsuario(Integer idUsuario);
     
 }

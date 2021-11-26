@@ -6,16 +6,18 @@
 package co.edu.unicundi.discotiendaejbjar.servicio.implementacion;
 
 import co.edu.unicundi.discotiendaejbjar.dto.TokenDto;
+import co.edu.unicundi.discotiendaejbjar.dto.UsuarioCancionDto;
+import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDiscoDto;
 import co.edu.unicundi.discotiendaejbjar.dto.UsuarioDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Rol;
 import co.edu.unicundi.discotiendaejbjar.entidad.Token;
 import co.edu.unicundi.discotiendaejbjar.entidad.Usuario;
-import co.edu.unicundi.discotiendaejbjar.entidad.UsuarioCancion;
 import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.UnauthorizedException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ICancionRep;
+import co.edu.unicundi.discotiendaejbjar.repositorio.IDiscoRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IRolRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IUsuarioRep;
@@ -24,7 +26,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -46,7 +47,7 @@ import org.modelmapper.TypeToken;
 public class UsuarioServicioImp implements IUsuarioServicio {
 
     /**
-     * Permite acceder a los métodos que operan la base de datos.
+     * Permite acceder a los métodos del usuario que operan la base de datos.
      */
     @EJB
     private IUsuarioRep repositorio;
@@ -62,12 +63,18 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      */
     @EJB
     private IRolRep repositorioRol;
-    
+
     /**
      * Permite acceder a los métodos de la cancion que operan la base de datos.
      */
     @EJB
     private ICancionRep repositorioCancion;
+    
+    /**
+     * Permite acceder a los métodos del disco que operan la base de datos.
+     */
+    @EJB
+    private IDiscoRep repositorioDisco;
 
     /**
      * Método que retorna el token para el inicio de sesión.
@@ -77,7 +84,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * @return token
      */
     @Override
-    public TokenDto iniciarSesion(String apodo, String contrasena)throws UnauthorizedException, ResourceNotFoundException{
+    public TokenDto iniciarSesion(String apodo, String contrasena) throws UnauthorizedException, ResourceNotFoundException {
         if (this.repositorio.validarExistenciaPorApodo(apodo) == 1) {
             if (this.desencriptarContrasena(
                     this.repositorio.buscarPorApodo(apodo).getContrasena())
@@ -135,7 +142,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * @param token
      */
     @Override
-    public void cerrarSesion(String token)throws UnauthorizedException{
+    public void cerrarSesion(String token) throws UnauthorizedException {
         if (this.repositorioToken.validarExistenciaPorContenido(token) == 1) {
             this.repositorioToken.eliminarPorContenidoJPQL(token);
         } else {
@@ -173,7 +180,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * @return
      */
     @Override
-    public UsuarioDto buscarPorApodo(String apodo)throws ResourceNotFoundException{
+    public UsuarioDto buscarPorApodo(String apodo) throws ResourceNotFoundException {
         if (this.repositorio.validarExistenciaPorApodo(apodo) == 1) {
             UsuarioDto usuarioDto = new UsuarioDto();
             ModelMapper mapper = new ModelMapper();
@@ -214,7 +221,6 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * Método que comprueba si la cédula existe, si es así, busca el usuario.
      * Además, se hace uso del ModelMapper para cambiar la contraseña
      * encripatada a la original.
-     *
      * @param cedula
      * @return
      */
@@ -235,7 +241,6 @@ public class UsuarioServicioImp implements IUsuarioServicio {
     /**
      * Método que busca a todos los usuarios. Además, se hace uso del
      * ModelMapper para cambiar la contraseña encripatada a la original.
-     *
      * @return
      */
     @Override
@@ -245,8 +250,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
         //Mapeo de listas con TypeToken.
         List<UsuarioDto> usuarioDto = mapper.map(
                 this.repositorio.buscarTodo(),
-                new TypeToken<List<UsuarioDto>>() {
-                }.getType());
+                new TypeToken<List<UsuarioDto>>() {}.getType());
 
         for (UsuarioDto usuarioDtoAux : usuarioDto) {
             usuarioDtoAux.setContrasena(
@@ -264,14 +268,14 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * @param objeto
      */
     @Override
-    public void registrar(Usuario objeto) throws ResourceConflictException,UnauthorizedException {
+    public void registrar(Usuario objeto) throws ResourceConflictException, UnauthorizedException {
         if (this.repositorioRol.buscarPorId(
                 objeto.getIdRol()).getNombre().equalsIgnoreCase("Administrador")) {
             throw new UnauthorizedException("El id del rol ingresado no es permitido.");
         } else {
             if (this.repositorio.validarExistenciaPorCedula(objeto.getCedula()) == 1
                     && this.repositorio.validarExistenciaPorCorreo(objeto.getCorreo()) == 1) {
-                
+
                 throw new ResourceConflictException("Actualmente hay un usuario registrado con esa cedula y ese correo.");
             } else {
                 if (this.repositorio.validarExistenciaPorCorreo(objeto.getCorreo()) == 1) {
@@ -299,7 +303,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
      * @param token
      */
     @Override
-    public void actualizarTk(Usuario objeto, String token) throws ResourceConflictException, EntityValidationException, ResourceNotFoundException, UnauthorizedException{
+    public void actualizarTk(Usuario objeto, String token) throws ResourceConflictException, EntityValidationException, ResourceNotFoundException, UnauthorizedException {
         if (this.repositorioToken.buscarPorIdUsuario(objeto.getId()).getContenido().equals(token)) {
             if ((objeto.getId() != null)) {
                 if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
@@ -319,7 +323,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
             } else {
                 throw new EntityValidationException("Es necesario ingresar un id.");
             }
-        }else{
+        } else {
             throw new UnauthorizedException("No tiene permisos para realizar esta accion.");
 
         }
@@ -343,7 +347,6 @@ public class UsuarioServicioImp implements IUsuarioServicio {
     /**
      * Método que comprueba si el id ingresado existe, si es así, procede a
      * eliminar el usuario por dicho id (SQL).
-     *
      * @param id
      */
     @Override
@@ -354,6 +357,70 @@ public class UsuarioServicioImp implements IUsuarioServicio {
         } else {
             throw new ResourceNotFoundException("No existe ese id en la base de datos.");
         }
+    }
+
+    /**
+     * Método que permite mostrar el historial de las canciones compradas.
+     * @param token
+     * @return
+     */
+    @Override
+    public List<UsuarioCancionDto> mostrarComprasCanciones(String token) {
+        ModelMapper mapper = new ModelMapper();
+        Integer idUsuario = this.repositorioToken
+                .buscarPorContenido(token)
+                .getUsuario()
+                .getId();
+        
+        //Mapeo de listas con TypeToken.
+        List<UsuarioCancionDto> usuarioCancionDto = mapper.map(
+                this.repositorio.buscarCancionesPorIdUsuario(idUsuario),
+                new TypeToken<List<UsuarioCancionDto>>() {}.getType());
+        
+        for (UsuarioCancionDto usuarioCancionDtoAux : usuarioCancionDto) {
+            usuarioCancionDtoAux.getCancion().setIdDisco(
+                    this.repositorioCancion.buscarPorId(
+                            usuarioCancionDtoAux.getCancion().getId())
+                            .getDisco().getId());
+            usuarioCancionDtoAux.getCancion().setIdFormato(
+                    this.repositorioCancion.buscarPorId(
+                            usuarioCancionDtoAux.getCancion().getId())
+                            .getFormato().getId());
+        }
+        return usuarioCancionDto;
+    }
+    
+    /**
+     * Método que permite mostrar el historial de los discos comprados.
+     * @param token
+     * @return 
+     */
+    @Override
+    public List<UsuarioDiscoDto> mostrarComprasDiscos(String token) {
+        ModelMapper mapper = new ModelMapper();
+        Integer idUsuario = this.repositorioToken
+                .buscarPorContenido(token)
+                .getUsuario()
+                .getId();
+        
+        //Mapeo de listas con TypeToken.
+        List<UsuarioDiscoDto> usuarioDiscoDto = mapper.map(
+                this.repositorio.buscarDiscosPorIdUsuario(idUsuario),
+                new TypeToken<List<UsuarioDiscoDto>>() {}.getType());
+        
+        for (UsuarioDiscoDto usuarioDiscoDtoAux : usuarioDiscoDto) {
+            usuarioDiscoDtoAux.getDisco().setIdArtista(
+                    this.repositorioDisco.buscarPorId(
+                            usuarioDiscoDtoAux.getDisco().getId())
+                            .getArtista()
+                            .getId());
+        }
+        return usuarioDiscoDto;
+    }
+
+    @Override
+    public void actualizar(Usuario objeto) throws ResourceNotFoundException, EntityValidationException, ResourceConflictException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -382,32 +449,6 @@ public class UsuarioServicioImp implements IUsuarioServicio {
         aesEncryptor.setPassword("/CEJD/");
         String contrasenaDesencriptada = aesEncryptor.decrypt(contrasena);
         return contrasenaDesencriptada;
-    }
-
-    /**
-     * Método que permite mostrar el historial de compras.
-     * @param token
-     * @return 
-     */
-    @Override
-    public List<UsuarioCancion> mostrarCompras(String token) {
-        ModelMapper mapper = new ModelMapper();
-        Integer idUsuario = this.repositorioToken
-                .buscarPorContenido(token)
-                .getUsuario()
-                .getId();
-        
-        Iterator<UsuarioCancion> it = this.repositorio.buscarCancionesPorIdUsuario(idUsuario).iterator();
-        while(it.hasNext()){
-            System.out.println(it.next());
-        }
-        
-        return this.repositorio.buscarCancionesPorIdUsuario(idUsuario);
-    }
-    
-    @Override
-    public void actualizar(Usuario objeto) throws  ResourceNotFoundException, EntityValidationException, ResourceConflictException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
