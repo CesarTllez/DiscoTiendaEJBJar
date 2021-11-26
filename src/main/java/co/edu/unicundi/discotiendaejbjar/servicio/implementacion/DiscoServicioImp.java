@@ -197,12 +197,16 @@ public class DiscoServicioImp implements IDiscoServicio {
     }
 
     @Override
-    public void registrarCompra(CompraDto idDisco, String token) {
-        this.repositorio.registrarCompra(idDisco.getId(), 
+    public void registrarCompra(CompraDto idDisco, String token) throws ResourceConflictException{
+        if(this.repositorio.validarExistenciaPorId(idDisco.getId()) != 1){
+                this.repositorio.registrarCompra(idDisco.getId(), 
                 this.repositorioToken
                       .buscarPorContenido(token)
                       .getUsuario()
                       .getId());
+            }else{
+                throw new ResourceConflictException("Esta disco ya ha sido comprada.");
+            }
     }
 
     @Override

@@ -8,6 +8,7 @@ package co.edu.unicundi.discotiendaejbjar.servicio;
 import co.edu.unicundi.discotiendaejbjar.dto.CompraDto;
 import co.edu.unicundi.discotiendaejbjar.dto.DiscoDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.vista.HistorialVentaDisco;
 import java.util.List;
@@ -45,7 +46,7 @@ public interface IDiscoServicio extends ICRUDServicio<Disco, Integer, DiscoDto> 
      * @param idDisco
      * @param token
      */
-    public void registrarCompra(CompraDto idDisco, String token);
+    public void registrarCompra(CompraDto idDisco, String token) throws ResourceConflictException;
     
     public List<HistorialVentaDisco> historialVentaDisco();
     

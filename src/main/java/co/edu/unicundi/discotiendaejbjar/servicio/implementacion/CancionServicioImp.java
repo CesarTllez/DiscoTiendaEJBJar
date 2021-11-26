@@ -11,6 +11,7 @@ import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
 import co.edu.unicundi.discotiendaejbjar.entidad.Disco;
 import co.edu.unicundi.discotiendaejbjar.entidad.Formato;
 import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ICancionRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IDiscoRep;
@@ -214,12 +215,16 @@ public class CancionServicioImp implements ICancionServicio {
     }
 
     @Override
-    public void registrarCompra(CompraDto idDisco, String token) {
-        this.repositorio.registrarCompra(idDisco.getId(), 
+    public void registrarCompra(CompraDto idCancion, String token) throws ResourceConflictException{
+        if(this.repositorio.validarExistenciaPorId(idCancion.getId()) != 1){
+                this.repositorio.registrarCompra(idCancion.getId(), 
                 this.repositorioToken
                       .buscarPorContenido(token)
                       .getUsuario()
                       .getId());
+            }else{
+                throw new ResourceConflictException("Esta cancion ya ha sido comprada.");
+            }
     }
 
     @Override

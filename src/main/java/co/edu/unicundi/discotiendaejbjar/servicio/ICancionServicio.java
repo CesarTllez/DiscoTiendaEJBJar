@@ -8,6 +8,7 @@ package co.edu.unicundi.discotiendaejbjar.servicio;
 import co.edu.unicundi.discotiendaejbjar.dto.CancionDto;
 import co.edu.unicundi.discotiendaejbjar.dto.CompraDto;
 import co.edu.unicundi.discotiendaejbjar.entidad.Cancion;
+import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.vista.HistorialVentaCancion;
 import java.util.List;
@@ -42,10 +43,10 @@ public interface ICancionServicio extends ICRUDServicio<Cancion, Integer, Cancio
 
     /**
      * Método que permite registrar una compra de una canción en la base de datos.
-     * @param idDisco
+     * @param idCancion
      * @param token 
      */
-    public void registrarCompra(CompraDto idDisco, String token);
+    public void registrarCompra(CompraDto idCancion, String token)throws ResourceConflictException;
     
      public List<HistorialVentaCancion> historialVentaCancion();
    
