@@ -22,7 +22,6 @@ import co.edu.unicundi.discotiendaejbjar.repositorio.IUsuarioRep;
 import co.edu.unicundi.discotiendaejbjar.servicio.IUsuarioServicio;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;

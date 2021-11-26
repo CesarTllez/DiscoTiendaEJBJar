@@ -52,6 +52,14 @@ public interface IDiscoRep extends ICRUDRep<Disco, Integer>{
     public Long validarExistenciaPorNombre(String nombre);
     
     /**
+     * Valida la existencia de las dos llaves usuario - disco.
+     * @param idDisco
+     * @param idUsuario
+     * @return 
+     */
+    public Long validarExistenciaPorIdsUD(Integer idDisco, Integer idUsuario);
+    
+    /**
      * Método que permite registrar una compra de un disco en la base de datos.
      * @param idDisco
      * @param idUsuario 

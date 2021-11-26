@@ -12,8 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -24,10 +22,12 @@ import javax.persistence.Table;
 @Table(name = "usuario_cancion")
 //Anotación para queries SQL's
 @NamedNativeQueries({
-    //Registrar usuario - disco..
+    //Registrar usuario - cancion.
     @NamedNativeQuery(name = "UsuarioCancion.registrar", query = "INSERT INTO usuario_cancion (cancion_id, usuario_id) VALUES (?, ?)"),
-     //Registrar usuario - disco..
+    //Registrar usuario - cancion.
     @NamedNativeQuery(name = "UsuarioCancion.buscarUCPorIdUsuario", query = "SELECT cancion_id FROM usuario_cancion WHERE usuario_id = ?"),
+    //Registrar usuario - cancion.
+    @NamedNativeQuery(name = "UsuarioCancion.validarExistenciaPorIds", query = "SELECT COUNT(*) FROM usuario_cancion WHERE cancion_id = ? AND usuario_id = ?"),
 })
 public class UsuarioCancion implements Serializable{
     

@@ -24,6 +24,8 @@ import javax.persistence.Table;
 @NamedNativeQueries({
     //Registrar usuario - disco..
     @NamedNativeQuery(name = "UsuarioDisco.registrar", query = "INSERT INTO usuario_disco (disco_id, usuario_id) VALUES (?, ?)"),
+    //Registrar usuario - disco.
+    @NamedNativeQuery(name = "UsuarioDisco.validarExistenciaPorIds", query = "SELECT COUNT(*) FROM usuario_disco WHERE disco_id = ? AND usuario_id = ?"),
 })
 public class UsuarioDisco implements Serializable {
     

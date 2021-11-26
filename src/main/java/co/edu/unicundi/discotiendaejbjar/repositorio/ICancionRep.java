@@ -45,6 +45,14 @@ public interface ICancionRep extends ICRUDRep<Cancion, Integer> {
     public Long validarExistenciaPorNombre(String nombre);
     
     /**
+     * Valida la existencia de las dos llaves usuario - canción.
+     * @param idCancion
+     * @param idUsuario
+     * @return 
+     */
+    public Long validarExistenciaPorIdsUC(Integer idCancion, Integer idUsuario);
+    
+    /**
      * Método que permite buscar todas las canciones por id del disco.
      * @param idDisco
      * @return 

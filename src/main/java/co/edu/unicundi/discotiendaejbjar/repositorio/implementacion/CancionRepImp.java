@@ -174,5 +174,20 @@ public class CancionRepImp implements ICancionRep {
         TypedQuery<HistorialVentaCancion> query = this.manager.createNamedQuery("HistorialVentaCancion.buscarTodos", HistorialVentaCancion.class);
         return query.getResultList();
     }
+    
+    /**
+     * Método que valida si los id de la tabla usuario-cancion ya existen.
+     * @param idCancion
+     * @param idUsuario
+     * @return 
+     */
+    @Override
+    public Long validarExistenciaPorIdsUC(Integer idCancion, Integer idUsuario) {
+        Long query = (Long)this.manager.createNamedQuery("UsuarioCancion.validarExistenciaPorIds")
+                .setParameter(1, idCancion)
+                .setParameter(2, idUsuario)
+                .getSingleResult();
+        return query;
+    }
 
 }

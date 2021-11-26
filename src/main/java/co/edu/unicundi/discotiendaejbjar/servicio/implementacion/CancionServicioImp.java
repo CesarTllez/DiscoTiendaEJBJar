@@ -215,16 +215,17 @@ public class CancionServicioImp implements ICancionServicio {
     }
 
     @Override
-    public void registrarCompra(CompraDto idCancion, String token) throws ResourceConflictException{
-        if(this.repositorio.validarExistenciaPorId(idCancion.getId()) != 1){
-                this.repositorio.registrarCompra(idCancion.getId(), 
+    public void registrarCompra(CompraDto idCompra, String token) throws ResourceConflictException{
+        if(this.repositorio.validarExistenciaPorIdsUC(idCompra.getId(), 
+                this.repositorioToken.buscarPorContenido(token).getUsuario().getId()) == 1){
+            throw new ResourceConflictException("Esta cancion ya ha sido comprada.");
+        }else{
+            this.repositorio.registrarCompra(idCompra.getId(), 
                 this.repositorioToken
                       .buscarPorContenido(token)
                       .getUsuario()
                       .getId());
-            }else{
-                throw new ResourceConflictException("Esta cancion ya ha sido comprada.");
-            }
+        }
     }
 
     @Override

@@ -179,4 +179,19 @@ public class DiscoRepImp implements IDiscoRep {
         return query.getResultList();
     }
 
+    /**
+     * Método que valida la existencia de las dos llaves de la tabla usuario - disco.
+     * @param idDisco
+     * @param idUsuario
+     * @return 
+     */
+    @Override
+    public Long validarExistenciaPorIdsUD(Integer idDisco, Integer idUsuario) {
+        Long query = (Long)this.manager.createNamedQuery("UsuarioDisco.validarExistenciaPorIds")
+                .setParameter(1, idDisco)
+                .setParameter(2, idUsuario)
+                .getSingleResult();
+        return query;
+    }
+
 }

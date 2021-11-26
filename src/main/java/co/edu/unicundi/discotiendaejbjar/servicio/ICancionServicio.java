@@ -43,10 +43,10 @@ public interface ICancionServicio extends ICRUDServicio<Cancion, Integer, Cancio
 
     /**
      * Método que permite registrar una compra de una canción en la base de datos.
-     * @param idCancion
+     * @param idCompra
      * @param token 
      */
-    public void registrarCompra(CompraDto idCancion, String token)throws ResourceConflictException;
+    public void registrarCompra(CompraDto idCompra, String token)throws ResourceConflictException;
     
      public List<HistorialVentaCancion> historialVentaCancion();
    
