@@ -5,11 +5,13 @@
  */
 package co.edu.unicundi.discotiendaejbjar.dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author cesar
  */
-public class DiscoDto {
+public class DiscoDto implements Serializable{
     
     private Integer id;
 
@@ -17,7 +19,7 @@ public class DiscoDto {
 
     private double precio;
 
-    private Integer numCanciones;
+    private Long numCanciones;
 
     private String anio;
     
@@ -28,7 +30,7 @@ public class DiscoDto {
     public DiscoDto() {
     }
 
-    public DiscoDto(Integer id, String nombre, double precio, Integer numCanciones, String anio, String portada, Integer idArtista) {
+    public DiscoDto(Integer id, String nombre, double precio, Long numCanciones, String anio, String portada, Integer idArtista) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
@@ -62,11 +64,11 @@ public class DiscoDto {
         this.precio = precio;
     }
 
-    public Integer getNumCanciones() {
+    public Long getNumCanciones() {
         return numCanciones;
     }
 
-    public void setNumCanciones(Integer numCanciones) {
+    public void setNumCanciones(Long numCanciones) {
         this.numCanciones = numCanciones;
     }
 

@@ -17,7 +17,6 @@ import javax.persistence.TypedQuery;
 /**
  * Clase que contiene los métodos necesarios para operar sobre la base de datos
  * haciendo uso del EntityManager.
- *
  * @author César Rodríguez
  * @author Eison Morales
  * @author Juan Páez
@@ -33,8 +32,7 @@ public class CancionRepImp implements ICancionRep {
     private EntityManager manager;
 
     /**
-     * Metodo que permite buscar una cancion por medio de la id
-     *
+     * Metodo que permite buscar una cancion por medio de la id.
      * @param id
      * @return
      */
@@ -45,8 +43,7 @@ public class CancionRepImp implements ICancionRep {
     }
 
     /**
-     * Metodo que permite buscar una cancion por medio del nombre
-     *
+     * Metodo que permite buscar una cancion por medio del nombre.
      * @param nombre
      * @return
      */
@@ -68,8 +65,7 @@ public class CancionRepImp implements ICancionRep {
 
     /**
      * Metodo que permite validar la existencia de la cancion por medio de la id
-     * en la Bd
-     *
+     * en la Bd.
      * @param id
      * @return
      */
@@ -83,8 +79,7 @@ public class CancionRepImp implements ICancionRep {
 
     /**
      * Metodo que permite validar la existencia de la cancion por medio del
-     * nombre en la Bd
-     *
+     * nombre en la Bd.
      * @param nombre
      * @return
      */
@@ -97,14 +92,21 @@ public class CancionRepImp implements ICancionRep {
     }
 
     /**
-     * Metodo que permite buscar todas las canciones de la base de datos
-     *
+     * Metodo que permite buscar todas las canciones de la base de datos.
      * @return
      */
     @Override
     public List<Cancion> buscarTodo() {
         TypedQuery<Cancion> query = this.manager.createNamedQuery("Cancion.buscarTodos", Cancion.class);
         return query.getResultList();
+    }
+    
+    @Override
+    public Long contarTodosPorIdDisco(Integer idDisco) {
+        Long query = (Long)this.manager.createNamedQuery("Cancion.contarTodosPorIdDisco")
+                .setParameter("idDisco", idDisco)
+                .getSingleResult();
+        return query;
     }
 
     /**
@@ -160,12 +162,14 @@ public class CancionRepImp implements ICancionRep {
      * Método que permite registrar en la base de datos una compra de una canción.
      * @param idCancion
      * @param idUsuario 
+     * @param fecha
      */
     @Override
-    public void registrarCompra(Integer idCancion, Integer idUsuario) {
+    public void registrarCompra(Integer idCancion, Integer idUsuario, String fecha) {
         this.manager.createNamedQuery("UsuarioCancion.registrar")
                 .setParameter(1, idCancion)
                 .setParameter(2, idUsuario)
+                .setParameter(3, fecha)
                 .executeUpdate();
     }
 

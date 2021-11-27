@@ -48,6 +48,10 @@ public interface IDiscoServicio extends ICRUDServicio<Disco, Integer, DiscoDto> 
      */
     public void registrarCompra(CompraDto idDisco, String token) throws ResourceConflictException;
     
+    /**
+     * Método que permite mostrar el historial de ventas de todos los discos.
+     * @return 
+     */
     public List<HistorialVentaDisco> historialVentaDisco();
     
 }

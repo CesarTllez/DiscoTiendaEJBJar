@@ -13,6 +13,8 @@ public class UsuarioCancionDto {
     
     private CancionDto cancion;
     
+    private String fechaCompra;
+    
     public UsuarioCancionDto(){
         
     }
@@ -23,6 +25,14 @@ public class UsuarioCancionDto {
 
     public void setCancion(CancionDto cancion) {
         this.cancion = cancion;
+    }
+
+    public String getFechaCompra() {
+        return fechaCompra;
+    }
+
+    public void setFechaCompra(String fechaCompra) {
+        this.fechaCompra = fechaCompra;
     }
     
 }

@@ -63,8 +63,13 @@ public interface IDiscoRep extends ICRUDRep<Disco, Integer>{
      * Método que permite registrar una compra de un disco en la base de datos.
      * @param idDisco
      * @param idUsuario 
+     * @param fecha
      */
-    public void registrarCompra(Integer idDisco, Integer idUsuario);
+    public void registrarCompra(Integer idDisco, Integer idUsuario, String fecha);
     
+    /**
+     * Método que permite mostrar el historial del total de discos comprados.
+     * @return 
+     */
     public List<HistorialVentaDisco> historialVentaDisco();
 }

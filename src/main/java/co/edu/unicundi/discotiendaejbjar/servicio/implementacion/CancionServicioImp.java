@@ -19,6 +19,8 @@ import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
 
 import co.edu.unicundi.discotiendaejbjar.servicio.ICancionServicio;
 import co.edu.unicundi.discotiendaejbjar.vista.HistorialVentaCancion;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -220,11 +222,14 @@ public class CancionServicioImp implements ICancionServicio {
                 this.repositorioToken.buscarPorContenido(token).getUsuario().getId()) == 1){
             throw new ResourceConflictException("Esta cancion ya ha sido comprada.");
         }else{
+            LocalDateTime fecha = LocalDateTime.now();
+            DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String fechaFInal = fecha.format(formatoFecha);
             this.repositorio.registrarCompra(idCompra.getId(), 
                 this.repositorioToken
                       .buscarPorContenido(token)
                       .getUsuario()
-                      .getId());
+                      .getId(), fechaFInal);
         }
     }
 

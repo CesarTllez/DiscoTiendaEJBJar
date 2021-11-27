@@ -23,8 +23,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -41,22 +39,22 @@ import javax.validation.constraints.Size;
 //Anotación para queries JPQL's.
 @NamedQueries({
     //Buscar todos los discos.
-    @NamedQuery(name = "Disco.buscarTodos", query = "SELECT d FROM Disco d"),
+    @NamedQuery(name = "Disco.buscarTodos", query = "SELECT d FROM Disco d ORDER BY d.nombre"),
     //Buscar todos los discos por id del artista.
-    @NamedQuery(name = "Disco.buscarTodosPorIdArtista", query = "SELECT d FROM Disco d WHERE d.artista.id = :idArtista"),
+    @NamedQuery(name = "Disco.buscarTodosPorIdArtista", query = "SELECT d FROM Disco d WHERE d.artista.id = :idArtista ORDER BY d.nombre"),
     //Buscar discos por id.
     @NamedQuery(name = "Disco.buscarPorId", query = "SELECT d FROM Disco d WHERE d.id = :id"),
     //Buscar discos por nombre.
     @NamedQuery(name = "Disco.buscarPorNombre", query = "SELECT d FROM Disco d WHERE d.nombre = :nombre"),
     //Actualizar discos por id.
-    @NamedQuery(name = "Disco.actualizar", query = "UPDATE Disco d SET d.nombre = :nombre, d.precio = :precio, d.numCanciones = :numCanciones, d.anio = :anio, d.portada = portada WHERE d.id = :id"),
+    @NamedQuery(name = "Disco.actualizar", query = "UPDATE Disco d SET d.nombre = :nombre, d.precio = :precio, d.anio = :anio, d.portada = portada WHERE d.id = :id"),
     //Eliminar disco por id.
     @NamedQuery(name = "Disco.eliminarPorIdJPQL", query = "DELETE FROM Disco d WHERE d.id = :id")
 })
 //Anotación para queries SQL's
 @NamedNativeQueries({
     //Registrar discos.
-    @NamedNativeQuery(name = "Disco.registrar", query = "INSERT INTO disco (nombre, precio, num_canciones, anio, portada, id_artista) VALUES (?, ?, ?, ?, ?, ?)"),
+    @NamedNativeQuery(name = "Disco.registrar", query = "INSERT INTO disco (nombre, precio, anio, portada, id_artista) VALUES (?, ?, ?, ?, ?)"),
     //Validar la existencia del disco en la BD por id.
     @NamedNativeQuery(name = "Disco.validarExistenciaPorId", query = "SELECT COUNT(*) FROM disco WHERE id = ?"),
     //Validar la existencia del disco en la BD por nombre.
@@ -88,15 +86,6 @@ public class Disco implements Serializable {
     @NotNull(message = "Debe ingresar un precio.")
     @Column(name = "precio", nullable = false)
     private double precio;
-
-    /**
-     * Almacena el numero canciones
-     */
-    @NotNull(message = "Debe ingresar minimo un numero de canciones.")
-    @Min(value = 1, message = "Debe tener como minimo una cancion")
-    @Max(value = 1000, message = "maximo son 1000")
-    @Column(name = "num_canciones", nullable = true, length = 25)
-    private Integer numCanciones;
 
     /**
      * Almacena un año
@@ -143,15 +132,14 @@ public class Disco implements Serializable {
      * @param id
      * @param nombre
      * @param precio
-     * @param numCanciones
+     * @param portada
      * @param anio
      * @param artista
      */
-    public Disco(Integer id, String nombre, double precio, Integer numCanciones, String anio, Artista artista, String portada) {
+    public Disco(Integer id, String nombre, double precio, String anio, Artista artista, String portada) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
-        this.numCanciones = numCanciones;
         this.anio = anio;
         this.artista = artista;
         this.portada = portada;
@@ -179,14 +167,6 @@ public class Disco implements Serializable {
 
     public void setPrecio(double precio) {
         this.precio = precio;
-    }
-
-    public int getNumCanciones() {
-        return numCanciones;
-    }
-
-    public void setNumCanciones(int numCanciones) {
-        this.numCanciones = numCanciones;
     }
 
     public String getAnio() {

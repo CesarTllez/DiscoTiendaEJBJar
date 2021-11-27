@@ -114,10 +114,9 @@ public class DiscoRepImp implements IDiscoRep {
         this.manager.createNamedQuery("Disco.registrar")
                 .setParameter(1, objeto.getNombre())
                 .setParameter(2, objeto.getPrecio())
-                .setParameter(3, objeto.getNumCanciones())
-                .setParameter(4, objeto.getAnio())
-                .setParameter(5, objeto.getPortada())
-                .setParameter(6, objeto.getArtista().getId())
+                .setParameter(3, objeto.getAnio())
+                .setParameter(4, objeto.getPortada())
+                .setParameter(5, objeto.getArtista().getId())
                 .executeUpdate();
     }
 
@@ -132,7 +131,6 @@ public class DiscoRepImp implements IDiscoRep {
                 .setParameter("id", objeto.getId())
                 .setParameter("nombre", objeto.getNombre())
                 .setParameter("precio", objeto.getPrecio())
-                .setParameter("numCanciones", objeto.getNumCanciones())
                 .setParameter("año", objeto.getAnio())
                 .setParameter("portada", objeto.getPortada())
                 .executeUpdate();
@@ -164,12 +162,14 @@ public class DiscoRepImp implements IDiscoRep {
      * Método que permite registrar en la base de datos una compra del disco.
      * @param idDisco
      * @param idUsuario 
+     * @param fecha
      */
     @Override
-    public void registrarCompra(Integer idDisco, Integer idUsuario) {
+    public void registrarCompra(Integer idDisco, Integer idUsuario, String fecha) {
         this.manager.createNamedQuery("UsuarioDisco.registrar")
                 .setParameter(1, idDisco)
                 .setParameter(2, idUsuario)
+                .setParameter(3, fecha)
                 .executeUpdate();
     }
 

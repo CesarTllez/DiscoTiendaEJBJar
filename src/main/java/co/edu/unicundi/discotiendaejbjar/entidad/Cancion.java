@@ -35,13 +35,15 @@ import javax.validation.constraints.Size;
  //Anotación para queries JPQL's.
 @NamedQueries({
     //Buscar todos los canciones.
-    @NamedQuery(name = "Cancion.buscarTodos", query = "SELECT c FROM Cancion c"),
+    @NamedQuery(name = "Cancion.buscarTodos", query = "SELECT c FROM Cancion c ORDER BY c.precio"),
     //Buscar canciones por id.
     @NamedQuery(name = "Cancion.buscarPorId", query = "SELECT c FROM Cancion c WHERE c.id = :id"),
     //Buscar canciones por nombre.
     @NamedQuery(name = "Cancion.buscarPorNombre", query = "SELECT c FROM Cancion c WHERE c.nombre = :nombre"),
     //Buscar canciones por disco.
-    @NamedQuery(name = "Cancion.buscarTodosPorIdDisco", query = "SELECT c FROM Cancion c WHERE c.disco.id = :idDisco"),
+    @NamedQuery(name = "Cancion.buscarTodosPorIdDisco", query = "SELECT c FROM Cancion c WHERE c.disco.id = :idDisco ORDER BY c.precio"),
+    //Contar canciones por disco.
+    @NamedQuery(name = "Cancion.contarTodosPorIdDisco", query = "SELECT COUNT(c) FROM Cancion c WHERE c.disco.id = :idDisco"),
     //Actualizar canciones por id.
     @NamedQuery(name = "Cancion.actualizar", query = "UPDATE Cancion c SET c.nombre = :nombre, c.duracion = :duracion, c.precio = :precio  WHERE c.id = :id"),
     //Eliminar cancion por id.

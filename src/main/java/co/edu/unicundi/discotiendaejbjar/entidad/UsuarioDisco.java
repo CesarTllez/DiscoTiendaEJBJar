@@ -6,6 +6,7 @@
 package co.edu.unicundi.discotiendaejbjar.entidad;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -30,7 +31,7 @@ import javax.persistence.Table;
 //Anotación para queries SQL's
 @NamedNativeQueries({
     //Registrar usuario - disco..
-    @NamedNativeQuery(name = "UsuarioDisco.registrar", query = "INSERT INTO usuario_disco (disco_id, usuario_id) VALUES (?, ?)"),
+    @NamedNativeQuery(name = "UsuarioDisco.registrar", query = "INSERT INTO usuario_disco (disco_id, usuario_id, fecha_compra) VALUES (?, ?, ?)"),
     //Registrar usuario - disco.
     @NamedNativeQuery(name = "UsuarioDisco.validarExistenciaPorIds", query = "SELECT COUNT(*) FROM usuario_disco WHERE disco_id = ? AND usuario_id = ?"),
 })
@@ -46,14 +47,18 @@ public class UsuarioDisco implements Serializable {
     @ManyToOne()
     @MapsId("idDisco")
     private Disco disco;
+    
+    @Column(name = "fecha_compra")
+    private String fechaCompra;
 
     public UsuarioDisco() {
     }
 
-    public UsuarioDisco(UsuarioDiscoPK usuarioDiscoId, Usuario usuario, Disco disco) {
+    public UsuarioDisco(UsuarioDiscoPK usuarioDiscoId, Usuario usuario, Disco disco, String fechaCompra) {
         this.usuarioDiscoId = usuarioDiscoId;
         this.usuario = usuario;
         this.disco = disco;
+        this.fechaCompra = fechaCompra;
     }
 
     public UsuarioDiscoPK getUsuarioDiscoId() {
@@ -78,6 +83,14 @@ public class UsuarioDisco implements Serializable {
 
     public void setDisco(Disco disco) {
         this.disco = disco;
+    }
+
+    public String getFechaCompra() {
+        return fechaCompra;
+    }
+
+    public void setFechaCompra(String fechaCompra) {
+        this.fechaCompra = fechaCompra;
     }
     
 }

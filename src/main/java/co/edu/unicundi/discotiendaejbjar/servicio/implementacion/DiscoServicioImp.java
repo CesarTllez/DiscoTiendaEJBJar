@@ -13,10 +13,13 @@ import co.edu.unicundi.discotiendaejbjar.excepciones.EntityValidationException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceConflictException;
 import co.edu.unicundi.discotiendaejbjar.excepciones.ResourceNotFoundException;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IArtistaRep;
+import co.edu.unicundi.discotiendaejbjar.repositorio.ICancionRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.IDiscoRep;
 import co.edu.unicundi.discotiendaejbjar.repositorio.ITokenRep;
 import co.edu.unicundi.discotiendaejbjar.servicio.IDiscoServicio;
 import co.edu.unicundi.discotiendaejbjar.vista.HistorialVentaDisco;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -41,13 +44,19 @@ public class DiscoServicioImp implements IDiscoServicio {
     private IDiscoRep repositorio;
     
     /**
+     * Permite acceder a los métodos de la cancion que operan la base de datos.
+     */
+    @EJB
+    private ICancionRep repositorioCancion;
+    
+    /**
      * Permite acceder a los métodos del artista que operan la base de datos.
      */
     @EJB
     private IArtistaRep repositorioArtista;
     
     /**
-     * Permite acceder a los métodos que operan la base de datos.
+     * Permite acceder a los métodos del token que operan la base de datos.
      */
     @EJB
     private ITokenRep repositorioToken;
@@ -65,6 +74,9 @@ public class DiscoServicioImp implements IDiscoServicio {
             ModelMapper mapper = new ModelMapper();
             mapper.map( this.repositorio.buscarPorNombre(nombre), discoDto);
             discoDto.setIdArtista(this.repositorio.buscarPorNombre(nombre).getArtista().getId());
+            discoDto.setNumCanciones(
+                    this.repositorioCancion.contarTodosPorIdDisco(
+                            this.repositorio.buscarPorNombre(nombre).getId()));
             return discoDto;
         } else {
             throw new ResourceNotFoundException("Ese nombre del disco no existe en la base de datos.");
@@ -84,6 +96,9 @@ public class DiscoServicioImp implements IDiscoServicio {
             ModelMapper mapper = new ModelMapper();
             mapper.map( this.repositorio.buscarPorId(id), discoDto);
             discoDto.setIdArtista(this.repositorio.buscarPorId(id).getArtista().getId());
+            discoDto.setNumCanciones(
+                    this.repositorioCancion.contarTodosPorIdDisco(
+                            this.repositorio.buscarPorId(id).getId()));
             return discoDto;
         } else {
          throw new ResourceNotFoundException("Ese id no existe en la base de datos.");
@@ -108,6 +123,9 @@ public class DiscoServicioImp implements IDiscoServicio {
         
         for (DiscoDto discoDtoAux : discoDto) {
             discoDtoAux.setIdArtista(this.repositorio.buscarPorId(discoDtoAux.getId()).getArtista().getId());
+            discoDtoAux.setNumCanciones(
+                    this.repositorioCancion.contarTodosPorIdDisco(
+                            this.repositorio.buscarPorId(discoDtoAux.getId()).getId()));
         }
         return discoDto;
     }
@@ -124,6 +142,12 @@ public class DiscoServicioImp implements IDiscoServicio {
         List<DiscoDto> discoDto = mapper.map(
                 this.repositorio.buscarTodosPorIdArtista(idArtista), 
                 new TypeToken<List<DiscoDto>>(){}.getType());
+        
+        for (DiscoDto discoDtoAux : discoDto) {
+            discoDtoAux.setNumCanciones(
+                    this.repositorioCancion.contarTodosPorIdDisco(
+                            this.repositorio.buscarPorId(discoDtoAux.getId()).getId()));
+        }
         
         return discoDto;
     }
@@ -202,11 +226,14 @@ public class DiscoServicioImp implements IDiscoServicio {
                 this.repositorioToken.buscarPorContenido(token).getUsuario().getId()) == 1){
             throw new ResourceConflictException("Este disco ya ha sido comprado.");
         }else{
+            LocalDateTime fecha = LocalDateTime.now();
+            DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String fechaFInal = fecha.format(formatoFecha);
             this.repositorio.registrarCompra(idDisco.getId(), 
                 this.repositorioToken
                       .buscarPorContenido(token)
                       .getUsuario()
-                      .getId());
+                      .getId(), fechaFInal);
         }
     }
 

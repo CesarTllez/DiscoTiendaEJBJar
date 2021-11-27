@@ -12,6 +12,8 @@ package co.edu.unicundi.discotiendaejbjar.dto;
 public class UsuarioDiscoDto {
     
     public DiscoDto disco;
+    
+    private String fechaCompra;
 
     public DiscoDto getDisco() {
         return disco;
@@ -19,6 +21,14 @@ public class UsuarioDiscoDto {
 
     public void setDisco(DiscoDto disco) {
         this.disco = disco;
+    }
+
+    public String getFechaCompra() {
+        return fechaCompra;
+    }
+
+    public void setFechaCompra(String fechaCompra) {
+        this.fechaCompra = fechaCompra;
     }
     
 }
