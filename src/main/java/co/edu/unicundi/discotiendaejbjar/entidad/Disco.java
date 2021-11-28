@@ -47,7 +47,7 @@ import javax.validation.constraints.Size;
     //Buscar discos por nombre.
     @NamedQuery(name = "Disco.buscarPorNombre", query = "SELECT d FROM Disco d WHERE d.nombre = :nombre"),
     //Actualizar discos por id.
-    @NamedQuery(name = "Disco.actualizar", query = "UPDATE Disco d SET d.nombre = :nombre, d.precio = :precio, d.anio = :anio, d.portada = portada WHERE d.id = :id"),
+    @NamedQuery(name = "Disco.actualizar", query = "UPDATE Disco d SET d.nombre = :nombre, d.precio = :precio, d.anio = :anio, d.portada = :portada WHERE d.id = :id"),
     //Eliminar disco por id.
     @NamedQuery(name = "Disco.eliminarPorIdJPQL", query = "DELETE FROM Disco d WHERE d.id = :id")
 })

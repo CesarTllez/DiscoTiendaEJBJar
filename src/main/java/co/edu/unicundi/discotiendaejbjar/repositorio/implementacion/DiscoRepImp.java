@@ -127,11 +127,11 @@ public class DiscoRepImp implements IDiscoRep {
      */
     @Override
     public void actualizar(Disco objeto) {
-        this.manager.createNamedQuery("Cancion.actualizar")
+        this.manager.createNamedQuery("Disco.actualizar")
                 .setParameter("id", objeto.getId())
                 .setParameter("nombre", objeto.getNombre())
                 .setParameter("precio", objeto.getPrecio())
-                .setParameter("año", objeto.getAnio())
+                .setParameter("anio", objeto.getAnio())
                 .setParameter("portada", objeto.getPortada())
                 .executeUpdate();
     }
