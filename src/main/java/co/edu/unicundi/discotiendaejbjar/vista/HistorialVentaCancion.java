@@ -5,6 +5,7 @@
  */
 package co.edu.unicundi.discotiendaejbjar.vista;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ import javax.persistence.Table;
     //Buscar todo el historial de venta canciones.
     @NamedQuery(name = "HistorialVentaCancion.buscarTodos", query = "SELECT c FROM HistorialVentaCancion c"),
 })
-public class HistorialVentaCancion {
+public class HistorialVentaCancion implements Serializable {
     
      @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
