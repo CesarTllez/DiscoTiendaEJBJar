@@ -108,7 +108,7 @@ public class UsuarioServicioImp implements IUsuarioServicio {
                         .signWith(SignatureAlgorithm.HS512, llaveToken)
                         .setSubject(apodo)
                         .setIssuedAt(new Date(fecha))
-                        .setExpiration(new Date(fecha + 600000))
+                        .setExpiration(new Date(fecha + 3600000))
                         .claim("rol", permisosRol)
                         .compact();
 

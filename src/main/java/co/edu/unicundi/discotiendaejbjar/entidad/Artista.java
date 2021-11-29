@@ -38,7 +38,7 @@ import javax.validation.constraints.Size;
     //Buscar artista por id.
     @NamedQuery(name = "Artista.buscarPorId", query = "SELECT a FROM Artista a WHERE a.id = :id"),
     //Actualizar artista.
-    @NamedQuery(name = "Artista.actualizar", query = "UPDATE Artista a SET a.nombre = :nombre, a.portada = portada WHERE a.id = :id"),
+    @NamedQuery(name = "Artista.actualizar", query = "UPDATE Artista a SET a.nombre = :nombre, a.portada = :portada WHERE a.id = :id"),
     //Eliminar artista por id.
     @NamedQuery(name = "Artista.eliminarPorIdJPQL", query = "DELETE FROM Artista a WHERE a.id = :id")
 })
