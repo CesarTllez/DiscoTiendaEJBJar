@@ -173,11 +173,11 @@ public class CancionServicioImp implements ICancionServicio {
      * @param objeto
      */
     @Override
-    public void actualizar(Cancion objeto)throws ResourceNotFoundException, EntityValidationException{
+    public void actualizar(Cancion objeto)throws ResourceNotFoundException, EntityValidationException, ResourceConflictException{
         if ((objeto.getId() != null)) {
             if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
                 if (this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1){
-                    System.out.println("Excepcion: Ya existe una cancion con ese nombre.");
+                    throw new ResourceConflictException("Ya existe una cancion con ese nombre.");
                 }else{
                     this.repositorio.actualizar(objeto);
                 }

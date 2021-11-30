@@ -179,11 +179,11 @@ public class DiscoServicioImp implements IDiscoServicio {
      * @param objeto
      */
     @Override
-    public void actualizar(Disco objeto) throws ResourceNotFoundException, EntityValidationException{
+    public void actualizar(Disco objeto) throws ResourceNotFoundException, EntityValidationException, ResourceConflictException{
         if ((objeto.getId() != null)) {
             if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
                 if (this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1){
-                    System.out.println("Excepcion: Ya existe un disco con ese nombre.");
+                    throw new ResourceConflictException("Ya existe un disco con ese nombre.");
                 }else{
                     this.repositorio.actualizar(objeto);
                 }
