@@ -409,6 +409,9 @@ public class UsuarioServicioImp implements IUsuarioServicio {
                 new TypeToken<List<UsuarioDiscoDto>>() {}.getType());
         
         for (UsuarioDiscoDto usuarioDiscoDtoAux : usuarioDiscoDto) {
+            usuarioDiscoDtoAux.getDisco().setNumCanciones(
+                    this.repositorioCancion.contarTodosPorIdDisco(
+                            usuarioDiscoDtoAux.getDisco().getId()));
             usuarioDiscoDtoAux.getDisco().setIdArtista(
                     this.repositorioDisco.buscarPorId(
                             usuarioDiscoDtoAux.getDisco().getId())
