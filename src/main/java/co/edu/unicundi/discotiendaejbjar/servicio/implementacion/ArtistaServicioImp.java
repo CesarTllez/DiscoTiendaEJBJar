@@ -96,7 +96,7 @@ public class ArtistaServicioImp implements IArtistaServicio {
         if ((objeto.getId() != null)) {
             if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
                 if (this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1) {
-                    System.out.println("Excepcion: Ya existe ese artista.");
+                    throw new ResourceConflictException("Ya existe ese artista.");
                 } else {
                     if ((!objeto.getNombre().equals(this.repositorio.buscarPorId(objeto.getId()).getNombre()))) {
                         this.repositorio.actualizar(objeto);
