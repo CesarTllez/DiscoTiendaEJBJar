@@ -176,7 +176,11 @@ public class CancionServicioImp implements ICancionServicio {
     public void actualizar(Cancion objeto)throws ResourceNotFoundException, EntityValidationException{
         if ((objeto.getId() != null)) {
             if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
-                this.repositorio.actualizar(objeto);
+                if (this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1){
+                    System.out.println("Excepcion: Ya existe una cancion con ese nombre.");
+                }else{
+                    this.repositorio.actualizar(objeto);
+                }
             } else {
                 throw new ResourceNotFoundException("No existe ese id en la base de datos.");
               
