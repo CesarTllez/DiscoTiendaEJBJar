@@ -146,9 +146,9 @@ public class CancionServicioImp implements ICancionServicio {
      * @param objeto
      */
     @Override
-    public void registrar(Cancion objeto) throws EntityValidationException, ResourceNotFoundException{
+    public void registrar(Cancion objeto) throws ResourceConflictException, ResourceNotFoundException{
         if (this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1) {
-            throw new EntityValidationException("Actualmente hay una cancion registrada con ese nombre.");
+            throw new ResourceConflictException("Actualmente hay una cancion registrada con ese nombre.");
         } else {
             if(this.repositorioDisco.validarExistenciaPorId(objeto.getIdDisco()) == 1){
                 Disco disco = new Disco();

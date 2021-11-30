@@ -72,9 +72,9 @@ public class ArtistaServicioImp implements IArtistaServicio{
      * @param objeto 
      */
     @Override
-    public void registrar(Artista objeto) throws EntityValidationException{
+    public void registrar(Artista objeto) throws ResourceConflictException{
         if(this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1){
-            throw  new EntityValidationException("Actualmente hay un artista registrado con ese nombre.");
+            throw  new ResourceConflictException("Actualmente hay un artista registrado con ese nombre.");
             }else{
                 this.repositorio.registrar(objeto);
             }
