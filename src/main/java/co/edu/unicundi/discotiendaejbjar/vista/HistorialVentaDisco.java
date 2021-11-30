@@ -51,17 +51,21 @@ public class HistorialVentaDisco implements Serializable {
      
      @Column(name = "precio", nullable= false, length = 25, insertable = false, updatable = false)
     private double precio;
-
+     
+     @Column(name = "fecha_compra", nullable= false, length = 25, insertable = false, updatable = false)
+    private String fecha_compra;
+     
     public HistorialVentaDisco() {
     }
 
-    public HistorialVentaDisco(Integer id_usuario, String nombre_usuario, String cedula, Integer id_disco, String nombre_disco, double precio) {
+    public HistorialVentaDisco(Integer id_usuario, String nombre_usuario, String cedula, Integer id_disco, String nombre_disco, double precio, String fecha_compra) {
         this.id_usuario = id_usuario;
         this.nombre_usuario = nombre_usuario;
         this.cedula = cedula;
         this.id_disco = id_disco;
         this.nombre_disco = nombre_disco;
         this.precio = precio;
+        this.fecha_compra = fecha_compra;
     }
 
     public Integer getId_usuario() {
@@ -111,6 +115,15 @@ public class HistorialVentaDisco implements Serializable {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
-      
+
+    public String getFecha_compra() {
+        return fecha_compra;
+    }
+
+    public void setFecha_compra(String fecha_compra) {
+        this.fecha_compra = fecha_compra;
+    }
+
+    
     
 }
