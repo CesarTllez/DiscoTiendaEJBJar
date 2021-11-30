@@ -182,7 +182,11 @@ public class DiscoServicioImp implements IDiscoServicio {
     public void actualizar(Disco objeto) throws ResourceNotFoundException, EntityValidationException{
         if ((objeto.getId() != null)) {
             if (this.repositorio.validarExistenciaPorId(objeto.getId()) == 1) {
-                this.repositorio.actualizar(objeto);
+                if (this.repositorio.validarExistenciaPorNombre(objeto.getNombre()) == 1){
+                    System.out.println("Excepcion: Ya existe un disco con ese nombre.");
+                }else{
+                    this.repositorio.actualizar(objeto);
+                }
             } else {
                  throw new ResourceNotFoundException("No existe ese id en la base de datos.");
             }
